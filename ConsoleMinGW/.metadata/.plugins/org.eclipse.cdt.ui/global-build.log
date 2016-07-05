@@ -1,0 +1,62 @@
+14:51:17 **** Incremental Build of configuration Debug for project PMLite ****
+make all 
+make: Nothing to be done for `all'.
+14:51:18 **** Incremental Build of configuration Debug for project ConsoleMinGW ****
+Info: Configuration "Debug" uses tool-chain "MinGW GCC" that is unsupported on this system, attempting to build anyway.
+Info: Internal Builder is used for build
+gcc -DDEBUG -D_REENTRANT "-IE:\\TraceReporter\\ConsoleMinGW\\PMLite\\inc" "-IE:\\TraceReporter\\ConsoleMinGW\\ConsoleMinGW" -O0 -g -Wall -c -fmessage-length=0 -o ConsoleMain.o "..\\ConsoleMain.c" 
+In file included from E:\TraceReporter\ConsoleMinGW\PMLite\inc/ASTrace.h:12:0,
+                 from ..\ConsoleMain.c:12:
+E:\TraceReporter\ConsoleMinGW\PMLite\inc/OSWinInc.h:17:0: warning: ignoring #pragma warning  [-Wunknown-pragmas]
+ #pragma warning (disable : 4201 4214 4514 4127)
+ ^
+E:\TraceReporter\ConsoleMinGW\PMLite\inc/OSWinInc.h:102:0: warning: ignoring #pragma warning  [-Wunknown-pragmas]
+ #pragma warning (disable : 4201 4214 4514 4127)
+ ^
+In file included from ..\ConsoleMain.c:12:0:
+E:\TraceReporter\ConsoleMinGW\PMLite\inc/ASTrace.h:30:0: warning: ignoring #pragma comment  [-Wunknown-pragmas]
+ #pragma comment(lib, "ASTRACE")
+ ^
+In file included from E:\TraceReporter\ConsoleMinGW\PMLite\inc/cXEnv.h:164:0,
+                 from E:\TraceReporter\ConsoleMinGW\PMLite\inc/cXTypes.h:12,
+                 from E:\TraceReporter\ConsoleMinGW\PMLite\inc/cXCore.h:11,
+                 from ..\ConsoleMain.c:14:
+E:\TraceReporter\ConsoleMinGW\PMLite\inc/cXStack.h:50:11: note: #pragma message: PMLITE_STACK_DEBUG - Defined
+ #  pragma message("PMLITE_STACK_DEBUG - Defined")
+           ^
+gcc "-LE:\\TraceReporter\\ConsoleMinGW\\PMLite\\Debug" "-LE:\\TraceReporter\\ConsoleMinGW\\ConsoleMinGW\\Debug" -o ConsoleMinGW.exe TestMain.o TMenu.o TChar.o ConsoleMain.o -lPMLite -lASTrace 
+14:58:31 **** Incremental Build of configuration Debug for project PMLite ****
+make all 
+make: Nothing to be done for `all'.
+14:58:32 **** Incremental Build of configuration Debug for project ConsoleMinGW ****
+Info: Configuration "Debug" uses tool-chain "MinGW GCC" that is unsupported on this system, attempting to build anyway.
+Info: Internal Builder is used for build
+gcc -DDEBUG -D_REENTRANT "-IE:\\TraceReporter\\ConsoleMinGW\\PMLite\\inc" "-IE:\\TraceReporter\\ConsoleMinGW\\ConsoleMinGW" -O0 -g -Wall -c -fmessage-length=0 -o ConsoleMain.o "..\\ConsoleMain.c" 
+In file included from E:\TraceReporter\ConsoleMinGW\PMLite\inc/ASTrace.h:12:0,
+                 from ..\ConsoleMain.c:12:
+E:\TraceReporter\ConsoleMinGW\PMLite\inc/OSWinInc.h:17:0: warning: ignoring #pragma warning  [-Wunknown-pragmas]
+ #pragma warning (disable : 4201 4214 4514 4127)
+ ^
+E:\TraceReporter\ConsoleMinGW\PMLite\inc/OSWinInc.h:102:0: warning: ignoring #pragma warning  [-Wunknown-pragmas]
+ #pragma warning (disable : 4201 4214 4514 4127)
+ ^
+In file included from ..\ConsoleMain.c:12:0:
+E:\TraceReporter\ConsoleMinGW\PMLite\inc/ASTrace.h:30:0: warning: ignoring #pragma comment  [-Wunknown-pragmas]
+ #pragma comment(lib, "ASTRACE")
+ ^
+In file included from E:\TraceReporter\ConsoleMinGW\PMLite\inc/cXEnv.h:164:0,
+                 from E:\TraceReporter\ConsoleMinGW\PMLite\inc/cXTypes.h:12,
+                 from E:\TraceReporter\ConsoleMinGW\PMLite\inc/cXCore.h:11,
+                 from ..\ConsoleMain.c:14:
+E:\TraceReporter\ConsoleMinGW\PMLite\inc/cXStack.h:50:11: note: #pragma message: PMLITE_STACK_DEBUG - Defined
+ #  pragma message("PMLITE_STACK_DEBUG - Defined")
+           ^
+gcc "-LE:\\TraceReporter\\ConsoleMinGW\\PMLite\\Debug" "-LE:\\TraceReporter\\ConsoleMinGW\\ConsoleMinGW\\Debug" -o ConsoleMinGW.exe TestMain.o TMenu.o TChar.o ConsoleMain.o -lPMLite -lASTrace 
+14:59:44 **** Incremental Build of configuration Debug for project PMLite ****
+make all 
+make: Nothing to be done for `all'.
+Info: Nothing to build for ConsoleMinGW
+15:01:27 **** Incremental Build of configuration Debug for project PMLite ****
+make all 
+make: Nothing to be done for `all'.
+Info: Nothing to build for ConsoleMinGW

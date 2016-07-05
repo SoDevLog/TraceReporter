@@ -1,0 +1,1016 @@
+18:00:43 **** Rebuild of configuration Debug for project TestPthread ****
+Info: Configuration "Debug" uses tool-chain "MinGW GCC" that is unsupported on this system, attempting to build anyway.
+Info: Internal Builder is used for build
+gcc -DDEBUG -D_REENTRANT "-IE:\\Eclipse\\WorkspaceCSL\\TestPthread\\Components\\inc" "-IE:\\Eclipse\\WorkspaceCSL\\CSLLib" "-IE:\\Eclipse\\WorkspaceCSL\\PMLite\\inc" "-IE:\\Eclipse\\WorkspaceCSL\\CSLLib\\inc" -O0 -g -Wall -c -fmessage-length=0 -o "Components\\src\\cl_readers.o" "..\\Components\\src\\cl_readers.c" 
+..\Components\src\cl_readers.c: In function 'cl_InitReaderFromFileByFriendlyName':
+..\Components\src\cl_readers.c:179:7: warning: enumeration value 'READER_TYPE_MASK' not handled in switch [-Wswitch]
+       switch ( eType)
+       ^
+..\Components\src\cl_readers.c:179:7: warning: enumeration value 'LANTRONIX_READER_TYPE' not handled in switch [-Wswitch]
+..\Components\src\cl_readers.c:179:7: warning: enumeration value 'UNKNOWN_READER_TYPE' not handled in switch [-Wswitch]
+..\Components\src\cl_readers.c:280:9: warning: implicit declaration of function 'ConvertASCIToHex' [-Wimplicit-function-declaration]
+         ConvertASCIToHex( (clu8*)&buf[iFirstIndex], iFieldLen, (clu8*)aReader->tCloverSense.au8RadioAddress, &ulOutLen );
+         ^
+gcc -DDEBUG -D_REENTRANT "-IE:\\Eclipse\\WorkspaceCSL\\TestPthread\\Components\\inc" "-IE:\\Eclipse\\WorkspaceCSL\\CSLLib" "-IE:\\Eclipse\\WorkspaceCSL\\PMLite\\inc" "-IE:\\Eclipse\\WorkspaceCSL\\CSLLib\\inc" -O0 -g -Wall -c -fmessage-length=0 -o "porting\\android\\netal_android.o" "..\\porting\\android\\netal_android.c" 
+gcc -DDEBUG -D_REENTRANT "-IE:\\Eclipse\\WorkspaceCSL\\TestPthread\\Components\\inc" "-IE:\\Eclipse\\WorkspaceCSL\\CSLLib" "-IE:\\Eclipse\\WorkspaceCSL\\PMLite\\inc" "-IE:\\Eclipse\\WorkspaceCSL\\CSLLib\\inc" -O0 -g -Wall -c -fmessage-length=0 -o "porting\\win64\\netal_win64.o" "..\\porting\\win64\\netal_win64.c" 
+gcc -DDEBUG -D_REENTRANT "-IE:\\Eclipse\\WorkspaceCSL\\TestPthread\\Components\\inc" "-IE:\\Eclipse\\WorkspaceCSL\\CSLLib" "-IE:\\Eclipse\\WorkspaceCSL\\PMLite\\inc" "-IE:\\Eclipse\\WorkspaceCSL\\CSLLib\\inc" -O0 -g -Wall -c -fmessage-length=0 -o TMultiReader.o "..\\TMultiReader.c" 
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/cXEnv.h:164:0,
+                 from E:\Eclipse\WorkspaceCSL\PMLite\inc/cXTypes.h:12,
+                 from E:\Eclipse\WorkspaceCSL\PMLite\inc/cMenu.h:12,
+                 from ..\TMultiReader.c:13:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/cXStack.h:50:11: note: #pragma message: PMLITE_STACK_DEBUG - Defined
+ #  pragma message("PMLITE_STACK_DEBUG - Defined")
+           ^
+In file included from ..\pmInterface.h:20:0,
+                 from ..\TMultiReader.c:14:
+..\pmEnv.h:14:9: note: #pragma message: PM_ENV - du repertoire <TPMLiteC> utilise
+ #pragma message("PM_ENV - du repertoire <TPMLiteC> utilise")
+         ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\pmEnv.h:72,
+                 from ..\pmInterface.h:20,
+                 from ..\TMultiReader.c:14:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:32:0: warning: "PM_USE_TRACES" redefined [enabled by default]
+ #  define PM_USE_TRACES 1
+ ^
+In file included from ..\pmInterface.h:20:0,
+                 from ..\TMultiReader.c:14:
+..\pmEnv.h:45:0: note: this is the location of the previous definition
+ #  define PM_USE_TRACES
+ ^
+In file included from ..\pmEnv.h:72:0,
+                 from ..\pmInterface.h:20,
+                 from ..\TMultiReader.c:14:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:96:9: note: #pragma message: PM_USE_TRACES - Defined
+ #pragma message("PM_USE_TRACES - Defined")
+         ^
+In file included from ..\pmInterface.h:20:0,
+                 from ..\TMultiReader.c:14:
+..\pmEnv.h:74:0: warning: "PM_BEGIN_PROC" redefined [enabled by default]
+ #  define PM_BEGIN_PROC(x) c_xstack_update_usage(#x);
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\pmEnv.h:72,
+                 from ..\pmInterface.h:20,
+                 from ..\TMultiReader.c:14:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:112:0: note: this is the location of the previous definition
+ #  define PM_BEGIN_PROC(x) \
+ ^
+In file included from ..\pmInterface.h:20:0,
+                 from ..\TMultiReader.c:14:
+..\pmEnv.h:85:0: warning: "PMLITE_MEMORY_DEBUG" redefined [enabled by default]
+ #define   PMLITE_MEMORY_DEBUG
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\pmEnv.h:72,
+                 from ..\pmInterface.h:20,
+                 from ..\TMultiReader.c:14:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:94:0: note: this is the location of the previous definition
+ #  define PMLITE_MEMORY_DEBUG 1
+ ^
+In file included from ..\TMultiReader.c:14:0:
+..\pmInterface.h:140:0: warning: "pm_memcpy" redefined [enabled by default]
+ #define     pm_memcpy       c_memcpy
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\pmEnv.h:72,
+                 from ..\pmInterface.h:20,
+                 from ..\TMultiReader.c:14:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:49:0: note: this is the location of the previous definition
+ #define     pm_memcpy   memcpy
+ ^
+In file included from ..\TMultiReader.c:14:0:
+..\pmInterface.h:141:0: warning: "pm_memset" redefined [enabled by default]
+ #define     pm_memset       c_memset
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\pmEnv.h:72,
+                 from ..\pmInterface.h:20,
+                 from ..\TMultiReader.c:14:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:52:0: note: this is the location of the previous definition
+ #define     pm_memset   memset
+ ^
+In file included from ..\TMultiReader.c:14:0:
+..\pmInterface.h:142:0: warning: "pm_memmove" redefined [enabled by default]
+ #define     pm_memmove      c_memmove
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\pmEnv.h:72,
+                 from ..\pmInterface.h:20,
+                 from ..\TMultiReader.c:14:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:55:0: note: this is the location of the previous definition
+ #define     pm_memmove  memmove
+ ^
+In file included from ..\TMultiReader.c:14:0:
+..\pmInterface.h:143:0: warning: "pm_memcmp" redefined [enabled by default]
+ #define     pm_memcmp       c_memcmp
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\pmEnv.h:72,
+                 from ..\pmInterface.h:20,
+                 from ..\TMultiReader.c:14:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:58:0: note: this is the location of the previous definition
+ #define     pm_memcmp   memcmp
+ ^
+In file included from ..\TMultiReader.c:14:0:
+..\pmInterface.h:144:0: warning: "pm_memchr" redefined [enabled by default]
+ #define     pm_memchr       c_memchr
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\pmEnv.h:72,
+                 from ..\pmInterface.h:20,
+                 from ..\TMultiReader.c:14:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:61:0: note: this is the location of the previous definition
+ #define     pm_memchr   memchr
+ ^
+In file included from ..\TMultiReader.c:14:0:
+..\pmInterface.h:146:0: warning: "pm_strcmp" redefined [enabled by default]
+ #define     pm_strcmp       c_strcmp
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\pmEnv.h:72,
+                 from ..\pmInterface.h:20,
+                 from ..\TMultiReader.c:14:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:64:0: note: this is the location of the previous definition
+ #define     pm_strcmp   strcmp
+ ^
+In file included from ..\TMultiReader.c:14:0:
+..\pmInterface.h:147:0: warning: "pm_strcpy" redefined [enabled by default]
+ #define     pm_strcpy       c_strcpy
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\pmEnv.h:72,
+                 from ..\pmInterface.h:20,
+                 from ..\TMultiReader.c:14:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:67:0: note: this is the location of the previous definition
+ #define     pm_strcpy   strcpy
+ ^
+In file included from ..\TMultiReader.c:14:0:
+..\pmInterface.h:148:0: warning: "pm_strcat" redefined [enabled by default]
+ #define     pm_strcat       c_strcat
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\pmEnv.h:72,
+                 from ..\pmInterface.h:20,
+                 from ..\TMultiReader.c:14:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:70:0: note: this is the location of the previous definition
+ #define     pm_strcat   strcat
+ ^
+In file included from ..\TMultiReader.c:14:0:
+..\pmInterface.h:149:0: warning: "pm_strlen" redefined [enabled by default]
+ #define     pm_strlen       c_strlen
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\pmEnv.h:72,
+                 from ..\pmInterface.h:20,
+                 from ..\TMultiReader.c:14:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:73:0: note: this is the location of the previous definition
+ #define     pm_strlen   strlen
+ ^
+In file included from ..\TMultiReader.c:14:0:
+..\pmInterface.h:150:0: warning: "pm_strchr" redefined [enabled by default]
+ #define     pm_strchr       c_strchr
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\pmEnv.h:72,
+                 from ..\pmInterface.h:20,
+                 from ..\TMultiReader.c:14:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:76:0: note: this is the location of the previous definition
+ #define     pm_strchr   strchr
+ ^
+In file included from ..\TMultiReader.c:14:0:
+..\pmInterface.h:151:0: warning: "pm_xrand" redefined [enabled by default]
+ #define     pm_xrand        c_xrand
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\pmEnv.h:72,
+                 from ..\pmInterface.h:20,
+                 from ..\TMultiReader.c:14:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:82:0: note: this is the location of the previous definition
+ #define     pm_xrand    c_xrand_imp
+ ^
+In file included from ..\TMultiReader.c:16:0:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmTrace.h:47:9: note: #pragma message: PM_USE_TRACES - Defined
+ #pragma message("PM_USE_TRACES - Defined")
+         ^
+..\TMultiReader.c: In function 'DoInitGlobalContext':
+..\TMultiReader.c:76:5: warning: implicit declaration of function 'cl_GetElapsedTimeHighPerformanceWin32' [-Wimplicit-function-declaration]
+     cl_GetElapsedTimeHighPerformanceWin32();
+     ^
+..\TMultiReader.c:100:5: warning: passing argument 1 of 'g_tHalFunc.fnFreeMemSafely' from incompatible pointer type [enabled by default]
+     g_tHalFunc.fnFreeMemSafely( &test);
+     ^
+..\TMultiReader.c:100:5: note: expected 'void **' but argument is of type 'char **'
+..\TMultiReader.c:133:5: warning: passing argument 1 of 'cl_InitReadersFromFile' from incompatible pointer type [enabled by default]
+     status = cl_InitReadersFromFile( g_friendlyNames );
+     ^
+In file included from ..\TMultiReader.c:18:0:
+E:\Eclipse\WorkspaceCSL\CSLLib\inc/clreaders.h:69:10: note: expected 'char **' but argument is of type 'char (*)[64]'
+ e_Result cl_InitReadersFromFile(char **friendlyNames);
+          ^
+..\TMultiReader.c: In function 'DoChangeReader':
+..\TMultiReader.c:193:2: warning: passing argument 2 of 'Input_UInt16' from incompatible pointer type [enabled by default]
+  result = Input_UInt16("Choisir le reader (0 ou 1)", &readerIndex, 0, pmfalse, pmfalse );
+  ^
+In file included from ..\TMultiReader.c:17:0:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/cInput.h:83:9: note: expected 'short unsigned int *' but argument is of type 'int *'
+ pmbool  Input_UInt16(char* aPrompt, pmuint16* aValue, pmbool afDefault, pmuint16 aDefaultValue, pmbool afCancel);
+         ^
+..\TMultiReader.c: In function 'DoChangeStateReader':
+..\TMultiReader.c:222:2: warning: implicit declaration of function 'cl_InitReaderFromFileByFriendlyName' [-Wimplicit-function-declaration]
+  status = cl_InitReaderFromFileByFriendlyName( g_friendlyNames[g_readerIndex], &tReaderFilter );
+  ^
+..\TMultiReader.c: In function 'SendDataToReader':
+..\TMultiReader.c:352:3: warning: pointer targets in passing argument 1 of 'strlen' differ in signedness [-Wpointer-sign]
+   ConvertStringToHexa(dataToSendAscii, strlen(dataToSendAscii), dataToSend);
+   ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/cXEnv.h:11:0,
+                 from E:\Eclipse\WorkspaceCSL\PMLite\inc/cXTypes.h:12,
+                 from E:\Eclipse\WorkspaceCSL\PMLite\inc/cMenu.h:12,
+                 from ..\TMultiReader.c:13:
+C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/string.h:54:18: note: expected 'const char *' but argument is of type 'unsigned char *'
+   size_t __cdecl strlen(const char *_Str);
+                  ^
+..\TMultiReader.c:352:3: warning: pointer targets in passing argument 1 of 'ConvertStringToHexa' differ in signedness [-Wpointer-sign]
+   ConvertStringToHexa(dataToSendAscii, strlen(dataToSendAscii), dataToSend);
+   ^
+In file included from ..\TMultiReader.c:18:0:
+E:\Eclipse\WorkspaceCSL\CSLLib\inc/clreaders.h:35:16: note: expected 'const char *' but argument is of type 'unsigned char *'
+ unsigned char* ConvertStringToHexa( const char *in, size_t len, unsigned char *out );
+                ^
+..\TMultiReader.c:289:7: warning: unused variable 'waiting_exchange' [-Wunused-variable]
+  bool waiting_exchange = true;
+       ^
+..\TMultiReader.c:288:28: warning: unused variable 'eSynchroStatus' [-Wunused-variable]
+  e_SERIAL_RetryProtocolDef eSynchroStatus = CL_SERIAL_PROT_W_END_DONE;
+                            ^
+..\TMultiReader.c: In function 'DoSendCmdToReader':
+..\TMultiReader.c:419:7: warning: variable 'result' set but not used [-Wunused-but-set-variable]
+  bool result;
+       ^
+..\TMultiReader.c: In function 'DoSendCMDThroughReaderToOther':
+..\TMultiReader.c:550:3: warning: pointer targets in passing argument 1 of 'strlen' differ in signedness [-Wpointer-sign]
+   ConvertStringToHexa(dataToSendAscii, strlen(dataToSendAscii), dataToSend);
+   ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/cXEnv.h:11:0,
+                 from E:\Eclipse\WorkspaceCSL\PMLite\inc/cXTypes.h:12,
+                 from E:\Eclipse\WorkspaceCSL\PMLite\inc/cMenu.h:12,
+                 from ..\TMultiReader.c:13:
+C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/string.h:54:18: note: expected 'const char *' but argument is of type 'unsigned char *'
+   size_t __cdecl strlen(const char *_Str);
+                  ^
+..\TMultiReader.c:550:3: warning: pointer targets in passing argument 1 of 'ConvertStringToHexa' differ in signedness [-Wpointer-sign]
+   ConvertStringToHexa(dataToSendAscii, strlen(dataToSendAscii), dataToSend);
+   ^
+In file included from ..\TMultiReader.c:18:0:
+E:\Eclipse\WorkspaceCSL\CSLLib\inc/clreaders.h:35:16: note: expected 'const char *' but argument is of type 'unsigned char *'
+ unsigned char* ConvertStringToHexa( const char *in, size_t len, unsigned char *out );
+                ^
+..\TMultiReader.c:500:14: warning: unused variable 'j' [-Wunused-variable]
+   int i = 0, j = 0;
+              ^
+..\TMultiReader.c:456:7: warning: unused variable 'waiting_exchange' [-Wunused-variable]
+  bool waiting_exchange = true;
+       ^
+..\TMultiReader.c:455:28: warning: unused variable 'eSynchroStatus' [-Wunused-variable]
+  e_SERIAL_RetryProtocolDef eSynchroStatus = CL_SERIAL_PROT_W_END_DONE;
+                            ^
+..\TMultiReader.c: In function 'DoSetRadioParamsToReaders':
+..\TMultiReader.c:687:4: warning: pointer targets in passing argument 1 of 'strlen' differ in signedness [-Wpointer-sign]
+    ConvertStringToHexa(dataToSendAscii, strlen(dataToSendAscii), dataToSend);
+    ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/cXEnv.h:11:0,
+                 from E:\Eclipse\WorkspaceCSL\PMLite\inc/cXTypes.h:12,
+                 from E:\Eclipse\WorkspaceCSL\PMLite\inc/cMenu.h:12,
+                 from ..\TMultiReader.c:13:
+C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/string.h:54:18: note: expected 'const char *' but argument is of type 'unsigned char *'
+   size_t __cdecl strlen(const char *_Str);
+                  ^
+..\TMultiReader.c:687:4: warning: pointer targets in passing argument 1 of 'ConvertStringToHexa' differ in signedness [-Wpointer-sign]
+    ConvertStringToHexa(dataToSendAscii, strlen(dataToSendAscii), dataToSend);
+    ^
+In file included from ..\TMultiReader.c:18:0:
+E:\Eclipse\WorkspaceCSL\CSLLib\inc/clreaders.h:35:16: note: expected 'const char *' but argument is of type 'unsigned char *'
+ unsigned char* ConvertStringToHexa( const char *in, size_t len, unsigned char *out );
+                ^
+..\TMultiReader.c:650:15: warning: unused variable 'j' [-Wunused-variable]
+    int i = 0, j = 0;
+               ^
+..\TMultiReader.c: In function 'DoClose_ByUser':
+..\TMultiReader.c:1007:14: warning: unused variable 'status' [-Wunused-variable]
+     e_Result status = CL_ERROR;
+              ^
+..\TMultiReader.c: In function 'TMultiReaderPMMenuProc':
+..\TMultiReader.c:1044:2: warning: case label value is less than minimum value for type [enabled by default]
+  PMMENU_CHOICE_END()
+  ^
+..\TMultiReader.c: At top level:
+..\TMultiReader.c:1005:13: warning: 'DoClose_ByUser' defined but not used [-Wunused-function]
+ static void DoClose_ByUser(void)
+             ^
+gcc -DDEBUG -D_REENTRANT "-IE:\\Eclipse\\WorkspaceCSL\\TestPthread\\Components\\inc" "-IE:\\Eclipse\\WorkspaceCSL\\CSLLib" "-IE:\\Eclipse\\WorkspaceCSL\\PMLite\\inc" "-IE:\\Eclipse\\WorkspaceCSL\\CSLLib\\inc" -O0 -g -Wall -c -fmessage-length=0 -o TWriteThread.o "..\\TWriteThread.c" 
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/cXEnv.h:164:0,
+                 from E:\Eclipse\WorkspaceCSL\PMLite\inc/cXTypes.h:12,
+                 from E:\Eclipse\WorkspaceCSL\PMLite\inc/cMenu.h:12,
+                 from ..\TWriteThread.c:7:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/cXStack.h:50:11: note: #pragma message: PMLITE_STACK_DEBUG - Defined
+ #  pragma message("PMLITE_STACK_DEBUG - Defined")
+           ^
+In file included from ..\pmInterface.h:20:0,
+                 from ..\TWriteThread.c:8:
+..\pmEnv.h:14:9: note: #pragma message: PM_ENV - du repertoire <TPMLiteC> utilise
+ #pragma message("PM_ENV - du repertoire <TPMLiteC> utilise")
+         ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\pmEnv.h:72,
+                 from ..\pmInterface.h:20,
+                 from ..\TWriteThread.c:8:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:32:0: warning: "PM_USE_TRACES" redefined [enabled by default]
+ #  define PM_USE_TRACES 1
+ ^
+In file included from ..\pmInterface.h:20:0,
+                 from ..\TWriteThread.c:8:
+..\pmEnv.h:45:0: note: this is the location of the previous definition
+ #  define PM_USE_TRACES
+ ^
+In file included from ..\pmEnv.h:72:0,
+                 from ..\pmInterface.h:20,
+                 from ..\TWriteThread.c:8:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:96:9: note: #pragma message: PM_USE_TRACES - Defined
+ #pragma message("PM_USE_TRACES - Defined")
+         ^
+In file included from ..\pmInterface.h:20:0,
+                 from ..\TWriteThread.c:8:
+..\pmEnv.h:74:0: warning: "PM_BEGIN_PROC" redefined [enabled by default]
+ #  define PM_BEGIN_PROC(x) c_xstack_update_usage(#x);
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\pmEnv.h:72,
+                 from ..\pmInterface.h:20,
+                 from ..\TWriteThread.c:8:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:112:0: note: this is the location of the previous definition
+ #  define PM_BEGIN_PROC(x) \
+ ^
+In file included from ..\pmInterface.h:20:0,
+                 from ..\TWriteThread.c:8:
+..\pmEnv.h:85:0: warning: "PMLITE_MEMORY_DEBUG" redefined [enabled by default]
+ #define   PMLITE_MEMORY_DEBUG
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\pmEnv.h:72,
+                 from ..\pmInterface.h:20,
+                 from ..\TWriteThread.c:8:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:94:0: note: this is the location of the previous definition
+ #  define PMLITE_MEMORY_DEBUG 1
+ ^
+In file included from ..\TWriteThread.c:8:0:
+..\pmInterface.h:140:0: warning: "pm_memcpy" redefined [enabled by default]
+ #define     pm_memcpy       c_memcpy
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\pmEnv.h:72,
+                 from ..\pmInterface.h:20,
+                 from ..\TWriteThread.c:8:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:49:0: note: this is the location of the previous definition
+ #define     pm_memcpy   memcpy
+ ^
+In file included from ..\TWriteThread.c:8:0:
+..\pmInterface.h:141:0: warning: "pm_memset" redefined [enabled by default]
+ #define     pm_memset       c_memset
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\pmEnv.h:72,
+                 from ..\pmInterface.h:20,
+                 from ..\TWriteThread.c:8:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:52:0: note: this is the location of the previous definition
+ #define     pm_memset   memset
+ ^
+In file included from ..\TWriteThread.c:8:0:
+..\pmInterface.h:142:0: warning: "pm_memmove" redefined [enabled by default]
+ #define     pm_memmove      c_memmove
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\pmEnv.h:72,
+                 from ..\pmInterface.h:20,
+                 from ..\TWriteThread.c:8:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:55:0: note: this is the location of the previous definition
+ #define     pm_memmove  memmove
+ ^
+In file included from ..\TWriteThread.c:8:0:
+..\pmInterface.h:143:0: warning: "pm_memcmp" redefined [enabled by default]
+ #define     pm_memcmp       c_memcmp
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\pmEnv.h:72,
+                 from ..\pmInterface.h:20,
+                 from ..\TWriteThread.c:8:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:58:0: note: this is the location of the previous definition
+ #define     pm_memcmp   memcmp
+ ^
+In file included from ..\TWriteThread.c:8:0:
+..\pmInterface.h:144:0: warning: "pm_memchr" redefined [enabled by default]
+ #define     pm_memchr       c_memchr
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\pmEnv.h:72,
+                 from ..\pmInterface.h:20,
+                 from ..\TWriteThread.c:8:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:61:0: note: this is the location of the previous definition
+ #define     pm_memchr   memchr
+ ^
+In file included from ..\TWriteThread.c:8:0:
+..\pmInterface.h:146:0: warning: "pm_strcmp" redefined [enabled by default]
+ #define     pm_strcmp       c_strcmp
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\pmEnv.h:72,
+                 from ..\pmInterface.h:20,
+                 from ..\TWriteThread.c:8:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:64:0: note: this is the location of the previous definition
+ #define     pm_strcmp   strcmp
+ ^
+In file included from ..\TWriteThread.c:8:0:
+..\pmInterface.h:147:0: warning: "pm_strcpy" redefined [enabled by default]
+ #define     pm_strcpy       c_strcpy
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\pmEnv.h:72,
+                 from ..\pmInterface.h:20,
+                 from ..\TWriteThread.c:8:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:67:0: note: this is the location of the previous definition
+ #define     pm_strcpy   strcpy
+ ^
+In file included from ..\TWriteThread.c:8:0:
+..\pmInterface.h:148:0: warning: "pm_strcat" redefined [enabled by default]
+ #define     pm_strcat       c_strcat
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\pmEnv.h:72,
+                 from ..\pmInterface.h:20,
+                 from ..\TWriteThread.c:8:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:70:0: note: this is the location of the previous definition
+ #define     pm_strcat   strcat
+ ^
+In file included from ..\TWriteThread.c:8:0:
+..\pmInterface.h:149:0: warning: "pm_strlen" redefined [enabled by default]
+ #define     pm_strlen       c_strlen
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\pmEnv.h:72,
+                 from ..\pmInterface.h:20,
+                 from ..\TWriteThread.c:8:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:73:0: note: this is the location of the previous definition
+ #define     pm_strlen   strlen
+ ^
+In file included from ..\TWriteThread.c:8:0:
+..\pmInterface.h:150:0: warning: "pm_strchr" redefined [enabled by default]
+ #define     pm_strchr       c_strchr
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\pmEnv.h:72,
+                 from ..\pmInterface.h:20,
+                 from ..\TWriteThread.c:8:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:76:0: note: this is the location of the previous definition
+ #define     pm_strchr   strchr
+ ^
+In file included from ..\TWriteThread.c:8:0:
+..\pmInterface.h:151:0: warning: "pm_xrand" redefined [enabled by default]
+ #define     pm_xrand        c_xrand
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\pmEnv.h:72,
+                 from ..\pmInterface.h:20,
+                 from ..\TWriteThread.c:8:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:82:0: note: this is the location of the previous definition
+ #define     pm_xrand    c_xrand_imp
+ ^
+In file included from ..\TWriteThread.c:10:0:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmTrace.h:47:9: note: #pragma message: PM_USE_TRACES - Defined
+ #pragma message("PM_USE_TRACES - Defined")
+         ^
+..\TWriteThread.c: In function 'DoInitGlobalContext':
+..\TWriteThread.c:50:5: warning: implicit declaration of function 'cl_GetElapsedTimeHighPerformanceWin32' [-Wimplicit-function-declaration]
+     cl_GetElapsedTimeHighPerformanceWin32();
+     ^
+..\TWriteThread.c:74:5: warning: passing argument 1 of 'g_tHalFunc.fnFreeMemSafely' from incompatible pointer type [enabled by default]
+     g_tHalFunc.fnFreeMemSafely( &test);
+     ^
+..\TWriteThread.c:74:5: note: expected 'void **' but argument is of type 'char **'
+..\TWriteThread.c:105:5: warning: passing argument 1 of 'cl_InitReadersFromFile' from incompatible pointer type [enabled by default]
+     status = cl_InitReadersFromFile( g_friendlyNames );
+     ^
+In file included from ..\TWriteThread.c:12:0:
+E:\Eclipse\WorkspaceCSL\CSLLib\inc/clreaders.h:69:10: note: expected 'char **' but argument is of type 'char (*)[64]'
+ e_Result cl_InitReadersFromFile(char **friendlyNames);
+          ^
+..\TWriteThread.c: In function 'DoChangeReader':
+..\TWriteThread.c:165:2: warning: passing argument 2 of 'Input_UInt16' from incompatible pointer type [enabled by default]
+  result = Input_UInt16("Choisir le reader (0 ou 1)", &readerIndex, 0, pmfalse, pmfalse );
+  ^
+In file included from ..\TWriteThread.c:11:0:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/cInput.h:83:9: note: expected 'short unsigned int *' but argument is of type 'int *'
+ pmbool  Input_UInt16(char* aPrompt, pmuint16* aValue, pmbool afDefault, pmuint16 aDefaultValue, pmbool afCancel);
+         ^
+..\TWriteThread.c: In function 'DoSendACommand':
+..\TWriteThread.c:349:2: warning: pointer targets in passing argument 1 of 'SendDataToReaderFindInList' differ in signedness [-Wpointer-sign]
+  status = SendDataToReaderFindInList( commandString, commandLenght );
+  ^
+..\TWriteThread.c:247:17: note: expected 'unsigned char *' but argument is of type 'char *'
+ static e_Result SendDataToReaderFindInList( clu8 *aBufferToSend, clu32 aBufferSize  )
+                 ^
+..\TWriteThread.c:336:7: warning: unused variable 'dataToSendAsciiForACK' [-Wunused-variable]
+  clu8 dataToSendAsciiForACK[2] = "06";
+       ^
+..\TWriteThread.c:332:10: warning: variable 'result' set but not used [-Wunused-but-set-variable]
+     bool result;
+          ^
+..\TWriteThread.c: In function 'DoSendACommandNTimesWithDelay':
+..\TWriteThread.c:422:3: warning: pointer targets in passing argument 1 of 'SendDataToReaderFindInList' differ in signedness [-Wpointer-sign]
+   status = SendDataToReaderFindInList( commandString, commandLenght );
+   ^
+..\TWriteThread.c:247:17: note: expected 'unsigned char *' but argument is of type 'char *'
+ static e_Result SendDataToReaderFindInList( clu8 *aBufferToSend, clu32 aBufferSize  )
+                 ^
+..\TWriteThread.c:374:7: warning: unused variable 'dataToSendAsciiForACK' [-Wunused-variable]
+  clu8 dataToSendAsciiForACK[2] = "06";
+       ^
+..\TWriteThread.c: In function 'DoSendACommandUsingWriteThread':
+..\TWriteThread.c:465:3: warning: 'return' with a value, in function returning void [enabled by default]
+   return CL_ERROR;
+   ^
+..\TWriteThread.c:470:3: warning: 'return' with a value, in function returning void [enabled by default]
+   return CL_ERROR;
+   ^
+..\TWriteThread.c:490:4: warning: 'return' with a value, in function returning void [enabled by default]
+    return CL_ERROR;
+    ^
+..\TWriteThread.c:494:3: warning: pointer targets in passing argument 1 of 'ConvertASCIToHex' differ in signedness [-Wpointer-sign]
+   ConvertASCIToHex( commandString, commandLenght, dataToSend, &dataToSendLenght );
+   ^
+In file included from ..\TWriteThread.c:12:0:
+E:\Eclipse\WorkspaceCSL\CSLLib\inc/clreaders.h:31:6: note: expected 'unsigned char *' but argument is of type 'char *'
+ void ConvertASCIToHex( unsigned char *pStringBuf, unsigned inLen, unsigned char *pOutData, unsigned long *pu32OutLen );
+      ^
+..\TWriteThread.c:501:76: warning: 'return' with a value, in function returning void [enabled by default]
+   if ( CL_FAILED( csl_pmalloc( (clvoid **)&pTuple2Send, sizeof(t_Tuple)))) return CL_ERROR;
+                                                                            ^
+..\TWriteThread.c:441:7: warning: variable 'result' set but not used [-Wunused-but-set-variable]
+  bool result;
+       ^
+..\TWriteThread.c: In function 'DoSendACommandUsingWriteThreadNTimes':
+..\TWriteThread.c:552:3: warning: 'return' with a value, in function returning void [enabled by default]
+   return CL_ERROR;
+   ^
+..\TWriteThread.c:581:3: warning: 'return' with a value, in function returning void [enabled by default]
+   return CL_ERROR;
+   ^
+..\TWriteThread.c:601:4: warning: 'return' with a value, in function returning void [enabled by default]
+    return CL_ERROR;
+    ^
+..\TWriteThread.c:605:3: warning: pointer targets in passing argument 1 of 'ConvertASCIToHex' differ in signedness [-Wpointer-sign]
+   ConvertASCIToHex( commandString, commandLenght, dataToSend, &dataToSendLenght );
+   ^
+In file included from ..\TWriteThread.c:12:0:
+E:\Eclipse\WorkspaceCSL\CSLLib\inc/clreaders.h:31:6: note: expected 'unsigned char *' but argument is of type 'char *'
+ void ConvertASCIToHex( unsigned char *pStringBuf, unsigned inLen, unsigned char *pOutData, unsigned long *pu32OutLen );
+      ^
+..\TWriteThread.c:619:77: warning: 'return' with a value, in function returning void [enabled by default]
+    if ( CL_FAILED( csl_pmalloc( (clvoid **)&pTuple2Send, sizeof(t_Tuple)))) return CL_ERROR;
+                                                                             ^
+..\TWriteThread.c: In function 'DoClose_ByUser':
+..\TWriteThread.c:699:14: warning: unused variable 'status' [-Wunused-variable]
+     e_Result status = CL_ERROR;
+              ^
+..\TWriteThread.c: In function 'TWriteThreadPMMenuProc':
+..\TWriteThread.c:733:2: warning: case label value is less than minimum value for type [enabled by default]
+  PMMENU_CHOICE_END()
+  ^
+..\TWriteThread.c: At top level:
+..\TWriteThread.c:158:13: warning: 'DoChangeReader' defined but not used [-Wunused-function]
+ static void DoChangeReader( void )
+             ^
+..\TWriteThread.c:328:13: warning: 'DoSendACommand' defined but not used [-Wunused-function]
+ static void DoSendACommand( void )
+             ^
+..\TWriteThread.c:363:13: warning: 'DoSendACommandNTimesWithDelay' defined but not used [-Wunused-function]
+ static void DoSendACommandNTimesWithDelay( void )
+             ^
+gcc -DDEBUG -D_REENTRANT "-IE:\\Eclipse\\WorkspaceCSL\\TestPthread\\Components\\inc" "-IE:\\Eclipse\\WorkspaceCSL\\CSLLib" "-IE:\\Eclipse\\WorkspaceCSL\\PMLite\\inc" "-IE:\\Eclipse\\WorkspaceCSL\\CSLLib\\inc" -O0 -g -Wall -c -fmessage-length=0 -o "porting\\android\\fileio_android.o" "..\\porting\\android\\fileio_android.c" 
+gcc -DDEBUG -D_REENTRANT "-IE:\\Eclipse\\WorkspaceCSL\\TestPthread\\Components\\inc" "-IE:\\Eclipse\\WorkspaceCSL\\CSLLib" "-IE:\\Eclipse\\WorkspaceCSL\\PMLite\\inc" "-IE:\\Eclipse\\WorkspaceCSL\\CSLLib\\inc" -O0 -g -Wall -c -fmessage-length=0 -o "Components\\src\\csl_component.o" "..\\Components\\src\\csl_component.c" 
+In file included from ..\Components\src\..\..\pmInterface.h:20:0,
+                 from ..\Components\src\csl_component.c:19:
+..\Components\src\..\..\pmEnv.h:14:9: note: #pragma message: PM_ENV - du repertoire <TPMLiteC> utilise
+ #pragma message("PM_ENV - du repertoire <TPMLiteC> utilise")
+         ^
+In file included from ..\Components\src\..\..\pmEnv.h:71:0,
+                 from ..\Components\src\..\..\pmInterface.h:20,
+                 from ..\Components\src\csl_component.c:19:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/cXStack.h:50:11: note: #pragma message: PMLITE_STACK_DEBUG - Defined
+ #  pragma message("PMLITE_STACK_DEBUG - Defined")
+           ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\Components\src\..\..\pmEnv.h:72,
+                 from ..\Components\src\..\..\pmInterface.h:20,
+                 from ..\Components\src\csl_component.c:19:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:32:0: warning: "PM_USE_TRACES" redefined [enabled by default]
+ #  define PM_USE_TRACES 1
+ ^
+In file included from ..\Components\src\..\..\pmInterface.h:20:0,
+                 from ..\Components\src\csl_component.c:19:
+..\Components\src\..\..\pmEnv.h:45:0: note: this is the location of the previous definition
+ #  define PM_USE_TRACES
+ ^
+In file included from ..\Components\src\..\..\pmEnv.h:72:0,
+                 from ..\Components\src\..\..\pmInterface.h:20,
+                 from ..\Components\src\csl_component.c:19:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:96:9: note: #pragma message: PM_USE_TRACES - Defined
+ #pragma message("PM_USE_TRACES - Defined")
+         ^
+In file included from ..\Components\src\..\..\pmInterface.h:20:0,
+                 from ..\Components\src\csl_component.c:19:
+..\Components\src\..\..\pmEnv.h:74:0: warning: "PM_BEGIN_PROC" redefined [enabled by default]
+ #  define PM_BEGIN_PROC(x) c_xstack_update_usage(#x);
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\Components\src\..\..\pmEnv.h:72,
+                 from ..\Components\src\..\..\pmInterface.h:20,
+                 from ..\Components\src\csl_component.c:19:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:112:0: note: this is the location of the previous definition
+ #  define PM_BEGIN_PROC(x) \
+ ^
+In file included from ..\Components\src\..\..\pmInterface.h:20:0,
+                 from ..\Components\src\csl_component.c:19:
+..\Components\src\..\..\pmEnv.h:85:0: warning: "PMLITE_MEMORY_DEBUG" redefined [enabled by default]
+ #define   PMLITE_MEMORY_DEBUG
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\Components\src\..\..\pmEnv.h:72,
+                 from ..\Components\src\..\..\pmInterface.h:20,
+                 from ..\Components\src\csl_component.c:19:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:94:0: note: this is the location of the previous definition
+ #  define PMLITE_MEMORY_DEBUG 1
+ ^
+In file included from ..\Components\src\csl_component.c:19:0:
+..\Components\src\..\..\pmInterface.h:140:0: warning: "pm_memcpy" redefined [enabled by default]
+ #define     pm_memcpy       c_memcpy
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\Components\src\..\..\pmEnv.h:72,
+                 from ..\Components\src\..\..\pmInterface.h:20,
+                 from ..\Components\src\csl_component.c:19:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:49:0: note: this is the location of the previous definition
+ #define     pm_memcpy   memcpy
+ ^
+In file included from ..\Components\src\csl_component.c:19:0:
+..\Components\src\..\..\pmInterface.h:141:0: warning: "pm_memset" redefined [enabled by default]
+ #define     pm_memset       c_memset
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\Components\src\..\..\pmEnv.h:72,
+                 from ..\Components\src\..\..\pmInterface.h:20,
+                 from ..\Components\src\csl_component.c:19:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:52:0: note: this is the location of the previous definition
+ #define     pm_memset   memset
+ ^
+In file included from ..\Components\src\csl_component.c:19:0:
+..\Components\src\..\..\pmInterface.h:142:0: warning: "pm_memmove" redefined [enabled by default]
+ #define     pm_memmove      c_memmove
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\Components\src\..\..\pmEnv.h:72,
+                 from ..\Components\src\..\..\pmInterface.h:20,
+                 from ..\Components\src\csl_component.c:19:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:55:0: note: this is the location of the previous definition
+ #define     pm_memmove  memmove
+ ^
+In file included from ..\Components\src\csl_component.c:19:0:
+..\Components\src\..\..\pmInterface.h:143:0: warning: "pm_memcmp" redefined [enabled by default]
+ #define     pm_memcmp       c_memcmp
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\Components\src\..\..\pmEnv.h:72,
+                 from ..\Components\src\..\..\pmInterface.h:20,
+                 from ..\Components\src\csl_component.c:19:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:58:0: note: this is the location of the previous definition
+ #define     pm_memcmp   memcmp
+ ^
+In file included from ..\Components\src\csl_component.c:19:0:
+..\Components\src\..\..\pmInterface.h:144:0: warning: "pm_memchr" redefined [enabled by default]
+ #define     pm_memchr       c_memchr
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\Components\src\..\..\pmEnv.h:72,
+                 from ..\Components\src\..\..\pmInterface.h:20,
+                 from ..\Components\src\csl_component.c:19:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:61:0: note: this is the location of the previous definition
+ #define     pm_memchr   memchr
+ ^
+In file included from ..\Components\src\csl_component.c:19:0:
+..\Components\src\..\..\pmInterface.h:146:0: warning: "pm_strcmp" redefined [enabled by default]
+ #define     pm_strcmp       c_strcmp
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\Components\src\..\..\pmEnv.h:72,
+                 from ..\Components\src\..\..\pmInterface.h:20,
+                 from ..\Components\src\csl_component.c:19:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:64:0: note: this is the location of the previous definition
+ #define     pm_strcmp   strcmp
+ ^
+In file included from ..\Components\src\csl_component.c:19:0:
+..\Components\src\..\..\pmInterface.h:147:0: warning: "pm_strcpy" redefined [enabled by default]
+ #define     pm_strcpy       c_strcpy
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\Components\src\..\..\pmEnv.h:72,
+                 from ..\Components\src\..\..\pmInterface.h:20,
+                 from ..\Components\src\csl_component.c:19:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:67:0: note: this is the location of the previous definition
+ #define     pm_strcpy   strcpy
+ ^
+In file included from ..\Components\src\csl_component.c:19:0:
+..\Components\src\..\..\pmInterface.h:148:0: warning: "pm_strcat" redefined [enabled by default]
+ #define     pm_strcat       c_strcat
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\Components\src\..\..\pmEnv.h:72,
+                 from ..\Components\src\..\..\pmInterface.h:20,
+                 from ..\Components\src\csl_component.c:19:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:70:0: note: this is the location of the previous definition
+ #define     pm_strcat   strcat
+ ^
+In file included from ..\Components\src\csl_component.c:19:0:
+..\Components\src\..\..\pmInterface.h:149:0: warning: "pm_strlen" redefined [enabled by default]
+ #define     pm_strlen       c_strlen
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\Components\src\..\..\pmEnv.h:72,
+                 from ..\Components\src\..\..\pmInterface.h:20,
+                 from ..\Components\src\csl_component.c:19:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:73:0: note: this is the location of the previous definition
+ #define     pm_strlen   strlen
+ ^
+In file included from ..\Components\src\csl_component.c:19:0:
+..\Components\src\..\..\pmInterface.h:150:0: warning: "pm_strchr" redefined [enabled by default]
+ #define     pm_strchr       c_strchr
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\Components\src\..\..\pmEnv.h:72,
+                 from ..\Components\src\..\..\pmInterface.h:20,
+                 from ..\Components\src\csl_component.c:19:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:76:0: note: this is the location of the previous definition
+ #define     pm_strchr   strchr
+ ^
+In file included from ..\Components\src\csl_component.c:19:0:
+..\Components\src\..\..\pmInterface.h:151:0: warning: "pm_xrand" redefined [enabled by default]
+ #define     pm_xrand        c_xrand
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\Components\src\..\..\pmEnv.h:72,
+                 from ..\Components\src\..\..\pmInterface.h:20,
+                 from ..\Components\src\csl_component.c:19:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:82:0: note: this is the location of the previous definition
+ #define     pm_xrand    c_xrand_imp
+ ^
+gcc -DDEBUG -D_REENTRANT "-IE:\\Eclipse\\WorkspaceCSL\\TestPthread\\Components\\inc" "-IE:\\Eclipse\\WorkspaceCSL\\CSLLib" "-IE:\\Eclipse\\WorkspaceCSL\\PMLite\\inc" "-IE:\\Eclipse\\WorkspaceCSL\\CSLLib\\inc" -O0 -g -Wall -c -fmessage-length=0 -o TEST_MainPthread.o "..\\TEST_MainPthread.c" 
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/ASTrace.h:12:0,
+                 from ..\TEST_MainPthread.c:12:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/OSWinInc.h:17:0: warning: ignoring #pragma warning  [-Wunknown-pragmas]
+ #pragma warning (disable : 4201 4214 4514 4127)
+ ^
+E:\Eclipse\WorkspaceCSL\PMLite\inc/OSWinInc.h:102:0: warning: ignoring #pragma warning  [-Wunknown-pragmas]
+ #pragma warning (disable : 4201 4214 4514 4127)
+ ^
+In file included from ..\TEST_MainPthread.c:12:0:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/ASTrace.h:30:0: warning: ignoring #pragma comment  [-Wunknown-pragmas]
+ #pragma comment(lib, "ASTRACE")
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/cXEnv.h:164:0,
+                 from E:\Eclipse\WorkspaceCSL\PMLite\inc/cXTypes.h:12,
+                 from E:\Eclipse\WorkspaceCSL\PMLite\inc/cMenu.h:12,
+                 from ..\TEST_MainPthread.c:13:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/cXStack.h:50:11: note: #pragma message: PMLITE_STACK_DEBUG - Defined
+ #  pragma message("PMLITE_STACK_DEBUG - Defined")
+           ^
+gcc -DDEBUG -D_REENTRANT "-IE:\\Eclipse\\WorkspaceCSL\\TestPthread\\Components\\inc" "-IE:\\Eclipse\\WorkspaceCSL\\CSLLib" "-IE:\\Eclipse\\WorkspaceCSL\\PMLite\\inc" "-IE:\\Eclipse\\WorkspaceCSL\\CSLLib\\inc" -O0 -g -Wall -c -fmessage-length=0 -o "porting\\linux\\fileio_posix.o" "..\\porting\\linux\\fileio_posix.c" 
+gcc -DDEBUG -D_REENTRANT "-IE:\\Eclipse\\WorkspaceCSL\\TestPthread\\Components\\inc" "-IE:\\Eclipse\\WorkspaceCSL\\CSLLib" "-IE:\\Eclipse\\WorkspaceCSL\\PMLite\\inc" "-IE:\\Eclipse\\WorkspaceCSL\\CSLLib\\inc" -O0 -g -Wall -c -fmessage-length=0 -o TReadThread.o "..\\TReadThread.c" 
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/cXEnv.h:164:0,
+                 from E:\Eclipse\WorkspaceCSL\PMLite\inc/cXTypes.h:12,
+                 from E:\Eclipse\WorkspaceCSL\PMLite\inc/cMenu.h:12,
+                 from ..\TReadThread.c:7:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/cXStack.h:50:11: note: #pragma message: PMLITE_STACK_DEBUG - Defined
+ #  pragma message("PMLITE_STACK_DEBUG - Defined")
+           ^
+In file included from ..\pmInterface.h:20:0,
+                 from ..\TReadThread.c:8:
+..\pmEnv.h:14:9: note: #pragma message: PM_ENV - du repertoire <TPMLiteC> utilise
+ #pragma message("PM_ENV - du repertoire <TPMLiteC> utilise")
+         ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\pmEnv.h:72,
+                 from ..\pmInterface.h:20,
+                 from ..\TReadThread.c:8:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:32:0: warning: "PM_USE_TRACES" redefined [enabled by default]
+ #  define PM_USE_TRACES 1
+ ^
+In file included from ..\pmInterface.h:20:0,
+                 from ..\TReadThread.c:8:
+..\pmEnv.h:45:0: note: this is the location of the previous definition
+ #  define PM_USE_TRACES
+ ^
+In file included from ..\pmEnv.h:72:0,
+                 from ..\pmInterface.h:20,
+                 from ..\TReadThread.c:8:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:96:9: note: #pragma message: PM_USE_TRACES - Defined
+ #pragma message("PM_USE_TRACES - Defined")
+         ^
+In file included from ..\pmInterface.h:20:0,
+                 from ..\TReadThread.c:8:
+..\pmEnv.h:74:0: warning: "PM_BEGIN_PROC" redefined [enabled by default]
+ #  define PM_BEGIN_PROC(x) c_xstack_update_usage(#x);
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\pmEnv.h:72,
+                 from ..\pmInterface.h:20,
+                 from ..\TReadThread.c:8:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:112:0: note: this is the location of the previous definition
+ #  define PM_BEGIN_PROC(x) \
+ ^
+In file included from ..\pmInterface.h:20:0,
+                 from ..\TReadThread.c:8:
+..\pmEnv.h:85:0: warning: "PMLITE_MEMORY_DEBUG" redefined [enabled by default]
+ #define   PMLITE_MEMORY_DEBUG
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\pmEnv.h:72,
+                 from ..\pmInterface.h:20,
+                 from ..\TReadThread.c:8:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:94:0: note: this is the location of the previous definition
+ #  define PMLITE_MEMORY_DEBUG 1
+ ^
+In file included from ..\TReadThread.c:8:0:
+..\pmInterface.h:140:0: warning: "pm_memcpy" redefined [enabled by default]
+ #define     pm_memcpy       c_memcpy
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\pmEnv.h:72,
+                 from ..\pmInterface.h:20,
+                 from ..\TReadThread.c:8:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:49:0: note: this is the location of the previous definition
+ #define     pm_memcpy   memcpy
+ ^
+In file included from ..\TReadThread.c:8:0:
+..\pmInterface.h:141:0: warning: "pm_memset" redefined [enabled by default]
+ #define     pm_memset       c_memset
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\pmEnv.h:72,
+                 from ..\pmInterface.h:20,
+                 from ..\TReadThread.c:8:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:52:0: note: this is the location of the previous definition
+ #define     pm_memset   memset
+ ^
+In file included from ..\TReadThread.c:8:0:
+..\pmInterface.h:142:0: warning: "pm_memmove" redefined [enabled by default]
+ #define     pm_memmove      c_memmove
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\pmEnv.h:72,
+                 from ..\pmInterface.h:20,
+                 from ..\TReadThread.c:8:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:55:0: note: this is the location of the previous definition
+ #define     pm_memmove  memmove
+ ^
+In file included from ..\TReadThread.c:8:0:
+..\pmInterface.h:143:0: warning: "pm_memcmp" redefined [enabled by default]
+ #define     pm_memcmp       c_memcmp
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\pmEnv.h:72,
+                 from ..\pmInterface.h:20,
+                 from ..\TReadThread.c:8:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:58:0: note: this is the location of the previous definition
+ #define     pm_memcmp   memcmp
+ ^
+In file included from ..\TReadThread.c:8:0:
+..\pmInterface.h:144:0: warning: "pm_memchr" redefined [enabled by default]
+ #define     pm_memchr       c_memchr
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\pmEnv.h:72,
+                 from ..\pmInterface.h:20,
+                 from ..\TReadThread.c:8:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:61:0: note: this is the location of the previous definition
+ #define     pm_memchr   memchr
+ ^
+In file included from ..\TReadThread.c:8:0:
+..\pmInterface.h:146:0: warning: "pm_strcmp" redefined [enabled by default]
+ #define     pm_strcmp       c_strcmp
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\pmEnv.h:72,
+                 from ..\pmInterface.h:20,
+                 from ..\TReadThread.c:8:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:64:0: note: this is the location of the previous definition
+ #define     pm_strcmp   strcmp
+ ^
+In file included from ..\TReadThread.c:8:0:
+..\pmInterface.h:147:0: warning: "pm_strcpy" redefined [enabled by default]
+ #define     pm_strcpy       c_strcpy
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\pmEnv.h:72,
+                 from ..\pmInterface.h:20,
+                 from ..\TReadThread.c:8:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:67:0: note: this is the location of the previous definition
+ #define     pm_strcpy   strcpy
+ ^
+In file included from ..\TReadThread.c:8:0:
+..\pmInterface.h:148:0: warning: "pm_strcat" redefined [enabled by default]
+ #define     pm_strcat       c_strcat
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\pmEnv.h:72,
+                 from ..\pmInterface.h:20,
+                 from ..\TReadThread.c:8:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:70:0: note: this is the location of the previous definition
+ #define     pm_strcat   strcat
+ ^
+In file included from ..\TReadThread.c:8:0:
+..\pmInterface.h:149:0: warning: "pm_strlen" redefined [enabled by default]
+ #define     pm_strlen       c_strlen
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\pmEnv.h:72,
+                 from ..\pmInterface.h:20,
+                 from ..\TReadThread.c:8:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:73:0: note: this is the location of the previous definition
+ #define     pm_strlen   strlen
+ ^
+In file included from ..\TReadThread.c:8:0:
+..\pmInterface.h:150:0: warning: "pm_strchr" redefined [enabled by default]
+ #define     pm_strchr       c_strchr
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\pmEnv.h:72,
+                 from ..\pmInterface.h:20,
+                 from ..\TReadThread.c:8:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:76:0: note: this is the location of the previous definition
+ #define     pm_strchr   strchr
+ ^
+In file included from ..\TReadThread.c:8:0:
+..\pmInterface.h:151:0: warning: "pm_xrand" redefined [enabled by default]
+ #define     pm_xrand        c_xrand
+ ^
+In file included from E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXDebug.h:13:0,
+                 from ..\pmEnv.h:72,
+                 from ..\pmInterface.h:20,
+                 from ..\TReadThread.c:8:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmXEnv.h:82:0: note: this is the location of the previous definition
+ #define     pm_xrand    c_xrand_imp
+ ^
+In file included from ..\TReadThread.c:10:0:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/pmTrace.h:47:9: note: #pragma message: PM_USE_TRACES - Defined
+ #pragma message("PM_USE_TRACES - Defined")
+         ^
+..\TReadThread.c: In function 'DoInitGlobalContext':
+..\TReadThread.c:40:5: warning: implicit declaration of function 'cl_GetElapsedTimeHighPerformanceWin32' [-Wimplicit-function-declaration]
+     cl_GetElapsedTimeHighPerformanceWin32();
+     ^
+..\TReadThread.c:64:5: warning: passing argument 1 of 'g_tHalFunc.fnFreeMemSafely' from incompatible pointer type [enabled by default]
+     g_tHalFunc.fnFreeMemSafely( &test);
+     ^
+..\TReadThread.c:64:5: note: expected 'void **' but argument is of type 'char **'
+..\TReadThread.c:93:5: warning: passing argument 1 of 'cl_InitReadersFromFile' from incompatible pointer type [enabled by default]
+     status = cl_InitReadersFromFile( g_friendlyNames );
+     ^
+In file included from ..\TReadThread.c:12:0:
+E:\Eclipse\WorkspaceCSL\CSLLib\inc/clreaders.h:69:10: note: expected 'char **' but argument is of type 'char (*)[64]'
+ e_Result cl_InitReadersFromFile(char **friendlyNames);
+          ^
+..\TReadThread.c: In function 'DoChangeReader':
+..\TReadThread.c:153:2: warning: passing argument 2 of 'Input_UInt16' from incompatible pointer type [enabled by default]
+  result = Input_UInt16("Choisir le reader (0 ou 1)", &readerIndex, 0, pmfalse, pmfalse );
+  ^
+In file included from ..\TReadThread.c:11:0:
+E:\Eclipse\WorkspaceCSL\PMLite\inc/cInput.h:83:9: note: expected 'short unsigned int *' but argument is of type 'int *'
+ pmbool  Input_UInt16(char* aPrompt, pmuint16* aValue, pmbool afDefault, pmuint16 aDefaultValue, pmbool afCancel);
+         ^
+..\TReadThread.c: In function 'DoClose_ByUser':
+..\TReadThread.c:281:14: warning: unused variable 'status' [-Wunused-variable]
+     e_Result status = CL_ERROR;
+              ^
+..\TReadThread.c: In function 'TReadThreadPMMenuProc':
+..\TReadThread.c:308:2: warning: case label value is less than minimum value for type [enabled by default]
+  PMMENU_CHOICE_END()
+  ^
+..\TReadThread.c: At top level:
+..\TReadThread.c:146:13: warning: 'DoChangeReader' defined but not used [-Wunused-function]
+ static void DoChangeReader( void )
+             ^
+gcc -DDEBUG -D_REENTRANT "-IE:\\Eclipse\\WorkspaceCSL\\TestPthread\\Components\\inc" "-IE:\\Eclipse\\WorkspaceCSL\\CSLLib" "-IE:\\Eclipse\\WorkspaceCSL\\PMLite\\inc" "-IE:\\Eclipse\\WorkspaceCSL\\CSLLib\\inc" -O0 -g -Wall -c -fmessage-length=0 -o "porting\\linux\\netal_posix.o" "..\\porting\\linux\\netal_posix.c" 
+gcc -DDEBUG -D_REENTRANT "-IE:\\Eclipse\\WorkspaceCSL\\TestPthread\\Components\\inc" "-IE:\\Eclipse\\WorkspaceCSL\\CSLLib" "-IE:\\Eclipse\\WorkspaceCSL\\PMLite\\inc" "-IE:\\Eclipse\\WorkspaceCSL\\CSLLib\\inc" -O0 -g -Wall -c -fmessage-length=0 -o "porting\\win64\\fileio_win64.o" "..\\porting\\win64\\fileio_win64.c" 
+gcc -DDEBUG -D_REENTRANT "-IE:\\Eclipse\\WorkspaceCSL\\TestPthread\\Components\\inc" "-IE:\\Eclipse\\WorkspaceCSL\\CSLLib" "-IE:\\Eclipse\\WorkspaceCSL\\PMLite\\inc" "-IE:\\Eclipse\\WorkspaceCSL\\CSLLib\\inc" -O0 -g -Wall -c -fmessage-length=0 -o "Components\\src\\utf8.o" "..\\Components\\src\\utf8.c" 
+gcc "-LE:\\Eclipse\\WorkspaceCSL\\CSLLib\\Debug" "-LE:\\Eclipse\\WorkspaceCSL\\PMLite\\Debug" "-LE:\\Eclipse\\WorkspaceCSL\\TestPthread\\Debug" -o TestPthread.exe "porting\\win64\\netal_win64.o" "porting\\win64\\fileio_win64.o" "porting\\linux\\netal_posix.o" "porting\\linux\\fileio_posix.o" "porting\\android\\netal_android.o" "porting\\android\\fileio_android.o" TWriteThread.o TReadThread.o TMultiReader.o TEST_MainPthread.o "Components\\src\\utf8.o" "Components\\src\\csl_component.o" "Components\\src\\cl_readers.o" -lCSLLib -lPMLite -lDbgHelp -lASTrace -lpthread -lws2_32 
+
+18:00:51 Build Finished (took 8s.344ms)
+

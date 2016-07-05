@@ -1,0 +1,561 @@
+/*--------------------------------------------------------------------------*\
+ * Copyright (c) 1998-2000 AbyreSoft. Written by Bruno Raby.
+ *--------------------------------------------------------------------------*
+ * TTrace.c - Differentes facons de faire des traces
+\*--------------------------------------------------------------------------*/
+
+#include "cMenu.h"
+#include "pmInterface.h"
+#include "pmEnv.h"
+#include "pmTrace.h"
+
+#include "cltypes.h"
+#include "clstructs.h"
+#include "clreaders.h"
+#include "cl_readers.h"
+#include "csl.h"
+
+#include "utf8.h"
+
+/* Definition of boolean type */
+#define bool  unsigned char
+#define true  (1==1)
+#define false (1==0)
+
+/* String types */
+#define EOS '\x0'	// End Of String
+
+#define cl_openfile fopen_s
+
+//#define STRING_LENGTH 1024
+extern char FullExeFileNameWithDirectory[1024];
+
+/*--------------------------------------------------------------------------*/
+
+int u8_reverse(char *dest, char * src, size_t len);
+
+//unsigned char *ConvertStringToHexa( const char *in, size_t len, unsigned char *out );
+
+int GetDirectoryName(char* aFullExeName, char* aDirectoryWithoutExeName);
+
+/*--------------------------------------------------------------------------*\
+ * Test de l'ouverture du fichier
+ *--------------------------------------------------------------------------*
+ * En debug : on ne peut pas ouvrir "readers_list.txt" qui se trouve
+ * pourtant dans le répertoire de l'.exe
+ * si je clique sur l'.exe le fichier est trouvé !
+\*--------------------------------------------------------------------------*/
+static void DoTestOpenFile(void)
+{
+	FILE       *file_in;
+	errno_t		err_no;
+	t_clContext *pCtxt 			= CL_NULL;
+	e_Result	status			= CL_ERROR;
+	char ligne[STRING_LENGTH];
+	char directory_name[STRING_LENGTH];
+	char file_name[STRING_LENGTH];
+	char file_on_disk[STRING_LENGTH] = "readers_list.txt";
+
+	directory_name[0] = EOS;
+	file_name[0] = EOS;
+
+	PM_TRACE0("FullExeFileNameWithDirectory:%s",FullExeFileNameWithDirectory);
+
+	if ( CL_FAILED( status = cl_GetContext( &pCtxt ) ) )
+	{
+		PM_TRACE0("Choper le Context FAILED !");
+	}
+
+	//err_no = fopen_s(&file_in,"readers_list.txt","rb");
+
+	err_no = fopen_s(&file_in,file_on_disk,"r");
+	if (err_no != 0)
+    {
+		PM_TRACE0("Impossible d'ouvrir le fichier %s !", file_on_disk);
+    }
+	else
+	{
+		PM_TRACE0("Fichier %s ouvert !", file_on_disk);
+	}
+
+	if (file_in == NULL)
+	{
+		int lgdn0 = GetDirectoryName(FullExeFileNameWithDirectory, directory_name);
+
+		PM_TRACE0("directory_name lg:%d :%s",strlen(directory_name), directory_name);
+
+		int lgdn = strlen(directory_name);
+		//directory_name[lgdn] = '\x0';
+
+		int lgfn = strlen(file_name);
+
+		strcat(file_name, directory_name);
+		strcat(file_name, "\\");
+
+		lgfn = strlen(file_name);
+
+		PM_TRACE0("file_name lg:%d :%s",strlen(file_name), file_name);
+
+		strcat(file_name, file_on_disk);
+
+		lgfn = strlen(file_name);
+
+		err_no = fopen_s(&file_in, file_name, "r");
+
+		if (err_no != 0)
+		{
+			PM_TRACE0("Impossible d'ouvrir le fichier %s !", file_name);
+		}
+		else
+		{
+			PM_TRACE0("Fichier %s ouvert !", file_name);
+		}
+	}
+
+	while ( fgets( ligne, STRING_LENGTH, file_in ) != NULL )
+	{
+		PM_TRACE0(ligne);
+	}
+
+	if (file_in)
+	{
+		err_no = fclose(file_in);
+		if (err_no != 0)
+	    {
+			PM_TRACE0("Impossible de fermer le fichier !");
+	    }
+	}
+}
+
+/*--------------------------------------------------------------------------*/
+
+static void DoGetDirectory(void)
+{
+	char str[STRING_LENGTH];
+
+	strnset(str, '\x0', STRING_LENGTH);
+
+	PM_TRACE0("FullExeFileNameWithDirectory:%s",FullExeFileNameWithDirectory);
+
+	int lg = GetDirectoryName(FullExeFileNameWithDirectory, str);
+
+	PM_TRACE0("DirectoryWithoutExeName[lg:%d] : %s", lg, str);
+	PM_TRACE0("lg(str):%d", lg, str);
+}
+
+/*--------------------------------------------------------------------------*/
+
+static void DoChekElapsedTime(void)
+{
+	clu32 elapsedTime = 0;
+    e_Result status = CL_ERROR;
+
+	//g_tHalFunc.fnTrace = pm_trace0;
+//	g_tHalFunc.fnTrace = ( void *)PM_TRACE0; // ( void *) : avoid warning message
+
+	status = clInit( (e_StackSupport)( COM_STACK_SUPPORT ), (t_clSys_HalFunctions *)&g_tHalFunc, (t_clSys_CallBackFunctions *)&g_tCallbacks, (t_clSys_CallBackFunctions *)CL_NULL, &g_tCSLDefaultReader, &g_IPReaderDefaultHAL, CL_NULL, &g_COMReaderDefaultHAL, CL_NULL, CL_NULL, CL_NULL,(t_MenuFileDef *)&g_tMenuFileDef );
+	PM_TRACE0("CSL Init Done - status %d", status);
+
+	elapsedTime = cl_GetElapsedTime();
+	c_printf("Elapsed time 1 : %d\n", elapsedTime);
+
+	cl_WaitMsWin32( 1000 );
+
+	elapsedTime = cl_GetElapsedTime();
+	c_printf("Elapsed time 2 : %d\n", elapsedTime);
+}
+
+///*--------------------------------------------------------------------------*\
+// * Supress 'filename.exe' from aFullExeName
+// *--------------------------------------------------------------------------*
+// * aFullExeName : is directory + filename
+// * aDirectoryWithoutExeName : will be only directory
+// * important remarque : try to set lgExe to strlen(sPos)-1 is a
+// * really bad mistake
+//\*--------------------------------------------------------------------------*/
+//int GetDirectoryName(char* aFullExeName, char* aDirectoryWithoutExeName)
+//{
+//	char* sPos;
+//	size_t lgTot; // total lenght
+//	size_t lgExe; // lenght of executable name
+//	char separator = '\\';
+//
+//	sPos = strrchr(aFullExeName, separator);
+//	lgExe = strlen(sPos);
+//	lgTot = strlen(aFullExeName);
+//
+//	strncpy(aDirectoryWithoutExeName, aFullExeName, lgTot - lgExe);
+//	return strlen(aDirectoryWithoutExeName);
+//}
+
+
+/*--------------------------------------------------------------------------*/
+
+//void ConvertASCIToHex( unsigned char *pStringBuf, unsigned inLen, unsigned char *pOutData, unsigned long *pu32OutLen );
+
+/*--------------------------------------------------------------------------*/
+
+static void DoConvertAsciiToHexa(void)
+{
+	clu8 dataToSend[6] = "010101";
+	clu8 outputData[3];
+
+	clu32 outputLenght = 3;
+
+	ConvertASCIToHex(dataToSend, 6, outputData, &outputLenght);
+
+	int i =3;
+}
+
+/*--------------------------------------------------------------------------*\
+ *
+ * Horreur ça ne marche pas !
+ * 07 devient '\a'
+ * 08 devient 'b\'
+ * ???? !!!!!!
+ *
+ */
+static void DoConvertAsciiToHexa2(void)
+{
+	clu8 dataToSend[30] = "0102030405060708090a0b0c0d0e0f";
+	clu8 outputData[15];
+
+	clu32 outputLenght = 15;
+
+	ConvertASCIToHex(dataToSend, 30, outputData, &outputLenght );
+
+	int i =3;
+}
+
+/*--------------------------------------------------------------------------*/
+
+#define U_MAX_BYTES 4
+
+/*--------------------------------------------------------------------------*/
+
+unsigned short u_getc(FILE *stream, char *bytes)
+{
+    /* mask values for bit pattern of first byte in multi-byte
+       UTF-8 sequences:
+       192 - 110xxxxx - for U+0080 to U+07FF
+       224 - 1110xxxx - for U+0800 to U+FFFF
+       240 - 11110xxx - for U+010000 to U+1FFFFF */
+    static unsigned short mask[] = {192, 224, 240};
+
+    unsigned short i, j;
+
+    /* initialize buffer */
+    memset(bytes, 0, U_MAX_BYTES + 1);
+
+    /* read first byte into buffer */
+    bytes[0] = getc(stream);
+    if (bytes[0] == EOF) {
+        return 0;
+    }
+
+    /* check how many more bytes need to be read for character */
+    i = 0;
+    if ((bytes[0] & mask[0]) == mask[0]) i++;
+    if ((bytes[0] & mask[1]) == mask[1]) i++;
+    if ((bytes[0] & mask[2]) == mask[2]) i++;
+
+    /* read subsequent character bytes */
+    j = 0;
+    while (j < i) {
+        j++;
+        bytes[j] = getc(stream);
+    }
+
+    /* return number of bytes read into buffer */
+    return i + 1;
+}
+
+//
+// Déplacée dans clreaders.c
+//
+///*--------------------------------------------------------------------------*/
+//
+//unsigned char *ConvertStringToHexa( const char *in, size_t len, unsigned char *out )
+//{
+//	unsigned int i, t, hn, ln;
+//
+//	for ( t = 0,i = 0; i < len; i += 2, ++t )
+//	{
+//		hn = in[i] > '9' ? in[i] - 'A' + 10 : in[i] - '0';
+//		ln = in[i+1] > '9' ? in[i+1] - 'A' + 10 : in[i+1] - '0';
+//
+//		out[t] = (hn << 4 ) | ln;
+//	}
+//
+//	return out;
+//}
+
+/*--------------------------------------------------------------------------*/
+
+int is_utf8(const char * string)
+{
+    if(!string)
+        return 0;
+
+    const unsigned char * bytes = (const unsigned char *)string;
+    while(*bytes)
+    {
+        if( (// ASCII
+             // use bytes[0] <= 0x7F to allow ASCII control characters
+                bytes[0] == 0x09 ||
+                bytes[0] == 0x0A ||
+                bytes[0] == 0x0D ||
+                (0x20 <= bytes[0] && bytes[0] <= 0x7E)
+            ) )
+        {
+            bytes += 1;
+            continue;
+        }
+
+        if( (// non-overlong 2-byte
+                (0xC2 <= bytes[0] && bytes[0] <= 0xDF) &&
+                (0x80 <= bytes[1] && bytes[1] <= 0xBF)
+            )
+        ) {
+            bytes += 2;
+            continue;
+        }
+
+        if( (// excluding overlongs
+                bytes[0] == 0xE0 &&
+                (0xA0 <= bytes[1] && bytes[1] <= 0xBF) &&
+                (0x80 <= bytes[2] && bytes[2] <= 0xBF)
+            ) ||
+            (// straight 3-byte
+                ((0xE1 <= bytes[0] && bytes[0] <= 0xEC) ||
+                    bytes[0] == 0xEE ||
+                    bytes[0] == 0xEF) &&
+                (0x80 <= bytes[1] && bytes[1] <= 0xBF) &&
+                (0x80 <= bytes[2] && bytes[2] <= 0xBF)
+            ) ||
+            (// excluding surrogates
+                bytes[0] == 0xED &&
+                (0x80 <= bytes[1] && bytes[1] <= 0x9F) &&
+                (0x80 <= bytes[2] && bytes[2] <= 0xBF)
+            )
+        )
+        {
+            bytes += 3;
+            continue;
+        }
+
+        if( (// planes 1-3
+                bytes[0] == 0xF0 &&
+                (0x90 <= bytes[1] && bytes[1] <= 0xBF) &&
+                (0x80 <= bytes[2] && bytes[2] <= 0xBF) &&
+                (0x80 <= bytes[3] && bytes[3] <= 0xBF)
+            ) ||
+            (// planes 4-15
+                (0xF1 <= bytes[0] && bytes[0] <= 0xF3) &&
+                (0x80 <= bytes[1] && bytes[1] <= 0xBF) &&
+                (0x80 <= bytes[2] && bytes[2] <= 0xBF) &&
+                (0x80 <= bytes[3] && bytes[3] <= 0xBF)
+            ) ||
+            (// plane 16
+                bytes[0] == 0xF4 &&
+                (0x80 <= bytes[1] && bytes[1] <= 0x8F) &&
+                (0x80 <= bytes[2] && bytes[2] <= 0xBF) &&
+                (0x80 <= bytes[3] && bytes[3] <= 0xBF)
+            )
+        )
+        {
+            bytes += 4;
+            continue;
+        }
+
+        return 0;
+    }
+
+    return 1;
+}
+
+/*--------------------------------------------------------------------------*/
+
+int u8_reverse(char *dest, char * src, size_t len)
+{
+    size_t si=0, di=len;
+    unsigned char c;
+
+    dest[di] = '\0';
+    while (si < len) {
+        c = (unsigned char)src[si];
+        if ((~c) & 0x80) {
+            di--;
+            dest[di] = c;
+            si++;
+        }
+        else {
+            switch (c>>4) {
+            case 0xC:
+            case 0xD:
+                di -= 2;
+                *((pmuint16*)&dest[di]) = *((pmuint16*)&src[si]);
+                si += 2;
+                break;
+            case 0xE:
+                di -= 3;
+                dest[di] = src[si];
+                *((pmuint16*)&dest[di+1]) = *((pmuint16*)&src[si+1]);
+                si += 3;
+                break;
+            case 0xF:
+                di -= 4;
+                *((pmuint16*)&dest[di]) = *((pmuint16*)&src[si]);
+                si += 4;
+                break;
+            default:
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
+
+/*--------------------------------------------------------------------------*/
+
+static void DoConvertHexaToAscii(void)
+{
+	clu8 dataToSend[6] = "010101";
+
+	clu8 outputData[3];
+
+	clu32 outputLenght = 3;
+
+	ConvertASCIToHex(dataToSend, 6, outputData, &outputLenght);
+
+	int i = 3;
+
+	u_int32_t outputString[3];
+
+	//ConvertByteToAscii(outputData, 3, &outputString);
+
+	//strchr() cherche une chaine
+
+	//u8_toucs(outputString, 3, outputData, 6);
+
+	int lgUTF8seq = u8_seqlen(outputData);
+
+	int nbCarConverted = u8_toutf8(outputString, 3, outputData, 6);
+
+	pm_trace0("nb car converted: %d", nbCarConverted);
+
+	//c_printf("outputString: %d", outputString);
+
+	i =3;
+}
+
+/*--------------------------------------------------------------------------*/
+
+static void DoTryConvertHexaToAscii()
+{
+	int u32Len = 3;
+
+	clu8 dataToSend[6] = "010101";
+
+	clu8 outputData[3];
+
+	clu32 outputLenght = 3;
+
+	ConvertASCIToHex(dataToSend, 6, outputData, &outputLenght);
+
+	size_t bufferSize = u32Len * 3 + 2 * 3;
+
+	char outputString[bufferSize];
+
+	ConvertByteToAscii(outputData, 3, outputString);
+
+	PM_TRACE0("%s", outputString);
+}
+
+/*--------------------------------------------------------------------------*/
+
+static void DoPrintBuffer()
+{
+	t_Buffer *ptBuff = pm_malloc( sizeof( t_Buffer ) );
+	int bufferLenght = 3;
+
+	clu8 dataToSend[6] = "010101";
+
+	ptBuff->ulLen = bufferLenght;
+	ptBuff->pData = pm_malloc( bufferLenght * sizeof( clu8 ) );
+	ConvertASCIToHex(dataToSend, 6, ptBuff->pData, &ptBuff->ulLen);
+
+	PM_TRACE0("%02x", '\001');
+
+	char string1[ptBuff->ulLen * 2];
+	strset(string1, EOS);
+
+	PrintBuffer(string1, ptBuff->pData, ptBuff->ulLen, "%02x ");
+
+	PM_TRACE0("%s",string1);
+
+	pm_free(ptBuff->pData);
+	pm_free(ptBuff);
+}
+
+/*--------------------------------------------------------------------------*/
+
+static void DoTestReverse()
+{
+	char src[12] = "0123456789ab";
+	char dest[12] = "0123456789ab";
+
+	int r = u8_reverse(dest, src, 12);
+
+	int i = 3;
+}
+
+/*--------------------------------------------------------------------------*/
+
+static void DoTestCharToByte()
+{
+	int i = 0;
+
+	char x[]="0102030405060708090A0B0C0D0E0F1F2F3F4F5f6f7f8f9fFFF0F1F2"; // Attention, il faut écrire en majuscule
+	unsigned char res[sizeof(x)-1];
+
+	ConvertStringToHexa( x , strlen(x), res );
+
+	for ( i = 0; i < 24; i++ )
+	{
+		pm_trace0("x[%d] = 0x%02X", i, res[i]);
+	}
+
+	char hex[] = { '\001', '\002', '\003', '\004', '\005', '\006', '\007', '\008', '\009', '\010', '\011', '\012',
+			'\013', '\014', '\015', '\016', '\017', '\018', '\019', '\020'};
+
+	for ( i = 0; i < 19; i++ )
+	{
+		pm_trace0("0x%02X", hex[i]);
+	}
+}
+
+/*
+ * "5f" ne fonctionne pas = 0x7F ?!!!
+ * '\008' ne donne pas 0x08 mais 0x38 ?!!!
+ */
+
+/*--------------------------------------------------------------------------*/
+
+PMMENU_BEGIN(Tests, "Tests divers")
+    PMMENU_ITEM_EX(1, "Lire le fichier 'readers_list.txt'", DoTestOpenFile)
+	PMMENU_ITEM_EX(2, "Get directory name", DoGetDirectory)
+	PMMENU_ITEM_EX(3, "Elapsed Time", DoChekElapsedTime)
+	PMMENU_ITEM_EX(4, "Convert Ascii To Hexa", DoConvertAsciiToHexa)
+	PMMENU_ITEM_EX(5, "Convert Ascii To Hexa 2", DoConvertAsciiToHexa2)
+	PMMENU_ITEM_EX(6, "Convert Hexa To Ascii", DoConvertHexaToAscii)
+	PMMENU_ITEM_EX(7, "Essaye d'utiliser ConvertHexaToAscii Hexa To Ascii", DoTryConvertHexaToAscii)
+	PMMENU_ITEM_EX(8, "Print Buffer", DoPrintBuffer)
+	PMMENU_ITEM_EX(9, "Test Reverse", DoTestReverse)
+	PMMENU_ITEM_EX(10, "Test CharToByte", DoTestCharToByte)
+
+PMMENU_END()
+
+/*--------------------------------------------------------------------------*/
+
+PMMENU_DEFAULT_HANDLER(Tests)

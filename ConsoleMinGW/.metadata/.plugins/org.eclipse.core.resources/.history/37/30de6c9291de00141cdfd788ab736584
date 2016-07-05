@@ -1,0 +1,1175 @@
+/****************************************************/
+/*               CLOVER SECURED LAYER				*/
+/*				Ineo-Sense Copyright 2014			*/
+/****************************************************/
+/****************************************************/
+/*  Name: clthreadutils.c                			*/
+/*													*/
+/*  Created on: 26 juin 2014						*/
+/*      Author: fdespres							*/
+/****************************************************/
+/* Description : routines to handle threads in CSL*/
+/*													*/
+/*****************************************************/
+
+#include "..\csl.h"
+#include "..\inc\clthread.h"
+#include "..\inc\generic.h"
+#include "..\inc\cltuple.h"
+#include "..\inc\clreaders.h"
+#include "..\inc\otaservice.h"
+#define TOTO
+#define TATA
+#define NOT_TUTU
+
+//#include <pthread.h>
+
+#include <stdio.h>
+#include <ctype.h>
+/**************************************************************************/
+/* Name : e_Result clReaderWriteThread( clvoid *pCallingReader );             			*/
+/* Description :                                                        */
+/*        Thread which handles write operation from application to low-layers	*/
+/*		  on failure, the thread auto-destroy itself					*/
+/**************************************************************************/
+/* Parameters:                                                            */
+/*  --------------                                                        */
+/*  In: 	void *pCallingReader : pointer on reader struct this thread is 	*/
+/*				associated to											  */
+/* ---------------                                                        */
+/*  Out: none                                                             */
+/* Return value: e_Result                                                 */
+/*  CL_OK                        :  Result is OK                          */
+/**************************************************************************/
+e_Result clReaderWriteThread( clvoid *pCallingReader )
+{
+	t_clContext 	*pCtxt = CL_NULL;
+	e_Result 		status = CL_ERROR;
+	t_Reader 		*pCrtReader = CL_NULL;
+	t_Tuple 		*pTuple = CL_NULL;
+	e_State			eState;
+	clu8			u8DestroyThread	=	0;
+	e_SERIAL_RetryProtocolDef eSyncStatus	=	CL_SERIAL_PROT_DEFAULT;
+	t_Buffer 		tLocalBuf;
+	t_Tuple			*pLocalTuple = CL_NULL;
+	clu8			*pData2Send	= CL_NULL;
+	t_Tuple			*pLocalTupleList	= CL_NULL;
+	clu8			u8LoopBack	=	0;
+	// check params
+	if ( pCallingReader == CL_NULL)
+		return ( CL_OK );
+
+	// store calling reader which initiates the creation of the thread for read
+	pCrtReader = pCallingReader;
+
+
+	// get context to have access to function pointers for memory/thread managment on platform
+	if ( CL_FAILED(status =  cl_GetContext( &pCtxt )) )
+		return ( CL_ERROR );
+
+	// check global parameters
+	if ( pCtxt == CL_NULL)
+		return ( CL_ERROR );
+
+	if ( pCtxt->ptHalFuncs->fnSemaphoreWait == CL_NULL )
+		return ( CL_ERROR );
+
+	if ( pCtxt->ptHalFuncs->fnSemaphoreRelease == CL_NULL )
+		return ( CL_ERROR );
+
+	if ( pCtxt->ptHalFuncs->fnFreeMem == CL_NULL )
+		return ( CL_ERROR );
+
+	if ( pCtxt->ptHalFuncs->fnGetTime == CL_NULL )
+		return ( CL_ERROR );
+
+	if ( pCrtReader->tCallBacks.fnIOSendDataDone_cb == CL_NULL )
+		return ( CL_ERROR );
+
+	if ( pCrtReader->tReaderHalFuncs.fnIOSendData == CL_NULL )
+		return ( CL_ERROR );
+
+	if ( pCrtReader->tReaderHalFuncs.fnIOCloseConnection == CL_NULL )
+		return ( CL_ERROR );
+
+	DEBUG_PRINTF("clReaderWriteThread:BEGIN");
+
+	// at this stage of the thread, the connection with the reader was already opened.
+	// on any error, we shall:
+	//	- close the connection with the reader
+	//  - remove it from the list of registered readers
+	//  - signal it to upper layers
+	do
+	{
+//		DEBUG_PRINTF("clReaderWriteThread:BEGIN");
+
+		if ( CL_FAILED(  pCtxt->ptHalFuncs->fnDestroyThreadAsked( &u8DestroyThread ) ) )
+			break;
+
+		if ( u8DestroyThread != 0 )	//if a destroy was asked .. then proceed :)
+		{
+			status = CL_ERROR;
+			break;
+		}
+
+		// wait for a connected reader
+		if ( CL_FAILED(  status = cl_ReaderGetState( pCrtReader, &eState ) ) )
+			break;
+
+		// check it is connected
+		// TODO!!!! do not enter read/write status if not connected. Put semaphore in place!!!
+		if (( eState != STATE_CONNECT ) & ( eState != STATE_DISCOVER ) & ( eState != STATE_OTA ))
+		{
+			pCtxt->ptHalFuncs->fnWaitMs( 500 );
+			continue;
+		}
+
+		// wait indefinitely for signal to this reader
+		//DEBUG_PRINTF("---- Wait pSgl4Write 1 \n");
+        status = pCtxt->ptHalFuncs->fnSemaphoreWait( pCrtReader->tSync.pSgl4Write,  50000 );
+
+		if (( status != CL_OK ) & (status != CL_TIMEOUT_ERR ))
+			break;
+
+		// catch new Tuple List
+		if ( pCrtReader->p_TplList2Send != CL_NULL )
+		{
+			pLocalTupleList	= pCrtReader->p_TplList2Send;
+			pCrtReader->p_TplList2Send	=	CL_NULL;
+		}
+
+		pCtxt->ptHalFuncs->fnSemaphoreRelease( pCrtReader->tSync.pSgl4Write );
+
+		do
+		{
+			// BRY_02042015 attendre un peu ça mange pas de pain
+//			pCtxt->ptHalFuncs->fnWaitMs( 1000 );
+
+			if ( CL_FAILED(  pCtxt->ptHalFuncs->fnDestroyThreadAsked( &u8DestroyThread ) ) )
+				break;
+
+			if ( u8DestroyThread != 0 )	//if a destroy was asked .. then proceed :)
+			{
+				status = CL_ERROR;
+				break;
+			}
+
+			// wait for a connected reader
+			if ( CL_FAILED(  status = cl_ReaderGetState( pCrtReader, &eState ) ) )
+				break;
+
+
+			// check it is connected
+			// TODO!!!! do not enter read/write status if not connected. Put semaphore in place!!!
+			if (( eState != STATE_CONNECT ) & ( eState != STATE_DISCOVER ) & ( eState != STATE_OTA ))
+			{
+				pCtxt->ptHalFuncs->fnWaitMs( 500 );
+				continue;
+			}
+
+			// wait for data from user land before accessing the low level and writing to the device
+
+			// load first element of tuple list and exit if none
+			if ( pLocalTupleList == CL_NULL )
+				break;
+
+			u8LoopBack	=	0;
+			// retry / tiemout machine handling
+			cl_ReaderGetSyncStatus(  pCrtReader, &eSyncStatus );
+			// retry_timeout machine
+			switch ( eSyncStatus )
+			{
+				case  	( CL_SERIAL_PROT_W_WAIT_FOR_ANSW ):		// check if we received a ANSW from lower layer
+				{
+//					DEBUG_PRINTF("--- WRITE WAIT ACK 1 ------ (CL_SERIAL_PROT_W_WAIT_FOR_ANSW) %d\n", cl_GetElapsedTime());
+					while ( CL_FAILED( status = pCtxt->ptHalFuncs->fnSemaphoreWait( pCrtReader->tSync.pSgl4ReadComplete,  0xFFFFFFFF ) ) );
+//					DEBUG_PRINTF(" WRITE GOT ACK!! -------->  (CL_SERIAL_PROT_W_WAIT_FOR_ANSW) %d\n", cl_GetElapsedTime());
+					u8LoopBack		=	1;
+					break;
+				}
+				case ( CL_SERIAL_PROT_R_RECEIVED_ACK ):	// 0x06 was received from read thread. Depending on type of Command sent, either Wait for the answer or exit
+				{
+//					DEBUG_PRINTF(" WRITE WAIT ACK 1 -------->  (Waiting for data: CL_SERIAL_PROT_R_RECEIVED_ACK) %d\n", cl_GetElapsedTime());
+
+					while ( CL_FAILED( status = pCtxt->ptHalFuncs->fnSemaphoreWait( pCrtReader->tSync.pSgl4ReadComplete,  0xFFFFFFFF ) ) );
+//					DEBUG_PRINTF(" WRITE GOT ACK!! -------->  (CL_SERIAL_PROT_R_RECEIVED_ACK) %d\n", cl_GetElapsedTime());
+					u8LoopBack = 1;
+					break;
+				}
+
+				case ( CL_SERIAL_PROT_R_WRITE_ACK_REQUIRED ):
+				{
+					// unstack previous command
+					// release memory for tuple
+					pCtxt->ptHalFuncs->fnFreeMem( pLocalTupleList->ptBuf->pData );
+					pCtxt->ptHalFuncs->fnFreeMem( pLocalTupleList->ptBuf );
+
+					// take next element of the list
+					pTuple = ( t_Tuple *)pLocalTupleList->pNext;
+					//pCtxt->ptHalFuncs->fnFreeMem( pLocalTupleList );
+					pLocalTupleList	=	pTuple;
+//					pCrtReader->p_TplList2Send = pTuple;
+
+					// emit a 0x06 => insertion of a tuple in the queue for this...
+					// first allocate tuple
+#ifdef TATA
+					// allocate memory for this buffer
+					status = pCtxt->ptHalFuncs->fnAllocMem( ( clvoid **)&pLocalTuple, sizeof( t_Tuple *) );
+					if ( CL_FAILED( status ))
+						break;
+
+
+					// allocate memory for this buffere
+					status = pCtxt->ptHalFuncs->fnAllocMem( ( clvoid **)&pData2Send, 1 );
+					if ( CL_FAILED( status ))
+						break;
+
+					// set ACK
+					*pData2Send	= 0x06;
+
+					// initialize a tuple default flags with memory
+					//if ( CL_FAILED( status = cl_initTuple( pLocalTuple, CL_NULL, &pData2Send, 1) ) )
+
+					int bidon = 0;
+
+					if ( CL_SUCCESS( cl_initTuple( pLocalTuple, CL_NULL, &pData2Send, 1 ) ) )
+					{
+						DEBUG_PRINTF("WriteThread: ACK SEND");
+//						cl_sendData( (t_Device*)CL_NULL, pCrtReader, pLocalTuple, NON_BLOCKING, &bidon );
+
+						//pCtxt->ptHalFuncs->fnWaitMs( 50 ); BRY_WRONG_WAY
+					}
+
+					// specify that this tuple is reserved for OTA needs
+					pLocalTuple->tOptions.tCnct = TSP_LAYER_REQ_OTA_SVC;
+
+					// insert ACK in List !!!! CAUTION shortcut as we can have many buffer. Current implementation of Tuple List just add one buffer at a time. To be upgraded to
+					// allow insertion in the middle of the list
+					pLocalTupleList	=	pLocalTuple;
+
+#endif
+
+					DEBUG_PRINTF("WriteThread: ANSW to COMMAND Inserted in QUEUE!");
+
+					// set retries to CSL framework value
+					pCrtReader->tSync.u32Retries	= pCtxt->ptCslReader->tSync.u32Retries;
+
+					// before sending to network, tag data with time stamp
+					pCtxt->ptHalFuncs->fnGetTime( pLocalTupleList->cl8Time, sizeof( pLocalTupleList->cl8Time) );
+
+					// reset the state machine e
+					cl_ReaderSetSyncStatus( pCrtReader, CL_SERIAL_PROT_W_END_REQUIRED ); // BRY_PRINT_DEBUG_STATUS
+
+					// take the semaphore.....
+					//DEBUG_PRINTF("--- WRITE WAIT ACK 1 ------ (CL_SERIAL_PROT_W_WAIT_FOR_ANSW) %d\n", cl_GetElapsedTime());
+					//while ( CL_FAILED( status = pCtxt->ptHalFuncs->fnSemaphoreWait( pCrtReader->tSync.pSgl4ReadComplete,  0xFFFFFFFF ) ) );
+					//DEBUG_PRINTF(" WRITE GOT ACK!! -------->  Send 0x06  %d\n", cl_GetElapsedTime());
+					break;
+				}
+				case ( CL_SERIAL_PROT_R_RECEIVED_NACK ):	// 0x15 was received from read thread. Reemit data to reader
+				case ( CL_SERIAL_PROT_W_WAIT_FOR_ACK ):	// a write was issued by the write thread. Write is waiting for Read Thread to receive 0x06
+				{
+					if ( eSyncStatus == CL_SERIAL_PROT_R_RECEIVED_NACK )
+					{
+						DEBUG_PRINTF("WriteThread: !!!UNEXPECTED CL_SERIAL_PROT_R_RECEIVED_NACK!!!");
+					}
+					else
+					{
+						DEBUG_PRINTF("WriteThread: !!!UNEXPECTED CL_SERIAL_PROT_W_WAIT_FOR_ACK!!!");
+					}
+					// resend the last command if a timeout occured
+                    cl_ReaderSetSyncStatus( pCrtReader, CL_SERIAL_PROT_DEFAULT );
+					pCrtReader->tSync.u32Retries--;
+					DEBUG_PRINTF("WriteThread:DECREMENT RETRY COUNTER AND EXECUTE DEFAULT BUFFER SENDING\n");
+				}
+				case ( CL_SERIAL_PROT_DEFAULT ): // new data to send => initialize state machine
+				{
+					// before sending to network, tag data with time stamp
+					pCtxt->ptHalFuncs->fnGetTime( pLocalTupleList->cl8Time, sizeof( pLocalTupleList->cl8Time) );
+
+					// set retries to CSL framework value
+					if ( pCrtReader->tSync.u32Retries == 0 )
+					{
+						pCrtReader->tSync.u32Retries	= pCtxt->ptCslReader->tSync.u32Retries;
+						cl_ReaderSetSyncStatus( pCrtReader, CL_SERIAL_PROT_W_END_REQUIRED );
+					}
+					else
+					{
+						// wait for ACK from the low level
+						cl_ReaderSetSyncStatus( pCrtReader, CL_SERIAL_PROT_W_WAIT_FOR_ACK );
+					}
+
+					// unblock any unasynchronous event from Read thread
+					pCtxt->ptHalFuncs->fnSemaphoreWait( pCrtReader->tSync.pSgl4ReadComplete,  50 ); // BRY_ j'ai touvé 1 ici ???
+
+//					DEBUG_PRINTF(" WRITE WAIT ACK 1 -------->  (Send new data %d: CL_SERIAL_PROT_DEFAULT) %d\n", pLocalTupleList->ptBuf->ulLen, cl_GetElapsedTime());
+//
+//					// take the semaphore.....
+//					pCtxt->ptHalFuncs->fnSemaphoreWait( pCrtReader->tSync.pSgl4ReadComplete,  0xFFFFFFFF );
+//					DEBUG_PRINTF(" WRITE GOT ACK 1!! -------->  (CL_SERIAL_PROT_DEFAULT) %d\n", cl_GetElapsedTime());
+//
+
+//					pCtxt->ptHalFuncs->fnSemaphoreWait( pCrtReader->tSync.pSgl4ReadComplete,  1 );
+//					DEBUG_PRINTF(" WRITE GOT ACK 2!! -------->  (CL_SERIAL_PROT_DEFAULT) %d\n", cl_GetElapsedTime());
+				}
+
+			}
+
+			// go back to timer
+			if ( u8LoopBack == 1 )
+				continue;
+
+			// send to lower level
+			if ( ( eState == STATE_CONNECT ) | ( eState == STATE_OTA ) )
+			{
+				if ( pCrtReader->tReaderHalFuncs.fnIOSendData != CL_NULL )
+					status = pCrtReader->tReaderHalFuncs.fnIOSendData( pCrtReader, pLocalTupleList->ptBuf );
+				else
+					pCtxt->ptHalFuncs->fnWaitMs( 500 );
+			}
+			else
+			{
+				if ( eState == STATE_DISCOVER )
+				{
+					if ( pCrtReader->tReaderDiscoverHalFuncs.fnIOSendData != CL_NULL )
+					{
+						status = pCrtReader->tReaderDiscoverHalFuncs.fnIOSendData( pCrtReader, pLocalTupleList->ptBuf );
+					}
+					else
+						pCtxt->ptHalFuncs->fnWaitMs( 500 );
+				}
+				else
+					continue;
+			}
+
+			// signal the completion of send on network if synchronization needs to be in an asynchronous way
+			switch ( eState )
+			{
+				case ( STATE_CONNECT ):
+				{
+					// if a callback was specified
+					if ( pCrtReader->tCallBacks.fnIOSendDataDone_cb != CL_NULL )
+						// remove serial header-trailer if needed
+					{
+						// lock callback access before pushing to user land
+						if ( CL_SUCCESS( pCtxt->ptHalFuncs->fnSemaphoreWait( pCtxt->tClbCtrl.pSgl, 100  ) ) )
+						{
+							pCrtReader->tCallBacks.fnIOSendDataDone_cb( pCrtReader, pLocalTupleList, status );
+							pCtxt->ptHalFuncs->fnSemaphoreRelease( pCtxt->tClbCtrl.pSgl );
+						}
+						else
+						{
+							DEBUG_PRINTF("WriteThread:Failed to lock callback sync semaphore \n");
+						}
+					}
+					break;
+				}
+				case ( STATE_OTA ):
+				{
+					// if a callback was specified, send to OTA service
+					if ( pCrtReader->tCallBacks.fnOTASendDataDone_cb != CL_NULL )
+					{
+						// lock callback access before pushing to user land
+						if ( CL_SUCCESS( pCtxt->ptHalFuncs->fnSemaphoreWait( pCtxt->tClbCtrl.pSgl, 100  ) ) )
+						{
+							pCrtReader->tCallBacks.fnOTASendDataDone_cb( pCrtReader, pLocalTupleList, status );
+							pCtxt->ptHalFuncs->fnSemaphoreRelease( pCtxt->tClbCtrl.pSgl );
+						}
+						else
+						{
+							DEBUG_PRINTF("WriteThread:Failed to lock callback sync semaphore \n");
+						}
+					}
+					// send for display if needed
+					if ( pCrtReader->tCallBacks.fnIOSendDataDone_cb != CL_NULL )
+					{
+						// lock callback access before pushing to user land
+						if ( CL_SUCCESS( pCtxt->ptHalFuncs->fnSemaphoreWait( pCtxt->tClbCtrl.pSgl, 100  ) ) )
+						{
+							pCrtReader->tCallBacks.fnIOSendDataDone_cb( pCrtReader, pLocalTupleList, status );
+							pCtxt->ptHalFuncs->fnSemaphoreRelease( pCtxt->tClbCtrl.pSgl );
+						}
+						else
+						{
+							DEBUG_PRINTF("WriteThread:Failed to lock callback sync semaphore \n");
+						}
+					}
+					break;
+				}
+				case ( STATE_DISCOVER ):
+				{
+					// if a callback was specified
+					if ( pCrtReader->tCallBacksDiscover.fnIOSendDataDone_cb != CL_NULL )
+					{
+						// lock callback access before pushing to user land
+						if ( CL_SUCCESS( pCtxt->ptHalFuncs->fnSemaphoreWait( pCtxt->tClbCtrl.pSgl, 100  ) ) )
+						{
+							// remove serial header-trailer if needed
+							pCrtReader->tCallBacksDiscover.fnIOSendDataDone_cb( pCrtReader, pLocalTupleList, status );
+							pCtxt->ptHalFuncs->fnSemaphoreRelease( pCtxt->tClbCtrl.pSgl );
+						}
+						else
+						{
+							DEBUG_PRINTF("WriteThread:Failed to lock callback sync semaphore \n");
+						}
+
+					}
+					break;
+				}
+				default: break;
+			}
+
+			//********************************************************************************************************
+			// at this stage, implements retry/wait serial protocol if necessary by synchronization with read thread
+			//********************************************************************************************************
+
+			// get synchrnous state
+			cl_ReaderGetSyncStatus( pCrtReader, &eSyncStatus );
+
+			if (( eSyncStatus != CL_SERIAL_PROT_R_END_GRANTED )	& ( eSyncStatus != CL_SERIAL_PROT_W_END_REQUIRED ))
+			{
+				// wait 300ms. It can only be released by the read thread
+				DEBUG_PRINTF("WriteThread: WAIT ACK 1 -------->  (Send new data %d lg: CL_SERIAL_PROT_DEFAULT)", pLocalTupleList->ptBuf->ulLen);
+
+				DEBUG_PRINTF("WriteThread: Wait pSgl4ReadComplete 3" );
+				if ( CL_FAILED( status = pCtxt->ptHalFuncs->fnSemaphoreWait( pCrtReader->tSync.pSgl4ReadComplete,  pCrtReader->tSync.u32SerialTimeout*10 ) ) )
+				{
+					DEBUG_PRINTF("WriteThread: WRITE FAILED ACK/// WAIT ACK 1 --------> ");
+
+					// get synchrnous state
+					cl_ReaderGetSyncStatus( pCrtReader, &eSyncStatus );
+
+					// if it is not the last exchange then loop back
+					if (( eSyncStatus != CL_SERIAL_PROT_R_END_GRANTED )	& ( eSyncStatus != CL_SERIAL_PROT_W_END_REQUIRED ))
+					{
+						DEBUG_PRINTF("WriteThread: Timeout Exceed: Retry !");
+						cl_ReaderSetSyncStatus( pCrtReader, CL_SERIAL_PROT_DEFAULT );
+						// resend the last command if a timeout occured
+						if ( pCrtReader->tSync.u32Retries-- )
+							continue;
+					}
+				}
+//				DEBUG_PRINTF(" WRITE GOT ACK GENERAL!! --------> %d\n", cl_GetElapsedTime());
+
+			}
+
+			// get synchrnous state
+			cl_ReaderGetSyncStatus( pCrtReader, &eSyncStatus );
+
+			// except for exit
+            if (( eSyncStatus == CL_SERIAL_PROT_R_END_GRANTED )	 | ( eSyncStatus == CL_SERIAL_PROT_W_END_REQUIRED ))
+			{
+				DEBUG_PRINTF("WriteThread: :):):) CL_SERIAL_PROT_R_END_GRANTED :):):)");
+				cl_ReaderSetSyncStatus( pCrtReader,CL_SERIAL_PROT_DEFAULT );
+				pCrtReader->tSync.u32Retries	= pCtxt->ptCslReader->tSync.u32Retries;
+			}
+			else
+				continue;
+
+
+
+			//************************************************************************
+			// NOW the retry mechanism is OVER..... release the buffer from user land
+			//************************************************************************
+			// unblock calling layer by signaling that the data was effectively sent
+			//DEBUG_PRINTF("___ Release pSgl4Write 1 \n");
+			//pCtxt->ptHalFuncs->fnSemaphoreRelease( pCrtReader->tSync.pSgl4Write );
+
+			if ( CL_FAILED( status )  )
+			{
+				DEBUG_PRINTF("WriteThread: release memory for all tuples");
+				// release memory for all tuples
+				pCtxt->ptHalFuncs->fnFreeMem( pLocalTupleList->ptBuf->pData );
+				pCtxt->ptHalFuncs->fnFreeMem( pLocalTupleList->ptBuf );
+				pCtxt->ptHalFuncs->fnFreeMem( pLocalTupleList );
+				// then exit
+				break;
+			}
+
+#ifdef TUTU
+
+			DEBUG_PRINTF("WriteThread: Release Memory used by Tuple: BEGIN");
+
+			if (pLocalTupleList == CL_NULL)
+			{
+				DEBUG_PRINTF("WriteThread: pLocalTupleList is NULL");
+			}
+			else
+			{
+	 			// take next element of the list
+	 			pTuple = ( t_Tuple *)pLocalTupleList->pNext;
+
+	 			if (pTuple == CL_NULL)
+	 			{
+	 				DEBUG_PRINTF("WriteThread: pTuple is NULL");
+	 			}
+
+	             // release memory for tuple
+	 			if (pLocalTupleList->ptBuf->pData == CL_NULL)
+	 			{
+	 				DEBUG_PRINTF("WriteThread: pLocalTupleList->ptBuf->pData is NULL");
+	 			}
+	 			else
+	 			{
+	 				e_Result er = pCtxt->ptHalFuncs->fnFreeMem( pLocalTupleList->ptBuf->pData );
+	 				if (er == CL_PARAMS_ERR)
+	 				{
+	 					DEBUG_PRINTF("WriteThread: fnFreeMem( pLocalTupleList->ptBuf->pData ) CL_PARAMS_ERR");
+	 				}
+	 				else
+	 				{
+	 					DEBUG_PRINTF("WriteThread: fnFreeMem( pLocalTupleList->ptBuf->pData )");
+	 				}
+	 			}
+
+	 			if (pLocalTupleList->ptBuf == CL_NULL)
+	 			{
+	 				DEBUG_PRINTF("WriteThread: pLocalTupleList->ptBuf is NULL");
+	 			}
+	 			else
+	 			{
+	 				e_Result er = pCtxt->ptHalFuncs->fnFreeMem( pLocalTupleList->ptBuf );
+	 				if (er == CL_PARAMS_ERR)
+					{
+						DEBUG_PRINTF("WriteThread: fnFreeMem( pLocalTupleList->ptBuf ) CL_PARAMS_ERR");
+					}
+					else
+					{
+						DEBUG_PRINTF("WriteThread: fnFreeMem( pLocalTupleList->ptBuf )");
+					}
+	 			}
+
+	 			if (pLocalTupleList == CL_NULL)
+	 			{
+	 				DEBUG_PRINTF("WriteThread: pLocalTupleList is NULL");
+	 			}
+	 			else
+	 			{
+	 				e_Result er = pCtxt->ptHalFuncs->fnFreeMem( pLocalTupleList );
+	 				if (er == CL_PARAMS_ERR)
+					{
+						DEBUG_PRINTF("WriteThread: fnFreeMem( pLocalTupleList ) CL_PARAMS_ERR");
+					}
+					else
+					{
+						DEBUG_PRINTF("WriteThread: fnFreeMem( pLocalTupleList )");
+					}
+	 			}
+
+	 			if ( pTuple == CL_NULL)
+	 			{
+	 				DEBUG_PRINTF("WriteThread: ERROR : pTuple is NULL");
+	 			}
+	 			else
+	 			{
+	 				DEBUG_PRINTF("WriteThread: pLocalTupleList point to new Tuple");
+
+
+	 				pLocalTupleList = pTuple;
+	 			}
+
+				DEBUG_PRINTF("WriteThread: Release Memory used by Tuple: END");
+			}
+
+			DEBUG_PRINTF("WriteThread: Release Memory WELLDONE");
+
+#else
+            pLocalTupleList = CL_NULL; // TODO : BRY : freeing memory correcly !!!
+#endif
+
+		}
+		while ( 1 );
+
+
+		//
+        //DEBUG_PRINTF("____ Release pSgl4Write 2 %x %d\n", pCrtReader->tSync.pSgl4Write, cl_GetElapsedTime() );
+		//if ( CL_FAILED( status = pCtxt->ptHalFuncs->fnSemaphoreRelease( pCrtReader->tSync.pSgl4Write ) ))
+		//	break;
+		// relieve thread if nothing is coming from upper layer
+		pCtxt->ptHalFuncs->fnWaitMs( 50 );
+	}
+	while( 1 );
+
+/*	if ( CL_FAILED( status ) )
+	{
+		DEBUG_PRINTF("Reader Write Thread closed due to pb\n");
+		pCrtReader->tReaderHalFuncs.fnIOCloseConnection( pCrtReader );
+		pCtxt->ptHalFuncs->fnSemaphoreDestroy( pCrtReader->tSync.pSgl4Read );
+	}
+
+
+	status = clRegisteredThread( clReaderReadThread );
+	pCtxt->ptHalFuncs->fnDestroyThread( CL_NULL );
+*/
+	return ( CL_OK );
+}
+
+
+/********************************************************************************/
+/* Name : e_Result clReaderReadThread( clvoid );             					*/
+/* Description :                                                        		*/
+/*        Thread which handles read operation from application to low-layers	*/
+/*		  on failure, the thread auto-destroy itself							*/
+/**************************************************************************/
+/* Parameters:                                                            */
+/*  --------------                                                        */
+/*  In: 	none			    										*/
+/* ---------------                                                        */
+/*  Out: none                                                             */
+/* Return value: e_Result                                                 */
+/*  CL_OK                        :  Result is OK                          */
+/**************************************************************************/
+e_Result clReaderReadThread( clvoid *pCallingReader )
+{
+	t_clContext 	*pCtxt 	= CL_NULL;
+	e_Result 		status 	= CL_ERROR;
+	t_Reader 		*pCrtReader = CL_NULL;
+	t_Tuple 		*pTuple 	= CL_NULL;
+	t_Tuple 		*pCrtTuple	= CL_NULL;
+	e_State			eState		= STATE_INIT;
+	clu8			u8DestroyThread	= 0;
+	t_Tuple			*pLocalTupleList	=	CL_NULL;
+	t_Tuple			*pLocalTuple = CL_NULL;
+	clu8			*pData2Send	= CL_NULL;
+    t_OtaInternal 	*pOta		=	CL_NULL;
+    clu32			u32TsfNb		=	0;
+	e_SERIAL_RetryProtocolDef eSyncStatus	=	CL_SERIAL_PROT_DEFAULT;
+	clu32 			u32TupleIndex  = 0;
+
+
+    // get pointer on OTA service
+    if ( CL_FAILED( cl_getOTAService( &pOta ) ) )
+    	return ( CL_ERROR );
+
+    if ( pOta == CL_NULL )
+    	return ( CL_ERROR );
+
+
+	// check params
+	if ( pCallingReader == CL_NULL)
+		return ( CL_OK );
+
+	// store calling reader which initiates the creation of the thread for read
+	pCrtReader = pCallingReader;
+
+
+	// get context to have access to function pointers for memory/thread managment on platform
+	if ( CL_FAILED(status =  cl_GetContext( &pCtxt )) )
+		return ( CL_ERROR );
+
+	// check global parameters
+	if ( pCtxt == CL_NULL)
+		return ( CL_ERROR );
+
+	if ( pCtxt->ptHalFuncs->fnSemaphoreWait == CL_NULL )
+		return ( CL_ERROR );
+
+	if ( pCtxt->ptHalFuncs->fnSemaphoreRelease == CL_NULL )
+		return ( CL_ERROR );
+
+	if ( pCtxt->ptHalFuncs->fnFreeMem == CL_NULL )
+		return ( CL_ERROR );
+
+	if ( pCtxt->ptHalFuncs->fnAllocMem == CL_NULL )
+		return ( CL_ERROR );
+
+	if ( pCrtReader->tReaderHalFuncs.fnIOGetData == CL_NULL )
+		return ( CL_ERROR );
+
+	if ( pCrtReader->tReaderHalFuncs.fnIOCloseConnection == CL_NULL )
+		return ( CL_ERROR );
+
+    if ( pCtxt->ptHalFuncs->fnWaitMs == CL_NULL )
+		return ( CL_ERROR );
+
+    if (pCtxt->tClbCtrl.pSgl == CL_NULL )
+    	return ( CL_ERROR );
+
+    DEBUG_PRINTF("clReaderReadThread:BEGIN");
+
+	// at this stage of the thread, the connection with the reader was already opened.
+	// on any error, we shall:
+	//	- close the connection with the reader
+	//  - remove it from the list of registered readers
+	//  - signal it to upper layers
+	do
+	{
+//		DEBUG_PRINTF("clReaderReadThread:BEGIN");
+
+		if ( CL_FAILED(  pCtxt->ptHalFuncs->fnDestroyThreadAsked( &u8DestroyThread ) ) )
+			break;
+
+		if ( u8DestroyThread != 0 )	//if a destroy was asked .. then proceed :)
+		{
+			status = CL_ERROR;
+			break;
+		}
+
+		// wait for a connected reader
+		if ( CL_FAILED(  status = cl_ReaderGetState( pCrtReader, &eState ) ) )
+			break;
+
+		// BRY_02042015 attendre un peu ça mange pas de pain
+//		pCtxt->ptHalFuncs->fnWaitMs( 1000 );
+
+		// check it is connected
+		// TODO!!!! do not enter read/write status if not connected. Put semaphore in place!!!
+		if ( ( eState != STATE_CONNECT )  & ( eState != STATE_DISCOVER ) & ( eState != STATE_OTA )  )
+		{
+			pCtxt->ptHalFuncs->fnWaitMs( 500 );
+			continue;
+		}
+
+		if ( ( eState == STATE_CONNECT ) | ( eState == STATE_OTA ) )
+		{
+			if ( pCrtReader->tReaderHalFuncs.fnIOGetData != CL_NULL )
+				status = ( pCrtReader->tReaderHalFuncs.fnIOGetData( (clvoid *)pCrtReader, &pTuple) );
+			else
+				pCtxt->ptHalFuncs->fnWaitMs( 500 );
+		}
+		else
+		{
+			if ( eState == STATE_DISCOVER )
+			{
+				if ( pCrtReader->tReaderDiscoverHalFuncs.fnIOGetData != CL_NULL )
+				{
+					status = ( pCrtReader->tReaderDiscoverHalFuncs.fnIOGetData( (clvoid *)pCrtReader, &pTuple) );
+				}
+				else
+					pCtxt->ptHalFuncs->fnWaitMs( 500 );
+			}
+			else
+				continue;
+		}
+		// wait for data from network
+		if ( CL_SUCCESS( status ) )
+		{
+			u32TupleIndex	=	1;	// indicator for debug
+
+			pCrtTuple = pTuple;		// get tuple list
+			for ( ;; )
+			{
+				// if any data is coming from the network, send it to user land
+				if ( pTuple != CL_NULL )
+				{
+					// before sending to upper layer, tag tuple with time stamp
+					pCtxt->ptHalFuncs->fnGetTime( pCrtTuple->cl8Time, sizeof( pCrtTuple->cl8Time) );
+
+					if ( pCrtTuple->ptBuf == CL_NULL )
+					{
+						DEBUG_PRINTF("ReadThread:Data from network : pCrtTuple->ptBuf == CL_NULL\n");
+						break;
+					}
+
+					if ( pCrtTuple->ptBuf->pData == CL_NULL )
+					{
+						DEBUG_PRINTF("ReadThread:Data from network : pCrtTuple->ptBuf->pData == CL_NULL\n");
+						break;
+					}
+
+					DEBUG_PRINTF("ReadThread:%s:<- Data From Network:Tuple.lg:%x Tuple.index:%d", pCrtTuple->cl8Time, pCrtTuple->ptBuf->ulLen, u32TupleIndex++ );
+
+					/* points tuple to next element*/
+					pTuple = ( t_Tuple *) pTuple->pNext ;
+
+					/* pCrtTuple is sent to user land one by one, so we break the linked list */
+					pCrtTuple->pNext = CL_NULL;
+
+#ifdef TOTO
+					// SYNCHRO!!
+					// get current state
+					cl_ReaderGetSyncStatus( pCrtReader, &eSyncStatus );
+					switch ( eSyncStatus )
+					{
+						case ( CL_SERIAL_PROT_DEFAULT ):
+						{
+//							DEBUG_PRINTF("R: CL_SERIAL_PROT_DEFAULT\n");
+							break;
+						}
+						case( CL_SERIAL_PROT_W_WAIT_FOR_ACK ):
+						{
+							if ( pCrtTuple->ptBuf->ulLen == 1)
+							{
+	                            DEBUG_PRINTF("ReadThread:0x%02x", pCrtTuple->ptBuf->pData[0]);
+
+	                            if ( pCrtTuple->ptBuf->pData[0] == 0x06 )
+									cl_ReaderSetSyncStatus( pCrtReader, CL_SERIAL_PROT_R_RECEIVED_ACK );
+								if ( pCrtTuple->ptBuf->pData[0] == 0x15 )
+									cl_ReaderSetSyncStatus( pCrtReader, CL_SERIAL_PROT_R_RECEIVED_NACK );
+							}
+							break;
+						}
+						case ( CL_SERIAL_PROT_R_RECEIVED_ACK ): // BRY_0804
+//						{
+//							DEBUG_PRINTF("ReadThread->0x%x2", pCrtTuple->ptBuf->pData[0]);
+//							// increment step of state machine to emit a 0x06 in the write thread
+//							if ( pCrtTuple->ptBuf->ulLen != 0)
+//								cl_ReaderSetSyncStatus( pCrtReader, CL_SERIAL_PROT_R_WRITE_ACK_REQUIRED );
+//							break;
+//						}
+						case ( CL_SERIAL_PROT_W_WAIT_FOR_ANSW ):
+						{
+//							DEBUG_PRINTF("R: CL_SERIAL_PROT_W_WAIT_FOR_ANSW %d\n", cl_GetElapsedTime());
+
+                            // signal to the write thread that we received a data
+//                            DEBUG_PRINTF("????? Release Read Complete 2 ??????\n");
+  //                          pCtxt->ptHalFuncs->fnSemaphoreRelease( pCrtReader->tSync.pSgl4ReadComplete );
+
+							// increment step of state machine to emit a 0x06 in the write thread
+							if ( pCrtTuple->ptBuf->ulLen != 0)
+								cl_ReaderSetSyncStatus( pCrtReader, CL_SERIAL_PROT_R_WRITE_ACK_REQUIRED );
+
+							// signal a progress in the OTA process with 5% progress
+							if ( pCtxt->ptCallbacks->fnOTAProgress_cb )
+							{
+								pOta->u8OtaProgress += 5;
+
+								// lock callback access before pushing to user land
+								if ( CL_SUCCESS( pCtxt->ptHalFuncs->fnSemaphoreWait( pCtxt->tClbCtrl.pSgl, 100  ) ) )
+								{
+									pCtxt->ptCallbacks->fnOTAProgress_cb( CL_OTA_ENTER_DOWNLOAD_MODE, pCrtReader, pOta->u8OtaProgress );
+									pCtxt->ptHalFuncs->fnSemaphoreRelease( pCtxt->tClbCtrl.pSgl );
+								}
+								else
+								{
+									DEBUG_PRINTF("ReadThread:Failed to lock callback sync semaphore 1\n");
+								}
+
+							}
+
+							break;
+						}
+						case ( CL_SERIAL_PROT_R_WRITE_ACK_REQUIRED ):
+						{
+//							DEBUG_PRINTF("R: CL_SERIAL_PROT_R_WRITE_ACK_REQUIRED %d\n", cl_GetElapsedTime());
+							cl_ReaderSetSyncStatus( pCrtReader, CL_SERIAL_PROT_DEFAULT );
+							break;
+						}
+						case ( CL_SERIAL_PROT_W_END_REQUIRED ):
+						{
+//							DEBUG_PRINTF("R: CL_SERIAL_PROT_W_END_REQUIRED %d\n", cl_GetElapsedTime());
+							cl_ReaderSetSyncStatus( pCrtReader, CL_SERIAL_PROT_R_END_GRANTED );
+							break;
+						}
+						case ( CL_SERIAL_PROT_R_END_GRANTED ):
+						{
+//							DEBUG_PRINTF("R: CL_SERIAL_PROT_R_END_GRANTED %d\n", cl_GetElapsedTime());
+							break;
+						}
+						case ( CL_SERIAL_PROT_W_END_DONE ):
+						{
+//							DEBUG_PRINTF("R: CL_SERIAL_PROT_W_END_DONE %d\n", cl_GetElapsedTime());
+							break;
+						}
+						default:
+						{
+//							DEBUG_PRINTF("!!!!R: eSyncStatus unknown %x [%d]", eSyncStatus, cl_GetElapsedTime() );
+							//cl_ReaderSetSyncStatus( pCrtReader, CL_SERIAL_PROT_DEFAULT );
+							break;
+						}
+					}
+#endif
+					// signal to the write thread that we received a data
+					if (( pTuple == CL_NULL ) | (( pTuple != CL_NULL ) & ( eSyncStatus != CL_SERIAL_PROT_W_WAIT_FOR_ACK)))
+					{
+						DEBUG_PRINTF("ReadThread:<------ READ ACK 1");
+						pCtxt->ptHalFuncs->fnSemaphoreRelease( pCrtReader->tSync.pSgl4ReadComplete );
+					}
+					// SEND DATA TO USER LAND
+					/* check if blocking call */
+					if ( pCrtReader->tSync.eCallType == BLOCKING )
+					{
+
+						/* lock the semaphore to push to upper layers*/
+						while( (  status = pCtxt->ptHalFuncs->fnSemaphoreWait( pCrtReader->tSync.pSgl4Read, 1  ) ) == CL_TIMEOUT_ERR );
+
+						// parse tuples list and add the new ones at the end of the list
+						while ( pCrtReader->p_TplList2Read != CL_NULL )
+							pCrtReader->p_TplList2Read = pCrtReader->p_TplList2Read->pNext;
+
+						// add the new one
+						pCrtReader->p_TplList2Read = pCrtTuple;
+						pCrtReader->p_TplList2Read->pNext = CL_NULL;
+
+						// signal we have a data ready for reading
+						pCtxt->ptHalFuncs->fnSemaphoreRelease( pCrtReader->tSync.pSgl4Read );
+
+
+						/* lock the semaphore to push to upper layers*/
+//						while( (  status = pCtxt->ptHalFuncs->fnSemaphoreWait( pCrtReader->tSync.pSgl4Read, 1  ) ) == CL_TIMEOUT_ERR );
+					}
+					else
+					{
+						// signal completion to upper layer if necessary
+						switch ( eState )
+						{
+							case ( STATE_CONNECT ):
+							{
+								DEBUG_PRINTF("ReadThread:STATE_CONNECT");
+								if ( pCrtReader->tCallBacks.fnIOData2Read_cb != CL_NULL )
+								{
+									// lock callback access before pushing to user land
+									DEBUG_PRINTF("ReadThread:WAIT pCtxt->tClbCtrl.pSgl");
+									if ( CL_SUCCESS( pCtxt->ptHalFuncs->fnSemaphoreWait( pCtxt->tClbCtrl.pSgl, 100  ) ) )
+									{
+										// remove serial header-trailer if needed
+										pCrtReader->tCallBacks.fnIOData2Read_cb( (void *)pCrtReader,  (void *)pCrtTuple, status );
+										pCtxt->ptHalFuncs->fnSemaphoreRelease( pCtxt->tClbCtrl.pSgl );
+									}
+									else
+									{
+										DEBUG_PRINTF("ReadThread:Failed to lock callback sync semaphore");
+									}
+								}
+								break;
+							}
+							case ( STATE_OTA ):
+							{
+								DEBUG_PRINTF("ReadThread:STATE_OTA\n");
+								// send to OTA service
+								if ( pCrtReader->tCallBacks.fnOTAData2Read_cb != CL_NULL )
+								{
+									// lock callback access before pushing to user land
+									if ( CL_SUCCESS( pCtxt->ptHalFuncs->fnSemaphoreWait( pCtxt->tClbCtrl.pSgl, 100  ) ) )
+									{
+										// remove serial header-trailer if needed
+										pCrtReader->tCallBacks.fnOTAData2Read_cb( (void *)pCrtReader,  (void *)&pCrtTuple, status );
+										pCtxt->ptHalFuncs->fnSemaphoreRelease( pCtxt->tClbCtrl.pSgl );
+									}
+									else
+									{
+										DEBUG_PRINTF("ReadThread:Failed to lock callback sync semaphore");
+									}
+								}
+								// send a copy to upper layer for display
+								if ( pCrtReader->tCallBacks.fnIOData2Read_cb != CL_NULL )
+								{
+									// lock callback access before pushing to user land
+									if ( CL_SUCCESS( pCtxt->ptHalFuncs->fnSemaphoreWait( pCtxt->tClbCtrl.pSgl, 100  ) ) )
+									{
+										// remove serial header-trailer if needed
+										pCrtReader->tCallBacks.fnIOData2Read_cb( (void *)pCrtReader,  (void *)pCrtTuple, status );
+										pCtxt->ptHalFuncs->fnSemaphoreRelease( pCtxt->tClbCtrl.pSgl );
+									}
+									else
+									{
+										DEBUG_PRINTF("ReadThread:Failed to lock callback sync semaphore");
+									}
+								}
+
+								break;
+							}
+							case ( STATE_DISCOVER ):
+                            {
+								DEBUG_PRINTF("ReadThread:STATE_DISCOVER\n");
+                                if ( pCrtReader->tCallBacksDiscover.fnIOData2Read_cb )
+                                {
+									// lock callback access before pushing to user land
+									if ( CL_SUCCESS( pCtxt->ptHalFuncs->fnSemaphoreWait( pCtxt->tClbCtrl.pSgl, 100  ) ) )
+									{
+										// remove serial header-trailer if needed
+										status = pCrtReader->tCallBacksDiscover.fnIOData2Read_cb( (void *)pCrtReader,  (void *)pCrtTuple, status );
+										pCtxt->ptHalFuncs->fnSemaphoreRelease( pCtxt->tClbCtrl.pSgl );
+									}
+									else
+									{
+										DEBUG_PRINTF("ReadThread:Failed to lock callback sync semaphore");
+									}
+                                }
+								break;
+							}
+							default:
+								break;
+						}
+
+						// release the semaphore to signal that we can read now as we received some data
+						pCtxt->ptHalFuncs->fnSemaphoreRelease( pCrtReader->tSync.pSgl4Read );
+					}
+
+
+					/* free memory of data sent to user land */
+					pCtxt->ptHalFuncs->fnFreeMem( pCrtTuple->ptBuf->pData );
+					pCtxt->ptHalFuncs->fnFreeMem( pCrtTuple->ptBuf );
+					pCtxt->ptHalFuncs->fnFreeMem( pCrtTuple );
+					pCrtTuple = pTuple;
+
+
+					// reset current pointer for next message
+					//pTuple = CL_NULL;
+
+				}
+				else
+					break;
+			}
+			pTuple = CL_NULL;
+		}
+		else
+		{
+			// SYNCHRO!!
+			// get current state
+
+			DEBUG_PRINTF("ReadThread:Thread got an error !!! Exit\n");
+            cl_ReaderGetSyncStatus( pCrtReader, &eSyncStatus );
+
+            cl_ReaderSetSyncStatus( pCrtReader, CL_SERIAL_PROT_DEFAULT );
+			pCtxt->ptHalFuncs->fnSemaphoreRelease( pCrtReader->tSync.pSgl4ReadComplete );
+
+
+//			if ( eSyncStatus == CL_SERIAL_PROT_W_END_DONE)
+//			{
+//				cl_ReaderSetSyncStatus( pCrtReader, CL_SERIAL_PROT_DEFAULT );
+//				// signal to the write thread that we received its completion signal
+//                DEBUG_PRINTF("????? Release Read Complete 3 ?????? %d\n", cl_GetElapsedTime() );
+//				DEBUG_PRINTF("<------ READ ACK 2 %d\n", cl_GetElapsedTime());
+//
+//				DEBUG_PRINTF("????? Release Read Complete 3 done ?????? %d\n", cl_GetElapsedTime() );
+//
+//			}
+
+		}
+		//
+//			if ( CL_FAILED( status = pCtxt->ptHalFuncs->fnSemaphoreRelease( pCrtReader->tSync.pSgl4Read ) ))
+//				break;
+
+	}
+	while( 1 );
+
+	if ( CL_FAILED( status ) )
+	{
+		DEBUG_PRINTF("ReadThread: Closed due to pb\n");
+		pCrtReader->tReaderHalFuncs.fnIOCloseConnection( pCrtReader );
+		pCtxt->ptHalFuncs->fnSemaphoreDestroy( pCrtReader->tSync.pSgl4Read );
+	}
+
+	clUnregisterThread( pCrtReader->tSync.tThreadId4Read, clReaderReadThread );
+	pCtxt->ptHalFuncs->fnDestroyThread( CL_NULL );
+
+	return ( CL_OK );
+
+}
+/********************************************************************************/
+/* Name : e_Result clCryptoThread( clvoid );             					*/
+/* Description :                                                        		*/
+/*        Thread which handles access to crypto resource (one per CSL shared )	*/
+/*		among readers 															*/
+/*		  on failure, the thread auto-destroy itself							*/
+/**************************************************************************/
+/* Parameters:                                                            */
+/*  --------------                                                        */
+/*  In: 	none			    										*/
+/* ---------------                                                        */
+/*  Out: none                                                             */
+/* Return value: e_Result                                                 */
+/*  CL_OK                        :  Result is OK                          */
+/**************************************************************************/
+e_Result clCryptoThread( clvoid )
+{
+
+	t_clContext *pCtxt = CL_NULL;
+	e_Result status = CL_ERROR;
+//	pthread_mutex_t crypto_mutex = PTHREAD_MUTEX_INITIALIZER;
+//	pthread_cond_t crypto_got_request = PTHREAD_COND_INITIALIZER;
+
+	// get context to have access to function pointers for memory/thread managment on platform
+	if ( CL_FAILED(status =  cl_GetContext( &pCtxt )) )
+		return ( CL_ERROR );
+
+	if ( pCtxt == CL_NULL)
+		return ( CL_ERROR );
+
+	/* */
+	for ( ;; )
+	{
+
+#if 0
+		pCtxt->ptHalFuncs->fnSemaphoreWait( );
+
+		/* first, lock crypto mutex */
+		int rc = pthread_mutex_lock( &crypto_mutex );
+		if (rc) { /* an error has occurred */
+//		    perror("pthread_mutex_lock");
+		    pthread_exit( CL_NULL );
+		}
+		// mutex is now locked - wait on condition variable (data to treat)  */
+		/* During the execution of pthread_cond_wait, the mutex is unlocked. */
+		rc = pthread_cond_wait( &crypto_got_request, &crypto_mutex);
+		if (rc == 0) { /* we were awakened due to the cond. variable being signaled */
+		               /* The mutex is now locked again by pthread_cond_wait()      */
+		    /* do your stuff... */
+
+		}
+		// re-initialize condition for further use
+		pthread_cond_init( &crypto_got_request, CL_NULL );
+		// finally, unlock the mutex and loop again
+		pthread_mutex_unlock( &crypto_mutex );
+#endif
+
+	}
+
+	pCtxt->ptHalFuncs->fnDestroyThread( CL_NULL );
+
+	return ( CL_OK );
+
+}
+
+/********************************************************************************/
+/* Name : e_Result clRegisterThread( clvoid *fnThreadId, clu64 u64ThreadId ); 	*/
+/* Description :                                                        		*/
+/*        Register a thread in a thread list with its id to ease identification	*/
+/*		and closure 															*/
+/**************************************************************************/
+/* Parameters:                                                            */
+/*  --------------                                                        */
+/*  In: 	none			    										*/
+/* ---------------                                                        */
+/*  Out: none                                                             */
+/* Return value: e_Result                                                 */
+/*  CL_OK                        :  Result is OK                          */
+/**************************************************************************/
+e_Result clRegisterThread( clvoid *fnThreadId, clu64 u64ThreadId )
+{
+
+
+	return ( CL_OK );
+}
+
+/********************************************************************************/
+/* Name : e_Result clRegisteredThread(  clu64 u64ThreadId, clvoid *pu64ThreadId); */
+/* Description :                                                        		*/
+/*      Get the function pointer of the thread to allow its unregistration		*/
+/*		  on failure, the thread auto-destroy itself							*/
+/********************************************************************************/
+/* Parameters:                                                            		*/
+/*  --------------                                                        		*/
+/*  In: 	none			    												*/
+/* ---------------                                                        		*/
+/*  Out: none                                                             		*/
+/* Return value: e_Result                                                 		*/
+/*  CL_OK                        :  Result is OK                          		*/
+/********************************************************************************/
+e_Result clRegisteredThread( clu64 u64ThreadId, clvoid *pu64ThreadId )
+{
+
+	return ( CL_OK );
+}
+
+/********************************************************************************/
+/* Name : e_Result clCryptoThread( clvoid );             					*/
+/* Description :                                                        		*/
+/*        Thread which handles access to crypto resource (one per CSL shared )	*/
+/*		among readers 															*/
+/*		  on failure, the thread auto-destroy itself							*/
+/**************************************************************************/
+/* Parameters:                                                            */
+/*  --------------                                                        */
+/*  In: 	none			    										*/
+/* ---------------                                                        */
+/*  Out: none                                                             */
+/* Return value: e_Result                                                 */
+/*  CL_OK                        :  Result is OK                          */
+/**************************************************************************/
+e_Result clUnregisterThread(  clvoid *fnThreadId, clu64 u64ThreadId )
+{
+
+	return ( CL_OK );
+}

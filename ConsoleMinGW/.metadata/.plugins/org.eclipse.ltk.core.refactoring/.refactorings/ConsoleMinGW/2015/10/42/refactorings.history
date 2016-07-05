@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;TestPthread/TSemaphoreWait.c&apos; to &apos;TThreadingInCSL2.c&apos;" description="Rename resource &apos;TSemaphoreWait.c&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="TSemaphoreWait.c" name="TThreadingInCSL2.c" stamp="1445011833711" updateReferences="true"/>
+</session>

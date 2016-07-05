@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;TestPthread/TMallocFree.c&apos; to &apos;TMallocFreeLoop.c&apos;" description="Rename resource &apos;TMallocFree.c&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="TMallocFree.c" name="TMallocFreeLoop.c" stamp="1432203890288" updateReferences="true"/>
+</session>

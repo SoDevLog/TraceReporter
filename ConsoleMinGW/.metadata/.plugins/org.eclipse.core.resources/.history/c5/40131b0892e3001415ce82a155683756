@@ -1,0 +1,465 @@
+/*--------------------------------------------------------------------------*\
+ * Copyright (c) 1998-2000 AbyreSoft. Written by Bruno Raby.
+ *--------------------------------------------------------------------------*
+ * TTrace.c - Differentes facons de faire des traces
+\*--------------------------------------------------------------------------*/
+
+#include "cMenu.h"
+#include "pmInterface.h"
+#include "pmEnv.h"
+#include "pmTrace.h"
+
+#include "cltypes.h"
+#include "clstructs.h"
+#include "clreaders.h"
+#include "cl_readers.h"
+#include "csl.h"
+
+#include "csl_component.h"
+
+static bool IsClosed = false;
+
+#define NO_INIT_AUTOMATIC
+
+/*---------------------------------------------------------------------------*/
+
+static void DoInitCOM_CSL(void)
+{
+    e_Result status = CL_ERROR;
+
+    pm_trace0("DoInitCOM_CSL: BEGIN");
+
+    //------------------------------
+    // Settings of User's functions
+    //------------------------------
+
+    g_tHalFunc.fnTrace = ( void *)pm_trace0; // ( void *) : avoid warning message
+
+    g_tHalFunc.fnAllocMem = csl_AllocDebug;
+    g_tHalFunc.fnFreeMem = csl_FreeDebug;
+
+    //-----------------------------
+
+    status = csl_InitGlobalContext
+	(
+		(e_StackSupport)( COM_STACK_SUPPORT ),
+		(t_clSys_HalFunctions *)&g_tHalFunc,
+		(t_clSys_CallBackFunctions *)&g_tCallbacks,
+		(t_clSys_CallBackFunctions *)CL_NULL,
+		&g_tCSLDefaultReader, &g_IPReaderDefaultHAL,
+		CL_NULL,
+		&g_COMReaderDefaultHAL,
+		CL_NULL,
+		CL_NULL,
+		CL_NULL,
+		(t_MenuFileDef *)&g_tMenuFileDef
+	);
+
+    if ( CL_SUCCESS( status ) )
+	{
+		pm_trace0( "DoInitCOM_CSL: csl_InitGlobalContext: SUCCESS" );
+	}
+	else
+	{
+		pm_trace0( "DoInitCOM_CSL: csl_InitGlobalContext: FAILED" );
+	}
+
+	//pm_xmemdbg_check(); // la memoire est-elle corrompue
+	pm_xmemdbg_dump_state();
+
+	status = csl_InitThreads();
+	if ( CL_SUCCESS( status ) )
+	{
+		pm_trace0( "DoInitCOM_CSL: csl_InitThreads: SUCCESS" );
+	}
+	else
+	{
+		pm_trace0( "DoInitCOM_CSL: csl_InitThreads: FAILED" );
+	}
+
+	pm_xmemdbg_dump_state();
+    pm_trace0("DoInitCOM_CSL: END");
+}
+
+/*---------------------------------------------------------------------------*/
+
+static void DoClose_CSL(void)
+{
+    e_Result status = CL_ERROR;
+
+    pm_trace0("DoClose_CSL: BEGIN");
+
+    status = csl_Close();
+
+	IsClosed = true;
+	pm_trace0("DoClose_CSL: DONE - status %d", status);
+}
+
+/*---------------------------------------------------------------------------*/
+static void DoAddReader( void )
+{
+	PM_TRACE0("Add Reader");
+
+//	t_Reader theReader =
+//	{
+//		COM_READER_TYPE,			// Type of reader (LANTRONIX, others....)
+//		STATE_DEFAULT,				// State of a reader
+//		"MyReader 030E0D67", 		// Friendly name of a reader
+//		(clu64)0, 					// clu64 handle for this reader
+//		{CL_NULL}, 					// IP reader parameters - t_clIPReader_Params
+//		{							// COM reader parameters - t_clCOMReader_Params
+//			10,							// IP address of the reader in the network - clu8
+//			256,						// Byte size for Transfer - e_COMBitDefs
+//			1, 							// define stop bits on serial
+//			CL_COM_BAUDRATE_115200,						// Baud rate for transfer of the reader
+//		},
+//		CL_NULL,					// Bluetooth parameters
+//		{ 							// t_RdrSynchro - structure which holds tasks/threads for sending/receiving data as well as necessary signals for
+//				CL_NULL,// Thread Id For Read Operations : auto filled when adding the reader to the list of readers
+//				CL_NULL,// Thread Id For Write Operations : auto filled when adding the reader to the list of readers
+//				CL_NULL,// Signal For Read Operations : auto filled when adding the reader to the list of readers
+//				CL_NULL,// Signal For Write Operations : auto filled when adding the reader to the list of readers
+//				CL_NULL, // Signal For Write completion signaling : auto filled when adding a reader to the list of readers
+//		},
+//		CL_NULL,		// Tuple list to be sent and attached to this reader
+//		CL_NULL,		// Tuple list to be read and attached to this reader
+//		LANTRONIX_READER_TYPE,// Ip reader use a Xport from LANTRONIX configured with CF/LF
+//		{
+//		CL_NULL,	// callback used on completion of reset of network stack
+//				CL_NULL,// callback used when data was pushed out to the reader
+//				NetwData2Read_cb_Reader1,// callback used when data is coming from reader
+//		},
+//		CL_NULL// Pointer on next reader : auto filled when adding the reader to the list of Readers
+//	};
+
+//	cl_readerAddToList( &theReader );
+}
+
+/*---------------------------------------------------------------------------*/
+
+static void DoInitReadersFromFile( void )
+{
+	PM_TRACE0("DoInitReadersFromFile");
+
+	cl_GetElapsedTimeHighPerformanceWin32();
+
+	cl_InitReadersFromFile();
+
+	cl64 elapsedTime = cl_GetElapsedTimeHighPerformanceWin32();
+	pm_trace0("DoInitReadersFromFile:[%d ms]", elapsedTime);
+}
+
+/*---------------------------------------------------------------------------*\
+ * If it is in state != STATE_CONNECT => Connect else => DISCONNECT
+ */
+static void DoChangeStateReader( void )
+{
+	e_Result    status = CL_ERROR;
+
+	t_Reader tReaderFilter;
+	t_Reader *pReaderFromList = CL_NULL;
+
+	clu8 friendlyName[64] = "03 0E 0D 67";
+	clu8 portName[64] = "COM3";
+
+	PM_TRACE0("DoConnectReader");
+	cl_GetElapsedTimeHighPerformanceWin32();
+
+	if ( CL_FAILED( cl_ReaderFillWithDefaultFields( &tReaderFilter, COM_READER_TYPE ) ) )
+	{
+		pm_trace0("ReaderFillWithDefaultFields:FAILED");
+		return;
+	}
+
+	// Friendly name
+	memset( tReaderFilter.aucLabel, 0, sizeof( tReaderFilter.aucLabel ) );
+	memcpy( tReaderFilter.aucLabel, friendlyName, sizeof(friendlyName) );
+
+	// COM parameters
+	// Baud Rate
+	tReaderFilter.tCOMParams.eBaudRate = CL_COM_BAUDRATE_115200;
+	// others ...
+    tReaderFilter.tCOMParams.eByteSize = CL_COM_BYTESIZE_8BITS;
+    tReaderFilter.tCOMParams.eParityBits = CL_COM_PARITYBIT_NONE;
+    tReaderFilter.tCOMParams.eStopBits = CL_COM_STOPBITS_10BIT;
+	// port name COM3
+    memset( tReaderFilter.tCOMParams.aucPortName, 0, sizeof( tReaderFilter.tCOMParams.aucPortName ) );
+    memcpy( (clvoid*)tReaderFilter.tCOMParams.aucPortName, (clvoid*)portName, strlen( (const cl8*)portName ) );
+
+    if ( CL_FAILED( status = cl_readerFindInList( &pReaderFromList, &tReaderFilter ) ) )
+    {
+    	pm_trace0("Reader in reader list:NOT FOUND");
+        return;
+    }
+
+    if ( pReaderFromList == CL_NULL )
+    {
+    	pm_trace0("Pointer to Reader in reader list:NULL");
+        return;
+    }
+
+    if ( pReaderFromList->eState != STATE_CONNECT )
+	{
+    	// change reader state
+		if ( pReaderFromList->eState != STATE_OTA )
+			cl_ReaderSetState( pReaderFromList, STATE_CONNECT);
+	}
+    else
+    {
+        if ((pReaderFromList->eState != STATE_DISCONNECT ) & ( pReaderFromList->eState != STATE_DISCOVER ))
+        {
+            // disconnect from lower layer
+            cl_ReaderSetState( pReaderFromList, STATE_DISCONNECT );
+        }
+    }
+
+    pm_trace0("DoChangeStateReader:[%d ms]", cl_GetElapsedTimeHighPerformanceWin32());
+}
+
+/*---------------------------------------------------------------------------*/
+
+void DoChangeStateReaderNEW( void )
+{
+	e_Result 	status = CL_ERROR;
+	clu8 friendlyName[64] = "03 0E 0D 67";
+	t_Reader 	theReader;
+	t_Reader 	*pReaderFromList;
+
+	status = cl_InitReaderFromFile(friendlyName, &theReader);
+	if ( status == CL_PARAMS_ERR )
+	{
+		pm_trace0("Reader not foud in readerlist file !");
+	}
+
+	if ( CL_FAILED( cl_readerFindInList( &pReaderFromList, &theReader ) ) )
+	{
+		pm_trace0("Reader not foud in CLS reader list !");
+
+		// Si le reader n'est pas dans la liste on ne pourra pas
+		// lui envoyer de commandes, on return
+		return;
+	}
+}
+
+/*---------------------------------------------------------------------------*/
+
+static void DoSendDataToReader( void )
+{
+	clu8 		friendlyName[64] = "03 0E 0D 67";
+	bool 		readerOk = false;
+	t_Reader 	theReader;
+	t_Reader 	*pReaderFromList;
+	t_clContext *pCtxt = CL_NULL;
+    e_Result 	status = CL_ERROR;
+
+	clu8        *pBuffForNet = CL_NULL;
+	t_Tuple     *pTuple2Send = CL_NULL;
+	clu32       clu32TsfNb  = 0;
+
+	status = cl_InitReaderFromFile(friendlyName, &theReader);
+	if ( status == CL_PARAMS_ERR )
+	{
+		pm_trace0("Reader not foud in readerlist file !");
+	}
+
+	// Is Reader already in the list of CSL readers list
+	if ( CL_FAILED( cl_readerFindInList( &pReaderFromList, &theReader ) ) )
+	{
+		pm_trace0("Reader not foud in CLS reader list !");
+
+		// Si le reader n'est pas dans la liste on ne pourra pas
+		// lui envoyer de commandes, on return
+		return;
+	}
+
+	if ( pReaderFromList )
+	{
+		if ( pReaderFromList->eState == STATE_CONNECT )
+		{
+			pm_trace0("Reader in state CONNECTED");
+			readerOk = true;
+		}
+		else
+		{
+			pm_trace0("Reader not CONNECTED");
+		}
+	}
+
+	if (readerOk == true )
+	{
+	        // get data to send
+//	        QByteArray StringUTF8 = pCmdLineToClear->text().toUtf8();
+//	        QByteArray Data2Send = QByteArray::fromHex( StringUTF8 );
+
+		clu8 dataToSendAscii[6] = "010101";
+		clu8 dataToSend[3];
+		clu32 dataToSendLenght = 3;
+		clu8    *pData = dataToSend;
+
+		ConvertASCIToHex(dataToSendAscii, 6, dataToSend, &dataToSendLenght);
+
+		if ( !pData ) return;
+
+		// get context to have access to function pointers for memory/thread management on platform
+		if ( CL_FAILED(status =  cl_GetContext( &pCtxt )) )
+			return;
+
+		// check input parameters
+		if ( pCtxt->ptHalFuncs == CL_NULL ) return;
+
+		if ( pCtxt->ptHalFuncs->fnAllocMem == CL_NULL ) return;
+
+		// allocate buffer for data to send
+		if ( CL_FAILED( csl_pmalloc( (clvoid **) &pBuffForNet, sizeof(dataToSend)))) return;
+
+		// allocate tuple which holds the data
+		if ( CL_FAILED( csl_pmalloc( (clvoid **) &pTuple2Send, sizeof(t_Tuple)))) return;
+
+		// save data in buffer
+		memcpy( pBuffForNet, pData, sizeof(dataToSend) );
+
+		// initialize a tuple default flags with memory
+		if ( CL_SUCCESS( cl_initTuple( pTuple2Send, CL_NULL, &pBuffForNet, sizeof(dataToSend) ) ) )
+		{
+			// now send to the device Dev4Test connected an unknown reader
+			//( t_Device *pDevice, t_Reader *pReader, t_Tuple *pTuple, e_CallType TsfType, clu32 *pTsfNb )
+			cl_sendData( (t_Device*)CL_NULL, pReaderFromList, pTuple2Send, NON_BLOCKING, &clu32TsfNb );
+		}
+
+//		/* clean up the interface*/
+//		pCmdLineToClear->setText(QString(""));
+	}
+}
+
+/*---------------------------------------------------------------------------*\
+ * The question is : after the first DoSendDataToReader
+ * What do we have to do to send new data ?
+\*---------------------------------------------------------------------------*/
+
+static void DoSendNewDataToReader( void )
+{
+	clu8 		friendlyName[64] = "03 0E 0D 67";
+	bool 		readerOk = false;
+	t_Reader 	theReader;
+	t_Reader 	*pReaderFromList;
+	t_clContext *pCtxt = CL_NULL;
+    e_Result 	status = CL_ERROR;
+
+	clu8        *pBuffForNet = CL_NULL;
+	t_Tuple     *pTuple2Send = CL_NULL;
+	clu32       clu32TsfNb  = 0;
+
+	// Is Reader already in the list of CSL readers list
+	if ( CL_FAILED( cl_readerFindInList( &pReaderFromList, &theReader ) ) )
+	{
+		pm_trace0("Reader not foud in CLS reader list !");
+
+		// Si le reader n'est pas dans la liste on ne pourra pas
+		// lui envoyer de commandes, on return
+		return;
+	}
+
+	if ( pReaderFromList )
+	{
+		if ( pReaderFromList->eState == STATE_CONNECT )
+		{
+			pm_trace0("Reader in state CONNECTED");
+			readerOk = true;
+		}
+		else
+		{
+			pm_trace0("Reader not CONNECTED");
+			//return; // j'envoie au reader meme deceonnecté
+		}
+	}
+
+	if (readerOk == true )
+	{
+
+		clu8 dataToSendAscii[6] = "010101";
+		clu8 dataToSend[3];
+		clu32 dataToSendLenght = 3;
+		clu8    *pData = dataToSend;
+
+		ConvertASCIToHex(dataToSendAscii, 6, dataToSend, &dataToSendLenght);
+
+		// allocate buffer for data to send
+		if ( CL_FAILED( csl_pmalloc( (clvoid **) &pBuffForNet, sizeof(dataToSend)))) return;
+
+		// allocate tuple which holds the data
+		if ( CL_FAILED( csl_pmalloc( (clvoid **) &pTuple2Send, sizeof(t_Tuple)))) return;
+
+		// save data in buffer
+		memcpy( pBuffForNet, pData, sizeof(dataToSend) );
+
+		// initialize a tuple default flags with memory
+		if ( CL_SUCCESS( cl_initTuple( pTuple2Send, CL_NULL, &pBuffForNet, sizeof(dataToSend) ) ) )
+		{
+			// now send to the device Dev4Test connected an unknown reader
+			//( t_Device *pDevice, t_Reader *pReader, t_Tuple *pTuple, e_CallType TsfType, clu32 *pTsfNb )
+			cl_sendData( (t_Device*)CL_NULL, pReaderFromList, pTuple2Send, NON_BLOCKING, &clu32TsfNb );
+		}
+
+//		/* clean up the interface*/
+//		pCmdLineToClear->setText(QString(""));
+	}
+}
+
+/*---------------------------------------------------------------------------*/
+
+static void DoInit( void )
+{
+	PM_TRACE0("CSL Init");
+
+	DoInitCOM_CSL();
+	c_printf("DoInit OK\n");
+
+	DoInitReadersFromFile();
+	c_printf("DoInitReadersFromFile OK\n");
+
+	DoChangeStateReader(); // Connect the Reader
+	c_printf("DoChangeStateReader OK\n");
+}
+
+/*---------------------------------------------------------------------------*/
+
+static void DoClose( void )
+{
+	e_Result status = CL_ERROR;
+
+	if ( IsClosed == false )
+	{
+		pm_trace0("DoClose: BEGIN");
+		status = csl_Close();
+		pm_trace0("DoClose: END with status :%d", status);
+	}
+	else
+	{
+		pm_trace0("Closed by user");
+	}
+}
+
+/*--------------------------------------------------------------------------*/
+
+PMMENU_BEGIN(CSLSendData, "CLS Send Data to Reader")
+    PMMENU_ITEM_EX(1, "Init CSL for COM", 			DoInitCOM_CSL)
+    PMMENU_ITEM_EX(2, "Close CSL", 					DoClose_CSL)
+    PMMENU_ITEM_EX(3, "Init Readers From File", 	DoInitReadersFromFile)
+    PMMENU_ITEM_EX(4, "Connect/Disconnect Reader", 	DoChangeStateReader)
+    PMMENU_ITEM_EX(5, "Send data to Reader", 		DoSendDataToReader)
+	PMMENU_ITEM_EX(6, "Send new data to Reader", 	DoSendNewDataToReader)
+PMMENU_END()
+
+/*--------------------------------------------------------------------------*/
+
+//PMMENU_DEFAULT_HANDLER(CLSInit)
+
+/*---------------------------------------------------------------------------*/
+
+PMMENU_HANDLER(CSLSendData)
+{
+    PMMENU_CHOICE_BEGIN()
+		PMMENU_CASE_INIT(DoInit);
+        PMMENU_CASE_CLOSE(DoClose);
+	PMMENU_CHOICE_END()
+}

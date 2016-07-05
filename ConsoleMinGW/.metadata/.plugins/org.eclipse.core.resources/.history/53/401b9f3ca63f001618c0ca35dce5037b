@@ -1,0 +1,44 @@
+/*--------------------------------------------------------------------------*\
+ * TestMain.c 
+ * Copyright (c) 1998-2000 AbyreSoft. All rights reserved.
+\*--------------------------------------------------------------------------*/
+
+#include "pmEnv.h"
+#include "cMenu.h"
+#include "cXCore.h"
+
+/*--------------------------------------------------------------------------*/
+
+PMMENU_DECLARE(TReadThread);
+PMMENU_DECLARE(TWriteThread);
+PMMENU_DECLARE(TMultiReader);
+PMMENU_DECLARE(Threading);
+PMMENU_DECLARE(Trace);
+PMMENU_DECLARE(MemDbg);
+PMMENU_DECLARE(String);
+PMMENU_DECLARE(Time);
+PMMENU_DECLARE(SerialPortCOM);
+
+/*--------------------------------------------------------------------------*/
+void NT_TestMain(void)
+{
+    pm_xstack_reset_usage();
+    pm_xstack_dump_usage();
+    pm_xthread_init();
+
+    PMMenu_InitializeMainMenu();
+
+    PMMENU_USE(Threading);
+	PMMENU_USE(Trace);
+	PMMENU_USE(MemDbg);
+    PMMENU_USE(String);
+    PMMENU_USE(Time);
+    PMMENU_USE(SerialPortCOM);
+
+    PMMenu_ExecuteMainMenu();
+    PMMenu_DeleteMainMenu();
+
+    pm_xstack_dump_usage();
+    pm_xmemdbg_dump_state();
+    pm_xthread_term();
+}

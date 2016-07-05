@@ -1,0 +1,953 @@
+18:00:25 **** Rebuild of configuration Debug for project CSLLib ****
+Info: Configuration "Debug" uses tool-chain "MinGW GCC" that is unsupported on this system, attempting to build anyway.
+Info: Internal Builder is used for build
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "ScriptingEngine\\script_engine.o" "..\\ScriptingEngine\\script_engine.c" 
+..\ScriptingEngine\script_engine.c: In function 'script_ProcessFile':
+..\ScriptingEngine\script_engine.c:41:15: warning: unused variable 'cmdType' [-Wunused-variable]
+  e_HciCmdType cmdType   =  HCI_UNKNOWN_CMD;
+               ^
+..\ScriptingEngine\script_engine.c:40:12: warning: unused variable 'pTupleReceived' [-Wunused-variable]
+  t_Tuple  *pTupleReceived =  CL_NULL;
+            ^
+..\ScriptingEngine\script_engine.c:39:13: warning: unused variable 'pTuple' [-Wunused-variable]
+  t_Tuple   *pTuple   =  CL_NULL;
+             ^
+..\ScriptingEngine\script_engine.c: In function 'cl_GetScriptCommand':
+..\ScriptingEngine\script_engine.c:239:8: warning: implicit declaration of function 'cls_pmalloc' [-Wimplicit-function-declaration]
+        if ( CL_FAILED( ( cls_pmalloc( (void **)&p_ScriptData, sizeof( t_ScriptData ) )) ) )
+        ^
+..\ScriptingEngine\script_engine.c: In function 'cl_ScriptRegisterReader':
+..\ScriptingEngine\script_engine.c:502:2: warning: pointer targets in passing argument 1 of 'atoi' differ in signedness [-Wpointer-sign]
+  tReader.tIPParams.u32Port = atoi( p_ScriptData->pData );
+  ^
+In file included from ..\ScriptingEngine\script_engine.c:19:0:
+C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/stdlib.h:346:15: note: expected 'const char *' but argument is of type 'unsigned char *'
+   int __cdecl atoi(const char *_Str);
+               ^
+..\ScriptingEngine\script_engine.c:401:12: warning: unused variable 'pFoundReader' [-Wunused-variable]
+  t_Reader *pFoundReader = CL_NULL;
+            ^
+..\ScriptingEngine\script_engine.c: In function 'cl_ScriptDelay':
+..\ScriptingEngine\script_engine.c:697:2: warning: pointer targets in passing argument 1 of 'atoi' differ in signedness [-Wpointer-sign]
+  clu32Period = atoi( p_Script->pNext->pData );
+  ^
+In file included from ..\ScriptingEngine\script_engine.c:19:0:
+C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/stdlib.h:346:15: note: expected 'const char *' but argument is of type 'unsigned char *'
+   int __cdecl atoi(const char *_Str);
+               ^
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "porting\\win32\\netal_win32.o" "..\\porting\\win32\\netal_win32.c" 
+..\porting\win32\netal_win32.c: In function 'cl_NetwSendDataWin32':
+..\porting\win32\netal_win32.c:171:14: warning: unused variable 'sin' [-Wunused-variable]
+  SOCKADDR_IN sin = { 0 };
+              ^
+..\porting\win32\netal_win32.c:168:14: warning: unused variable 'ptTuple' [-Wunused-variable]
+     t_Tuple *ptTuple  = CL_NULL;
+              ^
+..\porting\win32\netal_win32.c:167:9: warning: unused variable 'pTrailerData' [-Wunused-variable]
+  clu8  *pTrailerData  = CL_NULL;
+         ^
+..\porting\win32\netal_win32.c: In function 'cl_NetwOpenConnectionWin32':
+..\porting\win32\netal_win32.c:470:2: warning: pointer targets in passing argument 1 of 'inet_addr' differ in signedness [-Wpointer-sign]
+  sin.sin_addr.s_addr = inet_addr( pReader->tIPParams.aucIpAddr );  //= *pReader->u64IpAddr; /* l'adresse se trouve dans le champ h_addr de la structure hostinfo */
+  ^
+In file included from ..\porting\win32\netal_win32.c:23:0:
+C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/winsock2.h:985:48: note: expected 'const char *' but argument is of type 'unsigned char *'
+   WINSOCK_API_LINKAGE unsigned __LONG32 WSAAPI inet_addr(const char *cp);
+                                                ^
+..\porting\win32\netal_win32.c:455:8: warning: unused variable 'u32BroadcastOpt' [-Wunused-variable]
+  clu32 u32BroadcastOpt  = 1;
+        ^
+..\porting\win32\netal_win32.c:454:17: warning: unused variable 'timeout' [-Wunused-variable]
+  struct timeval timeout;
+                 ^
+..\porting\win32\netal_win32.c: In function 'cl_NetwOpenConnectionDiscoverWin32':
+..\porting\win32\netal_win32.c:665:5: warning: passing argument 1 of 'g_tCtxt.ptHalFuncs->fnTrace0' makes pointer from integer without a cast [enabled by default]
+     DEBUG_PRINTF( errno );
+     ^
+..\porting\win32\netal_win32.c:665:5: note: expected 'char *' but argument is of type 'int'
+..\porting\win32\netal_win32.c:615:17: warning: unused variable 'timeout' [-Wunused-variable]
+  struct timeval timeout;
+                 ^
+..\porting\win32\netal_win32.c:613:8: warning: unused variable 'cl8OptFlag' [-Wunused-variable]
+  cl8   cl8OptFlag  = 1;
+        ^
+..\porting\win32\netal_win32.c: In function 'cl_NetwSendDataDiscoverWin32':
+..\porting\win32\netal_win32.c:768:2: warning: pointer targets in passing argument 1 of 'inet_addr' differ in signedness [-Wpointer-sign]
+  sin.sin_addr.s_addr = inet_addr( pReader->tIPParams.aucIpAddr );  //= *pReader->u64IpAddr; /* l'adresse se trouve dans le champ h_addr de la structure hostinfo */
+  ^
+In file included from ..\porting\win32\netal_win32.c:23:0:
+C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/winsock2.h:985:48: note: expected 'const char *' but argument is of type 'unsigned char *'
+   WINSOCK_API_LINKAGE unsigned __LONG32 WSAAPI inet_addr(const char *cp);
+                                                ^
+..\porting\win32\netal_win32.c:721:15: warning: unused variable 'ptTuple' [-Wunused-variable]
+     t_Tuple  *ptTuple  = CL_NULL;
+               ^
+..\porting\win32\netal_win32.c:720:10: warning: unused variable 'pTrailerData' [-Wunused-variable]
+  clu8   *pTrailerData  = CL_NULL;
+          ^
+..\porting\win32\netal_win32.c: In function 'cl_NetwGetDataDiscoverWin32':
+..\porting\win32\netal_win32.c:928:2: warning: passing argument 6 of 'recvfrom' from incompatible pointer type [enabled by default]
+  cl32Len = recvfrom( (SOCKET)pReader->u64Handle, (cl8 *)pData, 2048, 0, ( SOCKADDR *)&sin, (cl32 *)&cl32FromLen );
+  ^
+In file included from ..\porting\win32\netal_win32.c:23:0:
+C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/winsock2.h:993:34: note: expected 'int *' but argument is of type 'long int *'
+   WINSOCK_API_LINKAGE int WSAAPI recvfrom(SOCKET s,char *buf,int len,int flags,struct sockaddr *from,int *fromlen);
+                                  ^
+..\porting\win32\netal_win32.c:933:15: warning: 'erroris' may be used uninitialized in this function [-Wmaybe-uninitialized]
+   DEBUG_PRINTF("Error is %x", erroris);
+               ^
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o csl.o "..\\csl.c" 
+In file included from ..\csl.c:16:0:
+..\csl.h:629:9: warning: initialization from incompatible pointer type [enabled by default]
+         .fnCreateThread   =  cl_CreateThreadWin32 ,
+         ^
+..\csl.h:629:9: warning: (near initialization for 'g_tHalFunc.fnCreateThread') [enabled by default]
+..\csl.h:632:9: warning: initialization from incompatible pointer type [enabled by default]
+         .fnAllocMem    = cl_AllocMemWin32     ,
+         ^
+..\csl.h:632:9: warning: (near initialization for 'g_tHalFunc.fnAllocMem') [enabled by default]
+..\csl.h:771:17: warning: initialization makes pointer from integer without a cast [enabled by default]
+                 CSL_SERIAL_MAX_REPEATS, /// hold retries count for serial low layer repeat protocol
+                 ^
+..\csl.h:771:17: warning: (near initialization for 'g_tCSLDefaultReader.tParsingParams.pDataStart') [enabled by default]
+..\csl.h:772:17: warning: initialization makes pointer from integer without a cast [enabled by default]
+                 CL_SERIAL_PROT_DEFAULT, // default status of synchronization between write and read threads
+                 ^
+..\csl.h:772:17: warning: (near initialization for 'g_tCSLDefaultReader.tParsingParams.pDataEnd') [enabled by default]
+..\csl.h:773:17: warning: excess elements in struct initializer [enabled by default]
+                 NON_BLOCKING, // specify BLOCKING read or asynchronous read via callbacks
+                 ^
+..\csl.h:773:17: warning: (near initialization for 'g_tCSLDefaultReader.tParsingParams') [enabled by default]
+..\csl.h:775:9: warning: missing braces around initializer [-Wmissing-braces]
+         CL_NULL,   // Tuple list to be sent and attached to this reader
+         ^
+..\csl.h:775:9: warning: (near initialization for 'g_tCSLDefaultReader.tSync') [-Wmissing-braces]
+..\csl.h:777:9: warning: braces around scalar initializer [enabled by default]
+         { // STANDARD TRANSMISSION
+         ^
+..\csl.h:777:9: warning: (near initialization for 'g_tCSLDefaultReader.tSync.mutexReadIncomingWR') [enabled by default]
+..\csl.h:779:17: warning: excess elements in scalar initializer [enabled by default]
+                 CL_NULL,  // callback used when data was pushed out to the reader
+                 ^
+..\csl.h:779:17: warning: (near initialization for 'g_tCSLDefaultReader.tSync.mutexReadIncomingWR') [enabled by default]
+..\csl.h:780:17: warning: excess elements in scalar initializer [enabled by default]
+                 CL_NULL,  // callback used when data is coming from reader
+                 ^
+..\csl.h:780:17: warning: (near initialization for 'g_tCSLDefaultReader.tSync.mutexReadIncomingWR') [enabled by default]
+..\csl.h:781:17: warning: excess elements in scalar initializer [enabled by default]
+                 CL_NULL,  // callback used to signal that the reader changed of state
+                 ^
+..\csl.h:781:17: warning: (near initialization for 'g_tCSLDefaultReader.tSync.mutexReadIncomingWR') [enabled by default]
+..\csl.h:783:9: warning: braces around scalar initializer [enabled by default]
+         { // DISCOVER CALLBACKS
+         ^
+..\csl.h:783:9: warning: (near initialization for 'g_tCSLDefaultReader.tSync.mutexWriteOnPortCom') [enabled by default]
+..\csl.h:785:17: warning: excess elements in scalar initializer [enabled by default]
+                 CL_NULL,  // callback used when data was pushed out to the reader
+                 ^
+..\csl.h:785:17: warning: (near initialization for 'g_tCSLDefaultReader.tSync.mutexWriteOnPortCom') [enabled by default]
+..\csl.h:786:17: warning: excess elements in scalar initializer [enabled by default]
+                 CL_NULL,  // callback used when data is coming from reader
+                 ^
+..\csl.h:786:17: warning: (near initialization for 'g_tCSLDefaultReader.tSync.mutexWriteOnPortCom') [enabled by default]
+..\csl.h:787:17: warning: excess elements in scalar initializer [enabled by default]
+                 CL_NULL,  // callback used to signal that the reader changed of state
+                 ^
+..\csl.h:787:17: warning: (near initialization for 'g_tCSLDefaultReader.tSync.mutexWriteOnPortCom') [enabled by default]
+..\csl.h:789:9: warning: braces around scalar initializer [enabled by default]
+         {  // TCP or COM standard DATA
+         ^
+..\csl.h:789:9: warning: (near initialization for 'g_tCSLDefaultReader.tSync.pSgl4Read') [enabled by default]
+..\csl.h:791:17: warning: excess elements in scalar initializer [enabled by default]
+                 CL_NULL,  // Use default from framework passed in clInit: unregister a reader from library to porting layers
+                 ^
+..\csl.h:791:17: warning: (near initialization for 'g_tCSLDefaultReader.tSync.pSgl4Read') [enabled by default]
+..\csl.h:792:17: warning: excess elements in scalar initializer [enabled by default]
+                 CL_NULL,  // Use default from framework passed in clInit: reset connection to reader
+                 ^
+..\csl.h:792:17: warning: (near initialization for 'g_tCSLDefaultReader.tSync.pSgl4Read') [enabled by default]
+..\csl.h:793:17: warning: excess elements in scalar initializer [enabled by default]
+                 CL_NULL,  // Use default from framework passed in clInit: open connection
+                 ^
+..\csl.h:793:17: warning: (near initialization for 'g_tCSLDefaultReader.tSync.pSgl4Read') [enabled by default]
+..\csl.h:794:17: warning: excess elements in scalar initializer [enabled by default]
+                 CL_NULL,  // Use default from framework passed in clInit: send data
+                 ^
+..\csl.h:794:17: warning: (near initialization for 'g_tCSLDefaultReader.tSync.pSgl4Read') [enabled by default]
+..\csl.h:795:17: warning: excess elements in scalar initializer [enabled by default]
+                 CL_NULL,  // Use default from framework passed in clInit: get data
+                 ^
+..\csl.h:795:17: warning: (near initialization for 'g_tCSLDefaultReader.tSync.pSgl4Read') [enabled by default]
+..\csl.h:796:17: warning: excess elements in scalar initializer [enabled by default]
+                 CL_NULL,  // Use default from framework passed in clInit: close connection to reader
+                 ^
+..\csl.h:796:17: warning: (near initialization for 'g_tCSLDefaultReader.tSync.pSgl4Read') [enabled by default]
+..\csl.h:797:17: warning: excess elements in scalar initializer [enabled by default]
+                 CL_NULL,  // Use default from framework passed in clInit: get DNS table
+                 ^
+..\csl.h:797:17: warning: (near initialization for 'g_tCSLDefaultReader.tSync.pSgl4Read') [enabled by default]
+..\csl.h:798:17: warning: excess elements in scalar initializer [enabled by default]
+                 CL_NULL,  // Use default from framework passed in clInit: set ip range
+                 ^
+..\csl.h:798:17: warning: (near initialization for 'g_tCSLDefaultReader.tSync.pSgl4Read') [enabled by default]
+..\csl.h:800:9: warning: braces around scalar initializer [enabled by default]
+         {  // DISCOVER
+         ^
+..\csl.h:800:9: warning: (near initialization for 'g_tCSLDefaultReader.tSync.pSgl4Write') [enabled by default]
+..\csl.h:802:17: warning: excess elements in scalar initializer [enabled by default]
+                 CL_NULL,  // Use default from framework passed in clInit: unregister a reader from library to porting layers
+                 ^
+..\csl.h:802:17: warning: (near initialization for 'g_tCSLDefaultReader.tSync.pSgl4Write') [enabled by default]
+..\csl.h:803:17: warning: excess elements in scalar initializer [enabled by default]
+                 CL_NULL,  // Use default from framework passed in clInit: reset connection to reader
+                 ^
+..\csl.h:803:17: warning: (near initialization for 'g_tCSLDefaultReader.tSync.pSgl4Write') [enabled by default]
+..\csl.h:804:17: warning: excess elements in scalar initializer [enabled by default]
+                 CL_NULL,  // Use default from framework passed in clInit: open connection
+                 ^
+..\csl.h:804:17: warning: (near initialization for 'g_tCSLDefaultReader.tSync.pSgl4Write') [enabled by default]
+..\csl.h:805:17: warning: excess elements in scalar initializer [enabled by default]
+                 CL_NULL,  // Use default from framework passed in clInit: send data
+                 ^
+..\csl.h:805:17: warning: (near initialization for 'g_tCSLDefaultReader.tSync.pSgl4Write') [enabled by default]
+..\csl.h:806:17: warning: excess elements in scalar initializer [enabled by default]
+                 CL_NULL,  // Use default from framework passed in clInit: get data
+                 ^
+..\csl.h:806:17: warning: (near initialization for 'g_tCSLDefaultReader.tSync.pSgl4Write') [enabled by default]
+..\csl.h:807:17: warning: excess elements in scalar initializer [enabled by default]
+                 CL_NULL,  // Use default from framework passed in clInit: close connection to reader
+                 ^
+..\csl.h:807:17: warning: (near initialization for 'g_tCSLDefaultReader.tSync.pSgl4Write') [enabled by default]
+..\csl.h:808:17: warning: excess elements in scalar initializer [enabled by default]
+                 CL_NULL,  // Use default from framework passed in clInit: get DNS table
+                 ^
+..\csl.h:808:17: warning: (near initialization for 'g_tCSLDefaultReader.tSync.pSgl4Write') [enabled by default]
+..\csl.h:809:17: warning: excess elements in scalar initializer [enabled by default]
+                 CL_NULL,  // Use default from framework passed in clInit: set ip range
+                 ^
+..\csl.h:809:17: warning: (near initialization for 'g_tCSLDefaultReader.tSync.pSgl4Write') [enabled by default]
+..\csl.h:811:9: warning: braces around scalar initializer [enabled by default]
+         {
+         ^
+..\csl.h:811:9: warning: (near initialization for 'g_tCSLDefaultReader.tSync.pSgl4WriteComplete') [enabled by default]
+..\csl.h:812:11: warning: braces around scalar initializer [enabled by default]
+           { 0, 0, 0, 0, 0, 0 }, /// default radio address of the clover sense in the reader
+           ^
+..\csl.h:812:11: warning: (near initialization for 'g_tCSLDefaultReader.tSync.pSgl4WriteComplete') [enabled by default]
+..\csl.h:812:11: warning: excess elements in scalar initializer [enabled by default]
+..\csl.h:812:11: warning: (near initialization for 'g_tCSLDefaultReader.tSync.pSgl4WriteComplete') [enabled by default]
+..\csl.h:812:11: warning: excess elements in scalar initializer [enabled by default]
+..\csl.h:812:11: warning: (near initialization for 'g_tCSLDefaultReader.tSync.pSgl4WriteComplete') [enabled by default]
+..\csl.h:812:11: warning: excess elements in scalar initializer [enabled by default]
+..\csl.h:812:11: warning: (near initialization for 'g_tCSLDefaultReader.tSync.pSgl4WriteComplete') [enabled by default]
+..\csl.h:812:11: warning: excess elements in scalar initializer [enabled by default]
+..\csl.h:812:11: warning: (near initialization for 'g_tCSLDefaultReader.tSync.pSgl4WriteComplete') [enabled by default]
+..\csl.h:812:11: warning: excess elements in scalar initializer [enabled by default]
+..\csl.h:812:11: warning: (near initialization for 'g_tCSLDefaultReader.tSync.pSgl4WriteComplete') [enabled by default]
+..\csl.h:813:11: warning: excess elements in scalar initializer [enabled by default]
+           CL_NULL,   /// pointer on next clover sense board in the reader
+           ^
+..\csl.h:813:11: warning: (near initialization for 'g_tCSLDefaultReader.tSync.pSgl4WriteComplete') [enabled by default]
+..\csl.h:822:9: warning: pointer targets in initialization differ in signedness [-Wpointer-sign]
+         ".\\menu_description.xml",  // get the description of the menu
+         ^
+..\csl.h:822:9: warning: (near initialization for 'g_tMenuFileDef.pMenuDescriptionFile') [-Wpointer-sign]
+..\csl.h:823:9: warning: pointer targets in initialization differ in signedness [-Wpointer-sign]
+         ".\\var_description.xml",  // get the description of the variables ( type, len....)
+         ^
+..\csl.h:823:9: warning: (near initialization for 'g_tMenuFileDef.pMenuVarDescription') [-Wpointer-sign]
+..\csl.h:824:9: warning: pointer targets in initialization differ in signedness [-Wpointer-sign]
+         "menu_var_values.xml",  // get the values of the variables
+         ^
+..\csl.h:824:9: warning: (near initialization for 'g_tMenuFileDef.pMenuVarValues') [-Wpointer-sign]
+..\csl.c: In function 'cl_sendData':
+..\csl.c:64:15: warning: unused variable 'ppCrtTuple' [-Wunused-variable]
+     t_Tuple **ppCrtTuple   = CL_NULL;
+               ^
+..\csl.c:63:8: warning: unused variable 'pTrailerData' [-Wunused-variable]
+  clu8 *pTrailerData   = CL_NULL;
+        ^
+..\csl.c:62:8: warning: unused variable 'pData' [-Wunused-variable]
+  clu8 *pData     = CL_NULL;
+        ^
+..\csl.c:61:8: warning: unused variable 'u32Index' [-Wunused-variable]
+  clu32 u32Index     = 0;
+        ^
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "GenericServices\\clfile.o" "..\\GenericServices\\clfile.c" 
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "porting\\win32\\fileio_win32.o" "..\\porting\\win32\\fileio_win32.c" 
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "porting\\linux\\netal_posix.o" "..\\porting\\linux\\netal_posix.c" 
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "ScriptingEngine\\menu_parser.o" "..\\ScriptingEngine\\menu_parser.c" 
+..\ScriptingEngine\menu_parser.c: In function 'cl_MenuBuild':
+..\ScriptingEngine\menu_parser.c:59:2: warning: pointer targets in passing argument 1 of 'strlen' differ in signedness [-Wpointer-sign]
+  clu32 u32LevelLen   =  (clu32) strlen( pu8Level );
+  ^
+In file included from ..\ScriptingEngine\menu_parser.c:15:0:
+C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/string.h:54:18: note: expected 'const char *' but argument is of type 'unsigned char *'
+   size_t __cdecl strlen(const char *_Str);
+                  ^
+..\ScriptingEngine\menu_parser.c:85:2: warning: pointer targets in passing argument 1 of 'pCtxt->ptHalFuncs->fnFileOpen' differ in signedness [-Wpointer-sign]
+  if ( pCtxt->ptHalFuncs->fnFileOpen( pFile, CL_FILE_BINARY_MODE, &pFileId) != CL_OK ) // file on opening file
+  ^
+..\ScriptingEngine\menu_parser.c:85:2: note: expected 'char *' but argument is of type 'unsigned char *'
+..\ScriptingEngine\menu_parser.c:59:8: warning: variable 'u32LevelLen' set but not used [-Wunused-but-set-variable]
+  clu32 u32LevelLen   =  (clu32) strlen( pu8Level );
+        ^
+..\ScriptingEngine\menu_parser.c: In function 'cl_MenuBuildItem':
+..\ScriptingEngine\menu_parser.c:189:3: warning: passing argument 4 of 'cl_TagGetValue' from incompatible pointer type [enabled by default]
+   if ( CL_FAILED( status = cl_TagGetValue( pFileId, u32StartBlockIndex, u32StopBlockIndex, &pValue, &u32ValueLen, &u32StartValueIndex, &u32StopValueIndex, CL_OK ) ) )
+   ^
+In file included from ..\ScriptingEngine\menu_parser.c:25:0:
+..\ScriptingEngine\..\inc\cltag.h:46:10: note: expected 'char **' but argument is of type 'unsigned char **'
+ e_Result cl_TagGetValue( clvoid *pFileId, clu32 u32StartBoundary, clu32 u32StopBoundary, cl8 **pp8Value, clu32 *pu32ValueLen, clu32 *pu32ValueStartIndex, clu32 *pu32ValueStopIndex, clu8 bRemoveSpaceTrailer );
+          ^
+..\ScriptingEngine\menu_parser.c: In function 'cl_MenuProcessAction':
+..\ScriptingEngine\menu_parser.c:366:17: warning: variable 'eActScript' set but not used [-Wunused-but-set-variable]
+  e_ActionScript eActScript = ACTION_SCRIPT_UNKNOWN;
+                 ^
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "GenericServices\\cllist.o" "..\\GenericServices\\cllist.c" 
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "Devices\\cldevices.o" "..\\Devices\\cldevices.c" 
+..\Devices\cldevices.c: In function 'cl_DeviceAddToList':
+..\Devices\cldevices.c:187:22: warning: assignment from incompatible pointer type [enabled by default]
+   pCrtDevice->ptNext = (struct t_Device *)pDeviceAllocated;
+                      ^
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "porting\\win64\\netal_win64.o" "..\\porting\\win64\\netal_win64.c" 
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "GenericServices\\cltuple.o" "..\\GenericServices\\cltuple.c" 
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "porting\\linux\\fileio_posix.o" "..\\porting\\linux\\fileio_posix.c" 
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "GenericServices\\cltag.o" "..\\GenericServices\\cltag.c" 
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "Readers\\clreaders.o" "..\\Readers\\clreaders.c" 
+..\Readers\clreaders.c: In function 'cl_InitReadersFromFile':
+..\Readers\clreaders.c:340:7: warning: enumeration value 'READER_TYPE_MASK' not handled in switch [-Wswitch]
+       switch ( eType)
+       ^
+..\Readers\clreaders.c:340:7: warning: enumeration value 'LANTRONIX_READER_TYPE' not handled in switch [-Wswitch]
+..\Readers\clreaders.c:340:7: warning: enumeration value 'UNKNOWN_READER_TYPE' not handled in switch [-Wswitch]
+..\Readers\clreaders.c: In function 'cl_readerAddToList':
+..\Readers\clreaders.c:796:7: warning: unused variable 'u8Index' [-Wunused-variable]
+  clu8 u8Index    = 0;
+       ^
+..\Readers\clreaders.c: In function 'OLD_THING_THAT_STINKS_cl_readerAddToList':
+..\Readers\clreaders.c:1278:7: warning: unused variable 'u8Index' [-Wunused-variable]
+  clu8 u8Index    = 0;
+       ^
+..\Readers\clreaders.c: In function 'cl_ReaderStartThreads':
+..\Readers\clreaders.c:2119:2: warning: passing argument 6 of 'CreateThread' from incompatible pointer type [enabled by default]
+  );
+  ^
+In file included from C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/winbase.h:29:0,
+                 from C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/windows.h:70,
+                 from ..\Readers\clreaders.c:24:
+C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/processthreadsapi.h:84:28: note: expected 'LPDWORD' but argument is of type 'void **'
+   WINBASEAPI HANDLE WINAPI CreateThread (LPSECURITY_ATTRIBUTES lpThreadAttributes, SIZE_T dwStackSize, LPTHREAD_START_ROUTINE lpStartAddress, LPVOID lpParameter, DWORD dwCreationFlags, LPDWORD lpThreadId);
+                            ^
+..\Readers\clreaders.c: In function 'OLD_THING_THAT_STINKS_cl_ReaderRemoveFromList':
+..\Readers\clreaders.c:2729:11: warning: unused variable 'pNextTuple' [-Wunused-variable]
+  t_Tuple *pNextTuple  = CL_NULL;
+           ^
+..\Readers\clreaders.c:2728:11: warning: unused variable 'pCrtTuple' [-Wunused-variable]
+  t_Tuple *pCrtTuple  = CL_NULL;
+           ^
+..\Readers\clreaders.c: In function 'cl_ReaderRegistrationThread':
+..\Readers\clreaders.c:3069:6: warning: pointer targets in passing argument 2 of 'itoa' differ in signedness [-Wpointer-sign]
+      itoa( (clu32)i64Range, &tLocalReader.tCOMParams.aucPortName[3], 10 );
+      ^
+In file included from ..\Readers\clreaders.c:15:0:
+C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/stdlib.h:610:17: note: expected 'char *' but argument is of type 'unsigned char *'
+   char *__cdecl itoa(int _Val,char *_DstBuf,int _Radix) __MINGW_ATTRIB_DEPRECATED_MSVC2005;
+                 ^
+..\Readers\clreaders.c:3097:18: warning: pointer targets in assignment differ in signedness [-Wpointer-sign]
+        pDiscover = &ac8COMDiscover[0];
+                  ^
+..\Readers\clreaders.c:3151:17: warning: pointer targets in passing argument 1 of 'strcat' differ in signedness [-Wpointer-sign]
+                 strcat( tLocalReader.tIPParams.aucIpAddr, aucTempName );
+                 ^
+In file included from ..\Readers\clreaders.c:14:0:
+C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/string.h:52:18: note: expected 'char * __restrict__' but argument is of type 'unsigned char *'
+   char * __cdecl strcat(char * __restrict__ _Dest,const char * __restrict__ _Source);
+                  ^
+..\Readers\clreaders.c:3152:17: warning: pointer targets in passing argument 1 of 'strcat' differ in signedness [-Wpointer-sign]
+                 strcat( tLocalReader.tIPParams.aucIpAddr, "." );
+                 ^
+In file included from ..\Readers\clreaders.c:14:0:
+C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/string.h:52:18: note: expected 'char * __restrict__' but argument is of type 'unsigned char *'
+   char * __cdecl strcat(char * __restrict__ _Dest,const char * __restrict__ _Source);
+                  ^
+..\Readers\clreaders.c:3155:17: warning: pointer targets in passing argument 1 of 'strcat' differ in signedness [-Wpointer-sign]
+                 strcat( tLocalReader.tIPParams.aucIpAddr, aucTempName );
+                 ^
+In file included from ..\Readers\clreaders.c:14:0:
+C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/string.h:52:18: note: expected 'char * __restrict__' but argument is of type 'unsigned char *'
+   char * __cdecl strcat(char * __restrict__ _Dest,const char * __restrict__ _Source);
+                  ^
+..\Readers\clreaders.c:3156:17: warning: pointer targets in passing argument 1 of 'strcat' differ in signedness [-Wpointer-sign]
+                 strcat( tLocalReader.tIPParams.aucIpAddr, "." );
+                 ^
+In file included from ..\Readers\clreaders.c:14:0:
+C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/string.h:52:18: note: expected 'char * __restrict__' but argument is of type 'unsigned char *'
+   char * __cdecl strcat(char * __restrict__ _Dest,const char * __restrict__ _Source);
+                  ^
+..\Readers\clreaders.c:3159:17: warning: pointer targets in passing argument 1 of 'strcat' differ in signedness [-Wpointer-sign]
+                 strcat( tLocalReader.tIPParams.aucIpAddr, aucTempName );
+                 ^
+In file included from ..\Readers\clreaders.c:14:0:
+C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/string.h:52:18: note: expected 'char * __restrict__' but argument is of type 'unsigned char *'
+   char * __cdecl strcat(char * __restrict__ _Dest,const char * __restrict__ _Source);
+                  ^
+..\Readers\clreaders.c:3160:17: warning: pointer targets in passing argument 1 of 'strcat' differ in signedness [-Wpointer-sign]
+                 strcat( tLocalReader.tIPParams.aucIpAddr, "." );
+                 ^
+In file included from ..\Readers\clreaders.c:14:0:
+C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/string.h:52:18: note: expected 'char * __restrict__' but argument is of type 'unsigned char *'
+   char * __cdecl strcat(char * __restrict__ _Dest,const char * __restrict__ _Source);
+                  ^
+..\Readers\clreaders.c:3163:17: warning: pointer targets in passing argument 1 of 'strcat' differ in signedness [-Wpointer-sign]
+                 strcat( tLocalReader.tIPParams.aucIpAddr, aucTempName );
+                 ^
+In file included from ..\Readers\clreaders.c:14:0:
+C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/string.h:52:18: note: expected 'char * __restrict__' but argument is of type 'unsigned char *'
+   char * __cdecl strcat(char * __restrict__ _Dest,const char * __restrict__ _Source);
+                  ^
+..\Readers\clreaders.c:3167:17: warning: pointer targets in passing argument 1 of 'strcat' differ in signedness [-Wpointer-sign]
+                 strcat( tLocalReader.aucLabel, tLocalReader.tIPParams.aucIpAddr);
+                 ^
+In file included from ..\Readers\clreaders.c:14:0:
+C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/string.h:52:18: note: expected 'char * __restrict__' but argument is of type 'unsigned char *'
+   char * __cdecl strcat(char * __restrict__ _Dest,const char * __restrict__ _Source);
+                  ^
+..\Readers\clreaders.c:3167:17: warning: pointer targets in passing argument 2 of 'strcat' differ in signedness [-Wpointer-sign]
+                 strcat( tLocalReader.aucLabel, tLocalReader.tIPParams.aucIpAddr);
+                 ^
+In file included from ..\Readers\clreaders.c:14:0:
+C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/string.h:52:18: note: expected 'const char * __restrict__' but argument is of type 'unsigned char *'
+   char * __cdecl strcat(char * __restrict__ _Dest,const char * __restrict__ _Source);
+                  ^
+..\Readers\clreaders.c:3197:20: warning: pointer targets in assignment differ in signedness [-Wpointer-sign]
+          pDiscover = &ac8IPDiscover[0];
+                    ^
+..\Readers\clreaders.c:2995:9: warning: unused variable 'u8ReaderIndex' [-Wunused-variable]
+  clu8   u8ReaderIndex   = 0;
+         ^
+..\Readers\clreaders.c:2992:14: warning: unused variable 'pReaderAlreadyInList' [-Wunused-variable]
+  t_Reader   *pReaderAlreadyInList  = CL_NULL;
+              ^
+..\Readers\clreaders.c:2991:14: warning: unused variable 'pReader2Register' [-Wunused-variable]
+  t_Reader   *pReader2Register   = CL_NULL;
+              ^
+..\Readers\clreaders.c:2988:18: warning: unused variable 'pRange' [-Wunused-variable]
+  t_ReaderRange  *pRange     = CL_NULL;
+                  ^
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "GenericServices\\clparams.o" "..\\GenericServices\\clparams.c" 
+..\GenericServices\clparams.c: In function 'cl_GetParams':
+..\GenericServices\clparams.c:95:4: warning: pointer targets in passing argument 1 of 'cl_FlOpen' differ in signedness [-Wpointer-sign]
+    if ( CL_FAILED( status = cl_FlOpen( pCtxt->ptMenuFileDef->pMenuVarValues, CL_FILE_BINARY_MODE, &pVarFileId ) ) )
+    ^
+In file included from ..\GenericServices\clparams.c:18:0:
+..\GenericServices\..\inc\clfile.h:34:10: note: expected 'char *' but argument is of type 'unsigned char *'
+ e_Result cl_FlOpen( cl8 *pFileName, e_FileOptions eOpts, clvoid **ppFileId);
+          ^
+..\GenericServices\clparams.c:105:5: warning: implicit declaration of function 'cl_MenuGetBlock' [-Wimplicit-function-declaration]
+     if ( CL_FAILED(  cl_MenuGetBlock( pVarFileId, "<var>", "</var>", u32CrtStartIndex, 0xFFFF, &u32StartBlockIndex, &u32StopBlockIndex ) ) )
+     ^
+..\GenericServices\clparams.c:123:17: warning: passing argument 4 of 'cl_TagGetValue' from incompatible pointer type [enabled by default]
+                 if ( CL_FAILED( status = cl_TagGetValue( pVarFileId, u32StartVarIndex, u32StopVarIndex, &pu8ReadValue, &u32ValueLen, &u32StartValueIndex, &u32StopValueIndex, CL_OK ) ) )
+                 ^
+In file included from ..\GenericServices\clparams.c:20:0:
+..\GenericServices\..\inc\cltag.h:46:10: note: expected 'char **' but argument is of type 'unsigned char **'
+ e_Result cl_TagGetValue( clvoid *pFileId, clu32 u32StartBoundary, clu32 u32StopBoundary, cl8 **pp8Value, clu32 *pu32ValueLen, clu32 *pu32ValueStartIndex, clu32 *pu32ValueStopIndex, clu8 bRemoveSpaceTrailer );
+          ^
+..\GenericServices\clparams.c:177:6: warning: passing argument 4 of 'cl_TagGetValue' from incompatible pointer type [enabled by default]
+      if ( CL_FAILED( status = cl_TagGetValue( pVarFileId, u32StartVarIndex, u32StopVarIndex, &pu8ReadValue, &u32ValueLen, &u32StartValueIndex, &u32StopValueIndex, CL_OK ) ) )
+      ^
+In file included from ..\GenericServices\clparams.c:20:0:
+..\GenericServices\..\inc\cltag.h:46:10: note: expected 'char **' but argument is of type 'unsigned char **'
+ e_Result cl_TagGetValue( clvoid *pFileId, clu32 u32StartBoundary, clu32 u32StopBoundary, cl8 **pp8Value, clu32 *pu32ValueLen, clu32 *pu32ValueStartIndex, clu32 *pu32ValueStopIndex, clu8 bRemoveSpaceTrailer );
+          ^
+..\GenericServices\clparams.c:59:9: warning: unused variable 'u32Index' [-Wunused-variable]
+  clu32  u32Index   = 0;
+         ^
+..\GenericServices\clparams.c: In function 'cl_SetParams':
+..\GenericServices\clparams.c:293:4: warning: pointer targets in passing argument 1 of 'cl_FlOpen' differ in signedness [-Wpointer-sign]
+    if ( CL_FAILED( status = cl_FlOpen( pCtxt->ptMenuFileDef->pMenuVarValues, CL_FILE_BINARY_MODE, &pVarFileId ) ) )
+    ^
+In file included from ..\GenericServices\clparams.c:18:0:
+..\GenericServices\..\inc\clfile.h:34:10: note: expected 'char *' but argument is of type 'unsigned char *'
+ e_Result cl_FlOpen( cl8 *pFileName, e_FileOptions eOpts, clvoid **ppFileId);
+          ^
+..\GenericServices\clparams.c:322:17: warning: passing argument 4 of 'cl_TagGetValue' from incompatible pointer type [enabled by default]
+                 if ( CL_FAILED( status = cl_TagGetValue( pVarFileId, u32StartVarIndex, u32StopVarIndex, &pu8ReadValue, &u32Len, &u32StartValueIndex, &u32StopValueIndex, CL_OK ) ) )
+                 ^
+In file included from ..\GenericServices\clparams.c:20:0:
+..\GenericServices\..\inc\cltag.h:46:10: note: expected 'char **' but argument is of type 'unsigned char **'
+ e_Result cl_TagGetValue( clvoid *pFileId, clu32 u32StartBoundary, clu32 u32StopBoundary, cl8 **pp8Value, clu32 *pu32ValueLen, clu32 *pu32ValueStartIndex, clu32 *pu32ValueStopIndex, clu8 bRemoveSpaceTrailer );
+          ^
+..\GenericServices\clparams.c:372:6: warning: passing argument 4 of 'cl_TagGetValue' from incompatible pointer type [enabled by default]
+      if ( CL_FAILED( status = cl_TagGetValue( pVarFileId, u32StartVarIndex, u32StopVarIndex, &pu8ReadValue, &u32Len, &u32StartValueIndex, &u32StopValueIndex, CL_OK ) ) )
+      ^
+In file included from ..\GenericServices\clparams.c:20:0:
+..\GenericServices\..\inc\cltag.h:46:10: note: expected 'char **' but argument is of type 'unsigned char **'
+ e_Result cl_TagGetValue( clvoid *pFileId, clu32 u32StartBoundary, clu32 u32StopBoundary, cl8 **pp8Value, clu32 *pu32ValueLen, clu32 *pu32ValueStartIndex, clu32 *pu32ValueStopIndex, clu8 bRemoveSpaceTrailer );
+          ^
+..\GenericServices\clparams.c:386:6: warning: pointer targets in passing argument 1 of 'atoi' differ in signedness [-Wpointer-sign]
+      if ( !( u32VarMaxLen = atoi( pu8ReadValue ) ) )
+      ^
+In file included from ..\GenericServices\clparams.c:15:0:
+C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/stdlib.h:346:15: note: expected 'const char *' but argument is of type 'unsigned char *'
+   int __cdecl atoi(const char *_Str);
+               ^
+..\GenericServices\clparams.c:402:6: warning: passing argument 4 of 'cl_TagGetValue' from incompatible pointer type [enabled by default]
+      if ( CL_FAILED( status = cl_TagGetValue( pVarFileId, u32StartVarIndex, u32StopVarIndex, &pu8ReadValue, &u32Len, &u32StartValueIndex, &u32StopValueIndex, CL_OK ) ) )
+      ^
+In file included from ..\GenericServices\clparams.c:20:0:
+..\GenericServices\..\inc\cltag.h:46:10: note: expected 'char **' but argument is of type 'unsigned char **'
+ e_Result cl_TagGetValue( clvoid *pFileId, clu32 u32StartBoundary, clu32 u32StopBoundary, cl8 **pp8Value, clu32 *pu32ValueLen, clu32 *pu32ValueStartIndex, clu32 *pu32ValueStopIndex, clu8 bRemoveSpaceTrailer );
+          ^
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "porting\\android\\fileio_android.o" "..\\porting\\android\\fileio_android.c" 
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "OTAService\\otaservice.o" "..\\OTAService\\otaservice.c" 
+..\OTAService\otaservice.c: In function 'cl_OTAData2Read_cb':
+..\OTAService\otaservice.c:331:6: warning: implicit declaration of function 'cl_GetElapsedTime' [-Wimplicit-function-declaration]
+      DEBUG_PRINTF("OTA ENTER DOWNLOAD MODE: SUCCESS %d\n", cl_GetElapsedTime());
+      ^
+..\OTAService\otaservice.c:359:7: warning: implicit declaration of function 'cl_HelperConvertASCIItoHex' [-Wimplicit-function-declaration]
+       cl_HelperConvertASCIItoHex( pValue, u32ValueLen, au8TransId, &u32TempLen );
+       ^
+..\OTAService\otaservice.c:373:7: warning: implicit declaration of function 'cl_HelperOTAFrameCrc' [-Wimplicit-function-declaration]
+       cl_HelperOTAFrameCrc( &a8OTABuff[CL_OTA_DOWNLOAD_FRAGMENT_DATA_BYTES_OFF + pOta->u32TrailerLen], u32OTACopyLen, u16TransactionId, &u16Crc );
+       ^
+..\OTAService\otaservice.c:221:13: warning: variable 'pReader' set but not used [-Wunused-but-set-variable]
+  t_Reader  *pReader = CL_NULL;
+             ^
+..\OTAService\otaservice.c: In function 'cl_CryptoThread':
+..\OTAService\otaservice.c:1342:4: warning: passing argument 1 of 'g_tCtxt.ptHalFuncs->fnAllocMem' from incompatible pointer type [enabled by default]
+    if ( CL_FAILED( csl_malloc( &pEnterDownloadMode, CL_OTA_ENTER_DOWNLOAD_MODE_SIZE + pOta->u32TrailerLen + pOta->u32EndLen ) ) )
+    ^
+..\OTAService\otaservice.c:1342:4: note: expected 'void **' but argument is of type 'unsigned char **'
+..\OTAService\otaservice.c:1354:14: warning: passing argument 1 of 'memcpy' makes pointer from integer without a cast [enabled by default]
+              memcpy( pEnterDownloadMode[CL_OTA_ENTER_DOWNLOAD_MODE_SIZE + pOta->u32TrailerLen - 1], pOta->pEndData, pOta->u32EndLen);
+              ^
+In file included from ..\OTAService\..\inc\..\clsupport.h:20:0,
+                 from ..\OTAService\..\inc\otaservice.h:19,
+                 from ..\OTAService\otaservice.c:13:
+C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/string.h:41:18: note: expected 'void * __restrict__' but argument is of type 'unsigned char'
+   void * __cdecl memcpy(void * __restrict__ _Dst,const void * __restrict__ _Src,size_t _Size) __MINGW_ATTRIB_DEPRECATED_SEC_WARN;
+                  ^
+..\OTAService\otaservice.c:1564:4: warning: pointer targets in passing argument 1 of 'pCtxt->ptHalFuncs->fnFileOpen' differ in signedness [-Wpointer-sign]
+    if ( pCtxt->ptHalFuncs->fnFileOpen( aTempArray, CL_FILE_BINARY_MODE, &pFileId) != CL_OK ) // file on opening file
+    ^
+..\OTAService\otaservice.c:1564:4: note: expected 'char *' but argument is of type 'unsigned char *'
+..\OTAService\otaservice.c:1590:4: warning: passing argument 1 of 'g_tCtxt.ptHalFuncs->fnAllocMem' from incompatible pointer type [enabled by default]
+    if ( CL_FAILED( csl_malloc( &pData, u32MaxTotalLen ) ) )
+    ^
+..\OTAService\otaservice.c:1590:4: note: expected 'void **' but argument is of type 'unsigned char **'
+..\OTAService\otaservice.c:1211:14: warning: variable 'u32FragId' set but not used [-Wunused-but-set-variable]
+     clu32    u32FragId   = 1;
+              ^
+..\OTAService\otaservice.c:1208:13: warning: unused variable 'u32TrailerLen' [-Wunused-variable]
+     clu32   u32TrailerLen  = 0;
+             ^
+..\OTAService\otaservice.c:1207:13: warning: unused variable 'pCmdBuf' [-Wunused-variable]
+     clu8   *pCmdBuf   =  CL_NULL;
+             ^
+..\OTAService\otaservice.c:1180:12: warning: unused variable 'eState' [-Wunused-variable]
+  e_State   eState;
+            ^
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "porting\\win32\\comal_win32.o" "..\\porting\\win32\\comal_win32.c" 
+In file included from C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/combaseapi.h:129:0,
+                 from C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/objbase.h:14,
+                 from C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/ole2.h:17,
+                 from C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/wtypes.h:12,
+                 from C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/winscard.h:10,
+                 from C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/windows.h:97,
+                 from ..\porting\win32\comal_win32.c:36:
+..\porting\win32\comal_win32.c:114:12: warning: '_errno' redeclared without dllimport attribute: previous dllimport ignored [-Wattributes]
+ extern int errno;
+            ^
+..\porting\win32\comal_win32.c: In function 'UpdateStatus':
+..\porting\win32\comal_win32.c:141:12: warning: type defaults to 'int' in declaration of 'dwMessageCounter' [-Wimplicit-int]
+     static dwMessageCounter = 0;
+            ^
+..\porting\win32\comal_win32.c:139:11: warning: variable 'dwSize' set but not used [-Wunused-but-set-variable]
+     DWORD dwSize;
+           ^
+..\porting\win32\comal_win32.c:138:12: warning: unused variable 'szNewMsg' [-Wunused-variable]
+     char * szNewMsg;
+            ^
+..\porting\win32\comal_win32.c: In function 'ReportStatusEvent':
+..\porting\win32\comal_win32.c:162:23: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+     HANDLE hPortCOM = (HANDLE)pReader->u64Handle;
+                       ^
+..\porting\win32\comal_win32.c: In function 'cl_COMAlSendDataWin32':
+..\porting\win32\comal_win32.c:438:3: warning: passing argument 1 of 'GetCommState' makes pointer from integer without a cast [enabled by default]
+   if ( !GetCommState(pReader->u64Handle, &serialParams) )
+   ^
+In file included from C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/windows.h:70:0,
+                 from ..\porting\win32\comal_win32.c:36:
+C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/winbase.h:1304:29: note: expected 'HANDLE' but argument is of type 'long long unsigned int'
+   WINBASEAPI WINBOOL WINAPI GetCommState (HANDLE hFile, LPDCB lpDCB);
+                             ^
+..\porting\win32\comal_win32.c:444:3: warning: passing argument 1 of 'GetCommTimeouts' makes pointer from integer without a cast [enabled by default]
+   if ( !GetCommTimeouts( pReader->u64Handle, &readtimeout ) )
+   ^
+In file included from C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/windows.h:70:0,
+                 from ..\porting\win32\comal_win32.c:36:
+C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/winbase.h:1305:29: note: expected 'HANDLE' but argument is of type 'long long unsigned int'
+   WINBASEAPI WINBOOL WINAPI GetCommTimeouts (HANDLE hFile, LPCOMMTIMEOUTS lpCommTimeouts);
+                             ^
+..\porting\win32\comal_win32.c:457:3: warning: passing argument 1 of 'WriteFile' makes pointer from integer without a cast [enabled by default]
+   if ( !WriteFile( pReader->u64Handle, (clvoid *)pLocalBuf->pData, pLocalBuf->ulLen, &dwWritten, &osWrite ) )
+   ^
+In file included from C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/winbase.h:18:0,
+                 from C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/windows.h:70,
+                 from ..\porting\win32\comal_win32.c:36:
+C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/fileapi.h:174:29: note: expected 'HANDLE' but argument is of type 'long long unsigned int'
+   WINBASEAPI WINBOOL WINAPI WriteFile (HANDLE hFile, LPCVOID lpBuffer, DWORD nNumberOfBytesToWrite, LPDWORD lpNumberOfBytesWritten, LPOVERLAPPED lpOverlapped);
+                             ^
+..\porting\win32\comal_win32.c:473:8: warning: passing argument 1 of 'GetOverlappedResult' makes pointer from integer without a cast [enabled by default]
+        if (!GetOverlappedResult(pReader->u64Handle, &osWrite, &dwWritten, FALSE))
+        ^
+In file included from C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/winbase.h:21:0,
+                 from C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/windows.h:70,
+                 from ..\porting\win32\comal_win32.c:36:
+C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/ioapiset.h:18:29: note: expected 'HANDLE' but argument is of type 'long long unsigned int'
+   WINBASEAPI WINBOOL WINAPI GetOverlappedResult (HANDLE hFile, LPOVERLAPPED lpOverlapped, LPDWORD lpNumberOfBytesTransferred, WINBOOL bWait);
+                             ^
+..\porting\win32\comal_win32.c:370:7: warning: unused variable 'fRes' [-Wunused-variable]
+  BOOL fRes;
+       ^
+..\porting\win32\comal_win32.c:366:8: warning: unused variable 'pMsg' [-Wunused-variable]
+  cl8  *pMsg   = CL_NULL;
+        ^
+..\porting\win32\comal_win32.c:362:14: warning: unused variable 'ptTuple' [-Wunused-variable]
+     t_Tuple *ptTuple  = CL_NULL;
+              ^
+..\porting\win32\comal_win32.c:361:9: warning: unused variable 'iReturnCode' [-Wunused-variable]
+  clu32  iReturnCode  = 0;
+         ^
+..\porting\win32\comal_win32.c: In function 'cl_COMAlGetStatus':
+..\porting\win32\comal_win32.c:585:10: warning: passing argument 1 of 'WaitCommEvent' makes pointer from integer without a cast [enabled by default]
+          if ( !WaitCommEvent( pReader->u64Handle , &dwCommEvent, &osStatus) )
+          ^
+In file included from C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/windows.h:70:0,
+                 from ..\porting\win32\comal_win32.c:36:
+C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/winbase.h:1313:29: note: expected 'HANDLE' but argument is of type 'long long unsigned int'
+   WINBASEAPI WINBOOL WINAPI WaitCommEvent (HANDLE hFile, LPDWORD lpEvtMask, LPOVERLAPPED lpOverlapped);
+                             ^
+..\porting\win32\comal_win32.c:657:18: warning: passing argument 1 of 'GetOverlappedResult' makes pointer from integer without a cast [enabled by default]
+                  if ( !GetOverlappedResult( pReader->u64Handle, &osStatus, &dwOvRes, FALSE ) )
+                  ^
+In file included from C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/winbase.h:21:0,
+                 from C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/windows.h:70,
+                 from ..\porting\win32\comal_win32.c:36:
+C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/ioapiset.h:18:29: note: expected 'HANDLE' but argument is of type 'long long unsigned int'
+   WINBASEAPI WINBOOL WINAPI GetOverlappedResult (HANDLE hFile, LPOVERLAPPED lpOverlapped, LPDWORD lpNumberOfBytesTransferred, WINBOOL bWait);
+                             ^
+..\porting\win32\comal_win32.c:560:7: warning: unused variable 'bWaitingOnStatusHandle' [-Wunused-variable]
+  BOOL bWaitingOnStatusHandle;
+       ^
+..\porting\win32\comal_win32.c:558:14: warning: unused variable 'dwStoredFlags' [-Wunused-variable]
+  DWORD       dwStoredFlags;
+              ^
+..\porting\win32\comal_win32.c: In function 'cl_ReaderAndStatusProc':
+..\porting\win32\comal_win32.c:811:20: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+  HANDLE hPortCOM = (HANDLE)pReader->u64Handle;
+                    ^
+..\porting\win32\comal_win32.c:1123:36: warning: statement with no effect [-Wunused-value]
+      NO_TRACE_INTERNAL_THREAD_EVENT("cl_ReaderAndStatusProc: WAIT_TIMEOUT");
+                                    ^
+..\porting\win32\comal_win32.c:806:11: warning: unused variable 'eState' [-Wunused-variable]
+  e_State  eState;
+           ^
+..\porting\win32\comal_win32.c: In function 'ANOTHER_SHIT_THAT_STINKS_By_FD_cl_COMAlGetDataWin32':
+..\porting\win32\comal_win32.c:1257:2: warning: passing argument 1 of 'GetCommState' makes pointer from integer without a cast [enabled by default]
+  if ( !GetCommState(pReader->u64Handle, &serialParams) )
+  ^
+In file included from C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/windows.h:70:0,
+                 from ..\porting\win32\comal_win32.c:36:
+C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/winbase.h:1304:29: note: expected 'HANDLE' but argument is of type 'long long unsigned int'
+   WINBASEAPI WINBOOL WINAPI GetCommState (HANDLE hFile, LPDCB lpDCB);
+                             ^
+..\porting\win32\comal_win32.c:1263:2: warning: passing argument 1 of 'GetCommTimeouts' makes pointer from integer without a cast [enabled by default]
+  if ( !GetCommTimeouts( pReader->u64Handle, &readtimeout ) )
+  ^
+In file included from C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/windows.h:70:0,
+                 from ..\porting\win32\comal_win32.c:36:
+C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/winbase.h:1305:29: note: expected 'HANDLE' but argument is of type 'long long unsigned int'
+   WINBASEAPI WINBOOL WINAPI GetCommTimeouts (HANDLE hFile, LPCOMMTIMEOUTS lpCommTimeouts);
+                             ^
+..\porting\win32\comal_win32.c:1280:3: warning: passing argument 1 of 'ReadFile' makes pointer from integer without a cast [enabled by default]
+   if ( !ReadFile(pReader->u64Handle, pData, SERIAL_BUF_SIZE, &dwRead, &osReader ) )
+   ^
+In file included from C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/winbase.h:18:0,
+                 from C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/windows.h:70,
+                 from ..\porting\win32\comal_win32.c:36:
+C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/fileapi.h:166:29: note: expected 'HANDLE' but argument is of type 'long long unsigned int'
+   WINBASEAPI WINBOOL WINAPI ReadFile (HANDLE hFile, LPVOID lpBuffer, DWORD nNumberOfBytesToRead, LPDWORD lpNumberOfBytesRead, LPOVERLAPPED lpOverlapped);
+                             ^
+..\porting\win32\comal_win32.c:1297:34: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+        if ( !GetOverlappedResult((HANDLE)pReader->u64Handle, &osReader, &dwRead, FALSE ) )
+                                  ^
+..\porting\win32\comal_win32.c:1200:13: warning: unused variable 'dwStoredFlags' [-Wunused-variable]
+  DWORD      dwStoredFlags = 0xFFFFFFFF;      // local copy of event flags
+             ^
+..\porting\win32\comal_win32.c:1198:10: warning: unused variable 'dwErrors' [-Wunused-variable]
+  DWORD   dwErrors;
+          ^
+..\porting\win32\comal_win32.c:1197:10: warning: unused variable 'comStat' [-Wunused-variable]
+  COMSTAT comStat;
+          ^
+..\porting\win32\comal_win32.c:1191:9: warning: unused variable 'pMsg' [-Wunused-variable]
+  cl8   *pMsg  = CL_NULL;
+         ^
+..\porting\win32\comal_win32.c:1189:8: warning: unused variable 'cl64Len' [-Wunused-variable]
+  cl64  cl64Len  = 0 ;
+        ^
+..\porting\win32\comal_win32.c: In function 'cl_COMAlOpenConnectionWin32':
+..\porting\win32\comal_win32.c:1649:2: warning: pointer targets in passing argument 1 of 'strlen' differ in signedness [-Wpointer-sign]
+  memcpy( &clLocalCOMName[sizeof( Trailer )], pReader->tCOMParams.aucPortName, strlen( pReader->tCOMParams.aucPortName ) );
+  ^
+In file included from ..\porting\win32\comal_win32.c:32:0:
+C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/string.h:54:18: note: expected 'const char *' but argument is of type 'unsigned char *'
+   size_t __cdecl strlen(const char *_Str);
+                  ^
+..\porting\win32\comal_win32.c:1687:22: warning: assignment makes integer from pointer without a cast [enabled by default]
+   pReader->u64Handle = hSerial;
+                      ^
+..\porting\win32\comal_win32.c:1693:3: warning: passing argument 1 of 'GetCommState' makes pointer from integer without a cast [enabled by default]
+   if ( !GetCommState(pReader->u64Handle, &serialParams) )
+   ^
+In file included from C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/windows.h:70:0,
+                 from ..\porting\win32\comal_win32.c:36:
+C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/winbase.h:1304:29: note: expected 'HANDLE' but argument is of type 'long long unsigned int'
+   WINBASEAPI WINBOOL WINAPI GetCommState (HANDLE hFile, LPDCB lpDCB);
+                             ^
+..\porting\win32\comal_win32.c:1733:4: warning: large integer implicitly truncated to unsigned type [-Woverflow]
+    default:serialParams.Parity = PARITY_NONE; break;
+    ^
+..\porting\win32\comal_win32.c:1747:3: warning: passing argument 1 of 'SetCommState' makes pointer from integer without a cast [enabled by default]
+   if ( !SetCommState(pReader->u64Handle, &serialParams) )
+   ^
+In file included from C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/windows.h:70:0,
+                 from ..\porting\win32\comal_win32.c:36:
+C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/winbase.h:1310:29: note: expected 'HANDLE' but argument is of type 'long long unsigned int'
+   WINBASEAPI WINBOOL WINAPI SetCommState (HANDLE hFile, LPDCB lpDCB);
+                             ^
+..\porting\win32\comal_win32.c:1805:3: warning: passing argument 1 of 'SetCommTimeouts' makes pointer from integer without a cast [enabled by default]
+   if ( !SetCommTimeouts(pReader->u64Handle, &g_TimeoutsDefault) )
+   ^
+In file included from C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/windows.h:70:0,
+                 from ..\porting\win32\comal_win32.c:36:
+C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/winbase.h:1311:29: note: expected 'HANDLE' but argument is of type 'long long unsigned int'
+   WINBASEAPI WINBOOL WINAPI SetCommTimeouts (HANDLE hFile, LPCOMMTIMEOUTS lpCommTimeouts);
+                             ^
+..\porting\win32\comal_win32.c:1828:3: warning: passing argument 1 of 'GetCommTimeouts' makes pointer from integer without a cast [enabled by default]
+   GetCommTimeouts( pReader->u64Handle, &readtimeout );
+   ^
+In file included from C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/windows.h:70:0,
+                 from ..\porting\win32\comal_win32.c:36:
+C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/winbase.h:1305:29: note: expected 'HANDLE' but argument is of type 'long long unsigned int'
+   WINBASEAPI WINBOOL WINAPI GetCommTimeouts (HANDLE hFile, LPCOMMTIMEOUTS lpCommTimeouts);
+                             ^
+..\porting\win32\comal_win32.c:1830:1: warning: multi-line comment [-Wcomment]
+ //        dwStoredFlags = EV_BREAK | EV_CTS | EV_DSR | EV_ERR | EV_RING |\
+ ^
+..\porting\win32\comal_win32.c:1833:1: warning: multi-line comment [-Wcomment]
+ //        dwStoredFlags = EV_BREAK | EV_CTS | EV_DSR | EV_ERR | EV_RING |\
+ ^
+..\porting\win32\comal_win32.c:1618:13: warning: unused variable 'dwStoredFlags' [-Wunused-variable]
+     DWORD   dwStoredFlags;
+             ^
+..\porting\win32\comal_win32.c: In function 'cl_COMAlCloseConnectionWin32':
+..\porting\win32\comal_win32.c:1881:26: warning: comparison between pointer and integer [enabled by default]
+  if ( pReader->u64Handle == INVALID_HANDLE_VALUE )
+                          ^
+..\porting\win32\comal_win32.c:1887:24: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+  result = CloseHandle( (void *)pReader->u64Handle );
+                        ^
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "GenericServices\\clthread.o" "..\\GenericServices\\clthread.c" 
+..\GenericServices\clthread.c: In function 'clReaderWriteThread':
+..\GenericServices\clthread.c:216:3: warning: implicit declaration of function 'sem_wait' [-Wimplicit-function-declaration]
+   sem_wait( pReader->tSync.pSgl4Write );
+   ^
+..\GenericServices\clthread.c:232:19: warning: statement with no effect [-Wunused-value]
+   MUTEX_WRITE_LOCK("clReaderWriteThread");
+                   ^
+..\GenericServices\clthread.c:234:21: warning: statement with no effect [-Wunused-value]
+   MUTEX_WRITE_UNLOCK("clReaderWriteThread");
+                     ^
+..\GenericServices\clthread.c: In function 'V0_0_clReaderWriteThread':
+..\GenericServices\clthread.c:344:19: warning: statement with no effect [-Wunused-value]
+   MUTEX_WRITE_LOCK("clReaderWriteThread");
+                   ^
+..\GenericServices\clthread.c:346:21: warning: statement with no effect [-Wunused-value]
+   MUTEX_WRITE_UNLOCK("clReaderWriteThread");
+                     ^
+..\GenericServices\clthread.c: In function 'TEST_cl_ReaderReadThreadTraitement':
+..\GenericServices\clthread.c:558:14: warning: unused variable 'bufferACK' [-Wunused-variable]
+     clu8     bufferACK[2] = "06";
+              ^
+..\GenericServices\clthread.c:557:15: warning: unused variable 'nbTupleIncoming' [-Wunused-variable]
+     clu32     nbTupleIncoming  = 0;
+               ^
+..\GenericServices\clthread.c:556:13: warning: unused variable 'pTuple2Read' [-Wunused-variable]
+  t_Tuple   *pTuple2Read = CL_NULL;
+             ^
+..\GenericServices\clthread.c: In function 'cl_ReaderReadThreadTraitement':
+..\GenericServices\clthread.c:547:1: warning: control reaches end of non-void function [-Wreturn-type]
+ }
+ ^
+..\GenericServices\clthread.c: In function 'TEST_cl_ReaderReadThreadTraitement':
+..\GenericServices\clthread.c:570:1: warning: control reaches end of non-void function [-Wreturn-type]
+ }
+ ^
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "porting\\android\\netal_android.o" "..\\porting\\android\\netal_android.c" 
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "porting\\win32\\clsupport_win32.o" "..\\porting\\win32\\clsupport_win32.c" 
+..\porting\win32\clsupport_win32.c: In function 'cl_IOStateWin32_cb':
+..\porting\win32\clsupport_win32.c:331:10: warning: pointer targets in assignment differ in signedness [-Wpointer-sign]
+    pDesc = pReader->tCOMParams.aucPortName;
+          ^
+..\porting\win32\clsupport_win32.c:334:10: warning: pointer targets in assignment differ in signedness [-Wpointer-sign]
+    pDesc = pReader->aucLabel;
+          ^
+..\porting\win32\clsupport_win32.c:316:12: warning: unused variable 'eStatus' [-Wunused-variable]
+  e_Result  eStatus = CL_ERROR;
+            ^
+..\porting\win32\clsupport_win32.c: In function 'cl_ClbkDiscover_ReadDone':
+..\porting\win32\clsupport_win32.c:616:4: warning: pointer targets in passing argument 1 of 'strcat' differ in signedness [-Wpointer-sign]
+    strcat( tLocalReader.tIPParams.aucIpAddr, aucTempName );
+    ^
+In file included from ..\porting\win32\..\..\clsupport.h:20:0,
+                 from ..\porting\win32\clsupport_win32.c:17:
+C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/string.h:52:18: note: expected 'char * __restrict__' but argument is of type 'unsigned char *'
+   char * __cdecl strcat(char * __restrict__ _Dest,const char * __restrict__ _Source);
+                  ^
+..\porting\win32\clsupport_win32.c:617:4: warning: pointer targets in passing argument 1 of 'strcat' differ in signedness [-Wpointer-sign]
+    strcat( tLocalReader.tIPParams.aucIpAddr, "." );
+    ^
+In file included from ..\porting\win32\..\..\clsupport.h:20:0,
+                 from ..\porting\win32\clsupport_win32.c:17:
+C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/string.h:52:18: note: expected 'char * __restrict__' but argument is of type 'unsigned char *'
+   char * __cdecl strcat(char * __restrict__ _Dest,const char * __restrict__ _Source);
+                  ^
+..\porting\win32\clsupport_win32.c:620:4: warning: pointer targets in passing argument 1 of 'strcat' differ in signedness [-Wpointer-sign]
+    strcat( tLocalReader.tIPParams.aucIpAddr, aucTempName );
+    ^
+In file included from ..\porting\win32\..\..\clsupport.h:20:0,
+                 from ..\porting\win32\clsupport_win32.c:17:
+C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/string.h:52:18: note: expected 'char * __restrict__' but argument is of type 'unsigned char *'
+   char * __cdecl strcat(char * __restrict__ _Dest,const char * __restrict__ _Source);
+                  ^
+..\porting\win32\clsupport_win32.c:621:4: warning: pointer targets in passing argument 1 of 'strcat' differ in signedness [-Wpointer-sign]
+    strcat( tLocalReader.tIPParams.aucIpAddr, "." );
+    ^
+In file included from ..\porting\win32\..\..\clsupport.h:20:0,
+                 from ..\porting\win32\clsupport_win32.c:17:
+C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/string.h:52:18: note: expected 'char * __restrict__' but argument is of type 'unsigned char *'
+   char * __cdecl strcat(char * __restrict__ _Dest,const char * __restrict__ _Source);
+                  ^
+..\porting\win32\clsupport_win32.c:624:4: warning: pointer targets in passing argument 1 of 'strcat' differ in signedness [-Wpointer-sign]
+    strcat( tLocalReader.tIPParams.aucIpAddr, aucTempName );
+    ^
+In file included from ..\porting\win32\..\..\clsupport.h:20:0,
+                 from ..\porting\win32\clsupport_win32.c:17:
+C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/string.h:52:18: note: expected 'char * __restrict__' but argument is of type 'unsigned char *'
+   char * __cdecl strcat(char * __restrict__ _Dest,const char * __restrict__ _Source);
+                  ^
+..\porting\win32\clsupport_win32.c:625:4: warning: pointer targets in passing argument 1 of 'strcat' differ in signedness [-Wpointer-sign]
+    strcat( tLocalReader.tIPParams.aucIpAddr, "." );
+    ^
+In file included from ..\porting\win32\..\..\clsupport.h:20:0,
+                 from ..\porting\win32\clsupport_win32.c:17:
+C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/string.h:52:18: note: expected 'char * __restrict__' but argument is of type 'unsigned char *'
+   char * __cdecl strcat(char * __restrict__ _Dest,const char * __restrict__ _Source);
+                  ^
+..\porting\win32\clsupport_win32.c:628:4: warning: pointer targets in passing argument 1 of 'strcat' differ in signedness [-Wpointer-sign]
+    strcat( tLocalReader.tIPParams.aucIpAddr, aucTempName );
+    ^
+In file included from ..\porting\win32\..\..\clsupport.h:20:0,
+                 from ..\porting\win32\clsupport_win32.c:17:
+C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/string.h:52:18: note: expected 'char * __restrict__' but argument is of type 'unsigned char *'
+   char * __cdecl strcat(char * __restrict__ _Dest,const char * __restrict__ _Source);
+                  ^
+..\porting\win32\clsupport_win32.c:632:4: warning: pointer targets in passing argument 1 of 'strcat' differ in signedness [-Wpointer-sign]
+    strcat( tLocalReader.aucLabel, tLocalReader.tIPParams.aucIpAddr);
+    ^
+In file included from ..\porting\win32\..\..\clsupport.h:20:0,
+                 from ..\porting\win32\clsupport_win32.c:17:
+C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/string.h:52:18: note: expected 'char * __restrict__' but argument is of type 'unsigned char *'
+   char * __cdecl strcat(char * __restrict__ _Dest,const char * __restrict__ _Source);
+                  ^
+..\porting\win32\clsupport_win32.c:632:4: warning: pointer targets in passing argument 2 of 'strcat' differ in signedness [-Wpointer-sign]
+    strcat( tLocalReader.aucLabel, tLocalReader.tIPParams.aucIpAddr);
+    ^
+In file included from ..\porting\win32\..\..\clsupport.h:20:0,
+                 from ..\porting\win32\clsupport_win32.c:17:
+C:/Program Files (x86)/mingw-w64/i686-4.8.2-posix-dwarf-rt_v3-rev4/mingw32/i686-w64-mingw32/include/string.h:52:18: note: expected 'const char * __restrict__' but argument is of type 'unsigned char *'
+   char * __cdecl strcat(char * __restrict__ _Dest,const char * __restrict__ _Source);
+                  ^
+..\porting\win32\clsupport_win32.c:656:6: warning: implicit declaration of function 'cl_ReaderRemoveFromList' [-Wimplicit-function-declaration]
+      if ( CL_FAILED( cl_ReaderRemoveFromList( pReaderInList ) ) )
+      ^
+..\porting\win32\clsupport_win32.c:661:15: warning: pointer targets in assignment differ in signedness [-Wpointer-sign]
+     pDiscover = &ac8IPDiscover[0];
+               ^
+..\porting\win32\clsupport_win32.c:701:7: warning: format '%x' expects argument of type 'unsigned int', but argument 3 has type 'long int' [-Wformat=]
+       sprintf(aucTempName+u8Index*2, "%x",cl32Temp);
+       ^
+..\porting\win32\clsupport_win32.c:566:12: warning: unused variable 'pNextTuple' [-Wunused-variable]
+  t_Tuple  *pNextTuple = CL_NULL;
+            ^
+..\porting\win32\clsupport_win32.c: In function 'cl_GetTimeWin32':
+..\porting\win32\clsupport_win32.c:1355:2: warning: format '%d' expects argument of type 'int', but argument 3 has type 'long int' [-Wformat=]
+  sprintf(strMilliseconds, ":%03d", real_time.tv_nsec / MILLION);
+  ^
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "porting\\win64\\fileio_win64.o" "..\\porting\\win64\\fileio_win64.c" 
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "GenericServices\\generic.o" "..\\GenericServices\\generic.c" 
+..\GenericServices\generic.c: In function 'clInit':
+..\GenericServices\generic.c:67:10: warning: unused variable 'tThreadCryptoId' [-Wunused-variable]
+  clvoid *tThreadCryptoId = CL_NULL;
+          ^
+..\GenericServices\generic.c:66:13: warning: unused variable 'tThreadRegistrationReader' [-Wunused-variable]
+     clvoid *tThreadRegistrationReader = CL_NULL;
+             ^
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "GenericServices\\clhelpers.o" "..\\GenericServices\\clhelpers.c" 
+..\GenericServices\clhelpers.c: In function 'reader_ResetParsingParams':
+..\GenericServices\clhelpers.c:61:3: warning: 'return' with a value, in function returning void [enabled by default]
+   return CL_ERROR;
+   ^
+..\GenericServices\clhelpers.c: In function 'cl_HelperOTAFrameCrc':
+..\GenericServices\clhelpers.c:1337:11: warning: unused variable 'j' [-Wunused-variable]
+  clu32 i, j;
+           ^
+..\GenericServices\clhelpers.c:1337:8: warning: unused variable 'i' [-Wunused-variable]
+  clu32 i, j;
+        ^
+..\GenericServices\clhelpers.c:1336:8: warning: unused variable 'u16Carry' [-Wunused-variable]
+  clu16 u16Carry = 0;
+        ^
+..\GenericServices\clhelpers.c:1335:8: warning: unused variable 'u16Poly' [-Wunused-variable]
+  clu16 u16Poly  =  0x8408;
+        ^
+..\GenericServices\clhelpers.c: In function 'cl_HelperDiscoverNetworkToTuples':
+..\GenericServices\clhelpers.c:1394:8: warning: unused variable 'cl32EndIndex' [-Wunused-variable]
+  cl32  cl32EndIndex = 0;
+        ^
+..\GenericServices\clhelpers.c:1393:8: warning: unused variable 'cl32FirstIndex' [-Wunused-variable]
+  cl32  cl32FirstIndex  = 0;
+        ^
+..\GenericServices\clhelpers.c:1392:8: warning: unused variable 'cl8StartOfTuple' [-Wunused-variable]
+  cl8   cl8StartOfTuple = 0;
+        ^
+..\GenericServices\clhelpers.c:1391:8: warning: unused variable 'cl8EndOfTuple' [-Wunused-variable]
+  cl8   cl8EndOfTuple  = 0;
+        ^
+..\GenericServices\clhelpers.c:1390:8: warning: unused variable 'cl32Index' [-Wunused-variable]
+  cl32  cl32Index =  0;
+        ^
+..\GenericServices\clhelpers.c:1388:9: warning: unused variable 'clu16Crc' [-Wunused-variable]
+  clu16  clu16Crc  = 0;
+         ^
+..\GenericServices\clhelpers.c:1386:17: warning: unused variable 'e_CheckStatus' [-Wunused-variable]
+     e_Result    e_CheckStatus = CL_ERROR;
+                 ^
+ar -r libCSLLib.a "porting\\win64\\netal_win64.o" "porting\\win64\\fileio_win64.o" "porting\\win32\\netal_win32.o" "porting\\win32\\fileio_win32.o" "porting\\win32\\comal_win32.o" "porting\\win32\\clsupport_win32.o" "porting\\linux\\netal_posix.o" "porting\\linux\\fileio_posix.o" "porting\\android\\netal_android.o" "porting\\android\\fileio_android.o" csl.o "ScriptingEngine\\script_engine.o" "ScriptingEngine\\menu_parser.o" "Readers\\clreaders.o" "OTAService\\otaservice.o" "GenericServices\\generic.o" "GenericServices\\cltuple.o" "GenericServices\\clthread.o" "GenericServices\\cltag.o" "GenericServices\\clparams.o" "GenericServices\\cllist.o" "GenericServices\\clhelpers.o" "GenericServices\\clfile.o" "Devices\\cldevices.o" 
+
+18:00:42 Build Finished (took 16s.312ms)
+

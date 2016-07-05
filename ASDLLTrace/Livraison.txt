@@ -1,0 +1,16 @@
+23/03/2015
+je normalise un peu les choses
+je crais \inc et \lib
+
+Processus de livraison de la DLL : astrace.dll
+- Transférer le fichier astrace.dll du dossier de génération :
+ASDLLTraceSources\Debug
+ou
+ASDLLTraceSources\Release
+
+vers le dossier de livraison : 
+C:\WINDOWS\cmd 
+
+Pour être utilisée facilement par Visual Studio .NET en C#
+Il faut ajouter un répertoire dans le PATH système
+

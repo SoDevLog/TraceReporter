@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<item value="0" key="org.eclipse.cdt.uiformatter_pagemodify_dialog.preferred_x"/>
+	<item value="0" key="org.eclipse.cdt.uiformatter_pagemodify_dialog.last_focus"/>
+	<item value="0" key="org.eclipse.cdt.uiformatter_pagemodify_dialog.preferred_y"/>
+	<item value="0" key="org.eclipse.cdt.uiformatter_page.white_space_tab_page.node"/>
+	<item value="Default C source template" key="LastUsedSourceTemplate"/>
+	<item value="59" key="org.eclipse.cdt.uiformatter_page.white_space.c_view.inner"/>
+	<item value="11" key="formatter_page.modify_dialog_tab_page.last_focus_index"/>
+	<item value="Default C header template" key="LastUsedHeaderTemplate"/>
+	<item value="1" key="org.eclipse.cdt.uiformatter_page.line_wrapping_tab_page.last_category_index"/>
+	<item value="PMLite" key="org.eclipse.cdt.utils.ui.controls.FileListControl"/>
+	<item value="11" key="org.eclipse.cdt.uiformatter_page.white_space.c_view.option"/>
+	<item value="true" key="org.eclipse.cdt.ui.codeformatter.create_profile_dialog.open_edit"/>
+	<item value="1920" key="org.eclipse.cdt.uiformatter_pagemodify_dialog.preferred_width"/>
+	<item value="1040" key="org.eclipse.cdt.uiformatter_pagemodify_dialog.preferred_height"/>
+	<section name="org.eclipse.cdt.ui.OPEN_ACTION_SELECTION_DIALOG_SECTION">
+		<item value="1550" key="DIALOG_WIDTH"/>
+		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
+		<item value="450" key="DIALOG_HEIGHT"/>
+		<item value="236" key="DIALOG_X_ORIGIN"/>
+		<item value="214" key="DIALOG_Y_ORIGIN"/>
+	</section>
+	<section name="org.eclipse.cdt.internal.ui.browser.opentype.OpenTypeActionSettings">
+		<item value="true" key="show_enums"/>
+		<item value="true" key="show_unions"/>
+		<item value="true" key="show_macros"/>
+		<item value="true" key="show_classes"/>
+		<item value="true" key="show_functions"/>
+		<item value="true" key="show_lowlevel"/>
+		<item value="true" key="show_namespaces"/>
+		<item value="true" key="show_enumerators"/>
+		<item value="true" key="show_structs"/>
+		<item value="678" key="x"/>
+		<item value="565" key="width"/>
+		<item value="67" key="y"/>
+		<item value="true" key="show_typedefs"/>
+		<item value="true" key="show_variables"/>
+		<item value="680" key="height"/>
+	</section>
+	<section name="org.eclipse.cdt.ui.text.hover.CMacroExpansionExploration.internal">
+		<item value="180" key="size.height"/>
+		<item value="714" key="size.width"/>
+	</section>
+	<section name="org.eclipse.cdt.ui.text.hover.CMacroExpansionExploration">
+	</section>
+	<section name="PDOMSearchPage">
+		<item value="false" key="caseSensitive"/>
+		<item value="227191" key="searchFlags"/>
+		<list key="previousPatterns">
+			<item value="u32Retries"/>
+			<item value="cl_ReaderAndStatusProc"/>
+			<item value="Mode_Raw"/>
+			<item value="cl_ReaderFreeListOfTuples2Read"/>
+			<item value="pData"/>
+			<item value="memcpy"/>
+			<item value="CLOVER_SERIAL_PROTO_ETX"/>
+			<item value="cl_NetworkToTuples"/>
+			<item value="cl_initTuple:pCrtBuffulLen:"/>
+			<item value="tCOMParamsaucPortName"/>
+			<item value="cl_FreeMemSafely"/>
+			<item value="ReadIntervalTimeout"/>
+			<item value="Number_Of_Tuples_Received"/>
+			<item value="WRITE_BUFFER_DEBUG_PRINTF"/>
+			<item value="NO_WRITE_BUFFER_DEBUG_PRINTF"/>
+			<item value="charbuffString"/>
+			<item value=":Incoming"/>
+			<item value="cl_ReaderReadThreadTraitement_"/>
+			<item value="ReportStatusEvent"/>
+			<item value="ResetEvent"/>
+			<item value="dwCommEventEV_RINGEV_RING"/>
+			<item value="WaitForThreadsToExit:"/>
+			<item value="cl_COMAlOpenConnectionWin32:Nosuchfileordirectory:"/>
+			<item value="ErrorReporter:Message:WaitForMultipleObjects"/>
+			<item value="cl_ReaderAndStatusProc:WaitCommEventError:"/>
+			<item value="cl_ReaderAndStatusProc:WaitCommEventError"/>
+			<item value="cl_ReaderReadThreadTraitement"/>
+			<item value="cl_ReaderAndStatusProc:fWaitingOnReadTRUE"/>
+			<item value="PURGE_FLAGS"/>
+			<item value="EVENTFLAGS_DEFAULT"/>
+			<item value="clReaderReadThread"/>
+			<item value="dwStoredFlags"/>
+			<item value="NO_USE_WRITE_READ_THREAD_IN_SESSION_MODE"/>
+			<item value="SemaphoreWaitWithTimeOut"/>
+			<item value="CLOVER_SERIAL_PROTO_SYNC"/>
+			<item value="cl_HelperEncapsulateToSerial"/>
+			<item value="stat_DoSend010602"/>
+			<item value="TNewThread"/>
+			<item value="cl_HelperSerialCrc"/>
+			<item value="Wait_End_Of_Thread"/>
+			<item value="pSgl4Read"/>
+			<item value="fnSemaphoreDestroy"/>
+			<item value="cl_ReaderRemoveFromList:SemaphoreDestroy:pSgl4ReadComplete"/>
+			<item value="DoClosePortCom:status:"/>
+			<item value="cl_COMAlOpenConnectionWin32:"/>
+			<item value="DoOpenPortCom:status:"/>
+			<item value="cl_COMAlOpenConnectionWin32"/>
+			<item value="fopen"/>
+			<item value="WSAGetLastError"/>
+			<item value="testpthread1"/>
+			<item value="cl_ReaderRemoveFromList:SemaphoreDestroy:"/>
+			<item value="cl_GetContext"/>
+			<item value="SESSION_clReaderWriteThread"/>
+			<item value="cl_ReaderRemoveFromList:Mutex_Destroy:lock"/>
+			<item value="Input"/>
+			<item value="cl_COMAlSendDataWin32"/>
+			<item value="pReaderp_TplList2SendCL_NULL"/>
+			<item value="SendtupletoIOPortCOM"/>
+			<item value="ConvertStringToHexa"/>
+			<item value="cl_readerFindInListByFriendlyName"/>
+			<item value="cl_SetParams"/>
+			<item value="cl_ReaderFillWithDefaultFields"/>
+			<item value="cl_readerFindInList"/>
+			<item value="fnTrace0"/>
+			<item value="ConvertByteToAscii"/>
+			<item value="PMTraceDefine"/>
+			<item value="pthread_mutex_lock"/>
+			<item value="SendDataToReader"/>
+			<item value="PM_USE_TRACES"/>
+			<item value="THREAD_WriterProc:WAIT_TIMEOUT"/>
+			<item value="nbTupleReceived"/>
+			<item value="cl_StackTrace"/>
+			<item value="cl_Trace"/>
+			<item value="CL_TIMEOUT_ERR"/>
+			<item value="cl_SemaphoreWaitWin32"/>
+			<item value="fnMutexCreate"/>
+			<item value="fnMutexDestroy"/>
+			<item value="g_MutexReadIncomingWriteRead"/>
+			<item value="fnMutexCreateWin32"/>
+			<item value="cl_SemaphoreDestroyWin32"/>
+			<item value="pthread_cancel"/>
+			<item value="fnSemaphoreCreate"/>
+			<item value="mutexReadIncomingWR"/>
+			<item value="Thesemaphorecouldnotbelockedbeforethespecifiedtimeoutexpired"/>
+			<item value="INCOMING_TIMEOUT"/>
+			<item value="clvoid**"/>
+			<item value="csl_FreeSafeDebug"/>
+			<item value="THREAD_ReaderAndStatusProc:readcompleted"/>
+			<item value="fnIOSendData"/>
+			<item value="CL_SERIAL_PROT_R_INCOMING"/>
+			<item value="e_SERIAL_RetryProtocolDef"/>
+			<item value="pSgl4ReadComplete"/>
+			<item value="cl_HelperConvertASCIItoHex"/>
+			<item value="BRY_FREE"/>
+			<item value="typedefstruct"/>
+			<item value="fnOTASendDataDone_cb"/>
+			<item value="csl_FreeDebugSafe"/>
+			<item value="cl_HelperDiscoverNetworkToTuples"/>
+			<item value="fnFreeMemSafely"/>
+			<item value="g_tHalFunc"/>
+			<item value="st_clSys_HalFunctions_s"/>
+			<item value="cl_FreeMemSafelyWin32"/>
+			<item value="t_clSys_HalFunctions"/>
+			<item value="fnFreeSafeMem"/>
+			<item value="cl_FreeMemWin32"/>
+			<item value="csl_FreeDebug"/>
+			<item value="csl_AllocDebug"/>
+			<item value="clvoid**pBuffer"/>
+			<item value="From_Reader"/>
+			<item value="cl_COMAlGetDataWin32:"/>
+			<item value="HelperNetworkToTuples:cl_initTuple:"/>
+			<item value="fnFreeMem"/>
+			<item value="strcat"/>
+			<item value="cl_GetTimeWin32"/>
+			<item value="fnGetTime"/>
+			<item value="cl_IOStateWin32_cb"/>
+			<item value="THREAD_ReaderAndStatusProc"/>
+			<item value="cl_initTuple"/>
+			<item value="fnIOData2Read_cb"/>
+			<item value="cl_IOData2ReadWin32_cb"/>
+			<item value="ToReader"/>
+			<item value="cl8Time"/>
+			<item value="fnIOSendDataDone_cb"/>
+			<item value="cl_COMAlGetStatus:BEGIN"/>
+			<item value="clReaderReadThread:CL_SERIAL_PROT_W_WAIT_FOR_ANS"/>
+			<item value="CL_SERIAL_PROT_R_END_GRANTED"/>
+			<item value="CL_SERIAL_PROT_W_END_DONE"/>
+			<item value="CL_SERIAL_PROT_W_WAIT_FOR_ANSW"/>
+			<item value="ConvertASCIToHex"/>
+			<item value="cl_InitReadersFromFile"/>
+			<item value="p_TplList2Send"/>
+			<item value="nesertàrien"/>
+			<item value="pSgl4WriteComplete"/>
+			<item value="pSgl4Write"/>
+			<item value="WaitingForNewRead"/>
+			<item value="SetCommTimeouts"/>
+			<item value="fNoStatus"/>
+			<item value="ClearCommError"/>
+			<item value="SerialEvent:"/>
+			<item value="SetCommMask"/>
+			<item value="g_TimeOut"/>
+			<item value="ERRORReadFilefailed"/>
+			<item value="cl_COMAlGetStatus"/>
+			<item value="WaitForSingleObject"/>
+			<item value="cl_GetReaderListEntry"/>
+			<item value="cl_ReaderRemoveFromList"/>
+			<item value="cl_getReader_List"/>
+			<item value="csl_Close"/>
+			<item value="fnIOCloseConnection"/>
+			<item value="cl_DestroyThreadWin32"/>
+			<item value="cl_DestroyThreadWin32:"/>
+			<item value="cl_GetReaderListEntry:"/>
+			<item value="clReaderReadThread:WaitingForNewRead"/>
+			<item value="cl_ReaderGetSyncStatus"/>
+			<item value="fnIOGetData"/>
+			<item value="cl_COMAlGetDataWin32"/>
+			<item value="cl_HelperNetworkToTuples"/>
+			<item value="free"/>
+			<item value="csl_malloc"/>
+			<item value="Allocatebufferfordatatosend"/>
+			<item value="strnsetbuffString"/>
+			<item value="FromReader"/>
+			<item value="ReaderAndStatusProc:fWaitingOnStatfWaitingOnRead"/>
+			<item value="WAIT_TIMEOUT"/>
+			<item value="OutputABuffer"/>
+			<item value="ReaderAndStatusProc:WAIT_OBJECT_0"/>
+			<item value="AMOUNT_TO_READ"/>
+			<item value="CreateFile"/>
+			<item value="COM3"/>
+			<item value="fCTSOutFlow"/>
+			<item value="TIMEOUTSORIG"/>
+			<item value="XONCHAR"/>
+			<item value="ReaderAndStatusProc"/>
+			<item value="fNoReading"/>
+			<item value="UpdateTTYInfo"/>
+			<item value="NOWRITING"/>
+			<item value="NOREADING"/>
+			<item value="osReaderhEvent"/>
+			<item value="HeapFree"/>
+			<item value="HeapAlloc"/>
+			<item value="gpWriterHead"/>
+			<item value="AddToFrontOfLinkedList"/>
+			<item value="WriterBlock"/>
+			<item value="WriterBlock:"/>
+			<item value="createthread"/>
+			<item value="PrintBuffer"/>
+			<item value="WriterGeneric"/>
+			<item value="COMDEV"/>
+			<item value="UpdateStatus"/>
+			<item value="ghStatusMessageEvent"/>
+			<item value="WaitForThreads"/>
+			<item value="ghThreadExitEvent"/>
+			<item value="Errorclosingport"/>
+			<item value="ghWriterEvent"/>
+			<item value="WaitForMultipleObjects"/>
+			<item value="WaitForMultipleObjectsReaderStatushandles"/>
+			<item value="Wait"/>
+			<item value="PrintfBuffer"/>
+			<item value="GetCommTimeouts"/>
+			<item value="PRINTF_BUFFER"/>
+			<item value="FullExeFileNameWithDirectory"/>
+			<item value="cls_c_malloc"/>
+			<item value="DEBUG_PRINTF"/>
+			<item value="cl_AllocMemWin32"/>
+			<item value="fnAllocMem"/>
+			<item value="clReaderWriteThread"/>
+			<item value="cl_initTupleSetAllFields"/>
+			<item value="fn_Trace"/>
+			<item value="ascii"/>
+			<item value="ConvertAscii"/>
+			<item value="R:CL_SERIAL_PROT_W_WAIT_FOR_ACK"/>
+			<item value="fnSemaphoreWait"/>
+			<item value="BRY_02042015"/>
+			<item value="fnPrintComplete"/>
+			<item value="cl_PrintOutCompletion"/>
+			<item value="fnTrace"/>
+			<item value="fnCreateThread"/>
+			<item value="fnBTStackSupportLoad"/>
+			<item value="CSLInitCOM"/>
+			<item value="fnIOState_cb"/>
+			<item value="Readerhandleis"/>
+			<item value="StateupdatefromReader"/>
+			<item value="QT_COMPILATION"/>
+			<item value="CompleteExeFileNameWithDirectory"/>
+			<item value="cl_readerAddToList"/>
+			<item value="fnDestroyThread"/>
+			<item value="cl_Tracechar*aFormat"/>
+			<item value="size_t"/>
+			<item value="fnIOOpenConnection"/>
+			<item value="menu_description"/>
+			<item value="cl_CreateThreadWin32"/>
+			<item value="script_ProcessFile"/>
+			<item value="BRY_"/>
+			<item value="pthread"/>
+			<item value="cl_MenuBuild"/>
+		</list>
+	</section>
+	<section name="RenameInformationPopup">
+	</section>
+	<section name="OptionalMessageDialog.hide.">
+		<item value="0" key="askReindex.detail"/>
+		<item value="true" key="askReindex"/>
+	</section>
+	<section name="CRenameRefactoringInputPage">
+		<item value="3" key="scope"/>
+		<item value="" key="workingset"/>
+		<item value="false" key="references_inv"/>
+		<item value="false" key="comment"/>
+		<item value="false" key="exhausiveFileSearch"/>
+		<item value="false" key="macroDefinition"/>
+	</section>
+	<section name="completion_proposal_size">
+	</section>
+	<section name="org.eclipse.cdt.internal.ui.typehierarchy.OpenTypeInHierarchyActionSettings">
+		<item value="true" key="show_enums"/>
+		<item value="true" key="show_unions"/>
+		<item value="false" key="show_macros"/>
+		<item value="true" key="show_classes"/>
+		<item value="false" key="show_functions"/>
+		<item value="true" key="show_lowlevel"/>
+		<item value="false" key="show_namespaces"/>
+		<item value="false" key="show_enumerators"/>
+		<item value="true" key="show_structs"/>
+		<item value="-1176" key="x"/>
+		<item value="432" key="width"/>
+		<item value="99" key="y"/>
+		<item value="true" key="show_typedefs"/>
+		<item value="false" key="show_variables"/>
+		<item value="662" key="height"/>
+	</section>
+	<section name="org.eclipse.cdt.internal.ui.includebrowser.IBViewPart">
+		<item value="false" key="showFolders"/>
+		<item value="false" key="systemFilter"/>
+		<item value="false" key="includedBy"/>
+		<item value="false" key="inactiveFilter"/>
+	</section>
+</section>

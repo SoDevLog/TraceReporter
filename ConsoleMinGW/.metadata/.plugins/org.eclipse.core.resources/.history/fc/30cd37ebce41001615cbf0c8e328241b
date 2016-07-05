@@ -1,0 +1,23 @@
+/*--------------------------------------------------------------------------*\
+ * TestMain.c 
+ * Copyright (c) 2016 SoDevLog. All rights reserved.
+\*--------------------------------------------------------------------------*/
+
+#include "pmEnv.h"
+#include "cMenu.h"
+
+/*--------------------------------------------------------------------------*/
+
+PMMENU_DECLARE(Char);
+
+
+/*--------------------------------------------------------------------------*/
+void NT_TestMain( void )
+{
+    PMMenu_InitializeMainMenu();
+
+    PMMENU_USE(Char);
+
+    PMMenu_ExecuteMainMenu();
+    PMMenu_DeleteMainMenu();
+}

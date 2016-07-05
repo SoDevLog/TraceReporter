@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;TestPthread/TCOMALSendAndReceiveData.c&apos; to &apos;TCOMALSendAndReceive.c&apos;" description="Rename resource &apos;TCOMALSendAndReceiveData.c&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="TCOMALSendAndReceiveData.c" name="TCOMALSendAndReceive.c" stamp="1429689438930" updateReferences="true"/>
+</session>

@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Rename resource &apos;TestPthread/TPMThread.c&apos; to &apos;TPThread.c&apos;" description="Rename resource &apos;TPMThread.c&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="TPMThread.c" name="TPThread.c" stamp="1428928150081" updateReferences="true"/>&#x0A;<refactoring comment="Rename resource &apos;TestPthread/TMemDbg.c&apos; to &apos;TMemDbgInCSL.c&apos;" description="Rename resource &apos;TMemDbg.c&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="TMemDbg.c" name="TMemDbgInCSL.c" stamp="1429018903934" updateReferences="true"/>
+</session>

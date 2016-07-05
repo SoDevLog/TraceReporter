@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;TestPthread/TESTpthread.c&apos; to &apos;TEST_MainPthread.c&apos;" description="Rename resource &apos;TESTpthread.c&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="TESTpthread.c" name="TEST_MainPthread.c" stamp="1444316725117" updateReferences="true"/>
+</session>

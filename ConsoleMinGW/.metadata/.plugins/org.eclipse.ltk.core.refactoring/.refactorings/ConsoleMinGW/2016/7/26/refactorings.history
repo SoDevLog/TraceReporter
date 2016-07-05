@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;ConsoleMinGW/TEST_MainPthread.c&apos; to &apos;ConsoleMain.c&apos;" description="Rename resource &apos;TEST_MainPthread.c&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="TEST_MainPthread.c" name="ConsoleMain.c" stamp="1467387276813" updateReferences="true"/>
+</session>

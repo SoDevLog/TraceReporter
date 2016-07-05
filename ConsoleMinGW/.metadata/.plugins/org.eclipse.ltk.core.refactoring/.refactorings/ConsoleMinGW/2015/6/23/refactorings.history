@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;TestPthread/TBackTrace.c&apos; to &apos;TStackTrace.c&apos;" description="Rename resource &apos;TBackTrace.c&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="TBackTrace.c" name="TStackTrace.c" stamp="1433154263771" updateReferences="true"/>
+</session>

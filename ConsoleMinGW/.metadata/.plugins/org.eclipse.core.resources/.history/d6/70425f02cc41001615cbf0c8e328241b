@@ -1,0 +1,28 @@
+/*--------------------------------------------------------------------------*\
+ * TestMain.c 
+ * Copyright (c) 1998-2000 AbyreSoft. All rights reserved.
+\*--------------------------------------------------------------------------*/
+
+#include "pmEnv.h"
+#include "cMenu.h"
+#include "cXCore.h"
+#include "cXStack.h"
+
+/*--------------------------------------------------------------------------*/
+
+PMMENU_DECLARE(TChar);
+
+
+/*--------------------------------------------------------------------------*/
+void NT_TestMain( void )
+{
+    PMMenu_InitializeMainMenu();
+
+    PMMENU_USE( TChar );
+
+    PMMenu_ExecuteMainMenu();
+    PMMenu_DeleteMainMenu();
+
+	c_xmemdbg_dump_state();
+	c_xthread_term();
+}
