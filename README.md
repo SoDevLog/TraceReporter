@@ -10,3 +10,5 @@ cf. http://www.mingw.org/
 ## ASDLLTrace
 Is source code of a DLL that enable communication between your application under test and the Reporter application in charge to display traces
 
+## ASReporter 
+Is a Windows application developed using Visual Studio C++ MFC she display traces
